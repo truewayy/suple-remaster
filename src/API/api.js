@@ -5,8 +5,10 @@ const cookies = new Cookies();
 
 // 로그인 API
 export const loginApi = (setData, setLoading, id, pw) => {
+    let now = new Date;
+    let after1m = new Date();
+    after1m.setMinutes(now.getMinutes() +1);
     const url = `http://localhost:3001/login`;
-
     const data = {
       user_id: id,
       user_password: pw,
@@ -25,11 +27,13 @@ export const loginApi = (setData, setLoading, id, pw) => {
           path: '/',
           secure: true,
           sameSite: false,
+          expires: after1m
         });
         cookies.set('refreshToken', r.data.Authorization['refreshToken'], {
           path: '/',
           secure: true,
           sameSite: false,
+          expires: after1m
         });
         setData(r.data)
         setLoading(true)

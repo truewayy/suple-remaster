@@ -29,7 +29,7 @@ const Nav = () => {
             <Styled.NavMenu onClick={handleClick} click={click}>
                 { !cookie ? 
                     <Styled.NavLinks onClick={() => navigate("/login")}>글 쓰기</Styled.NavLinks> : 
-                    <Styled.NavLinks onClick={() => alert('성공')}>글 쓰기</Styled.NavLinks> }
+                    <Styled.NavLinks onClick={() => navigate("/write")}>글 쓰기</Styled.NavLinks> }
                 <Styled.NavLinks onClick={() => navigate("/notice")}>공지사항</Styled.NavLinks>
                 { !cookie ? 
                     <Styled.NavLinks onClick={() => navigate("/login")}>로그인</Styled.NavLinks> : 
