@@ -9,6 +9,7 @@ import Myinformation from "./pages/Myinformation"
 import Nav from "./components/navbar/index"
 import GlobalStyle from "./globalStyles"
 import WriteButton from "./components/WriteButton"
+import WriteForm from "./pages/WriteForm"
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/pwsearch" element={<PwSearch />} />
         <Route path="/notice" element={<Notice />} />
         <Route path="/myinformation" element={<Myinformation />} />
+        <Route path="/write" element={<WriteForm />} />
       </Routes>
       <WriteButton />
     </BrowserRouter>
