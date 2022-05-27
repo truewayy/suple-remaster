@@ -16,11 +16,11 @@ const Myinformation = () => {
                     <Styled.ContentTitle>내 계정</Styled.ContentTitle>
                     <Styled.DetailWrapper>
                         <Styled.ContentDetail>로그인 아이디</Styled.ContentDetail>
-                        <Styled.DetailData>{db.user_id}</Styled.DetailData>
+                        <Styled.DetailData>{db.id}</Styled.DetailData>
                     </Styled.DetailWrapper>
                     <Styled.DetailWrapper id='bottom'>
                         <Styled.ContentDetail>학교 인증 메일</Styled.ContentDetail>
-                        <Styled.DetailData>{db.user_email}</Styled.DetailData>
+                        <Styled.DetailData>{db.email}</Styled.DetailData>
                     </Styled.DetailWrapper>
                 </Styled.ContentWrapper>
                 <Styled.ContentWrapper>

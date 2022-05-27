@@ -29,7 +29,7 @@ const WriteForm = () => {
                 <Styled.FormText>글 쓰기</Styled.FormText>
                 <Styled.FlexRow>
                     <Styled.FormText id='title'>제목</Styled.FormText>
-                    <Styled.TitleInput rows={1} onChange={(e)=>{setTitle(e.target.value)}}/>
+                    <Styled.TitleInput rows={1} placeholder='제목을 입력하세요' onChange={(e)=>{setTitle(e.target.value)}}/>
                 </Styled.FlexRow>
                 <Styled.FlexRow id='field'>
                     <Styled.FormText id='url'>모집분야</Styled.FormText>
@@ -57,11 +57,11 @@ const WriteForm = () => {
                 </Styled.FlexRow>
                 <Styled.FlexRow>
                     <Styled.FormText id='title'>내용</Styled.FormText>
-                    <Styled.ContentTextArea rows={15} onChange={(e)=>{setContent(e.target.value)}}/>
+                    <Styled.ContentTextArea rows={15} placeholder='프로젝트 소개 및 원하는 팀원을 적어주세요' onChange={(e)=>{setContent(e.target.value)}}/>
                 </Styled.FlexRow>
                 <Styled.FlexRow>
                     <Styled.FormText id='url'>오픈채팅<br />URL</Styled.FormText>
-                    <Styled.TitleInput rows={1} onChange={(e)=>{setTitle(e.target.value)}}/>
+                    <Styled.TitleInput rows={1} placeholder='카카오톡 오픈채팅 URL' onChange={(e)=>{setTitle(e.target.value)}}/>
                 </Styled.FlexRow>
             </Styled.FormContainer>
             <Styled.SubmitButton>작성하기</Styled.SubmitButton>

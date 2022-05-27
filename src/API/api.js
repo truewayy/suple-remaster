@@ -7,7 +7,7 @@ const cookies = new Cookies();
 export const loginApi = (setData, setLoading, id, pw) => {
     let now = new Date;
     let after1m = new Date();
-    after1m.setMinutes(now.getMinutes() +1);
+    after1m.setMinutes(now.getMinutes() +100);
     const url = `http://localhost:3001/login`;
     const data = {
       user_id: id,
@@ -39,8 +39,7 @@ export const loginApi = (setData, setLoading, id, pw) => {
         setLoading(true)
       },
       (error) => {
-        console.log(error.response);
-        console.log(data);
+        alert(error.response.data.message)
       }
     );
   };
@@ -52,7 +51,7 @@ export const loginApi = (setData, setLoading, id, pw) => {
     const options = {
       method: 'get',
       headers: {
-        'Content-Tyoe': 'application/json'
+        'Content-Type': 'application/json'
       },
       url,
     };
@@ -73,7 +72,8 @@ export const myInfoApi = (setData) => {
   const options = {
     method: 'get',
     headers: {
-      'Content-Tyoe': 'application/json'
+      'Content-Type': 'application/json',
+      Authorization: cookies.get('accessToken')
     },
     url,
   };
@@ -174,6 +174,35 @@ export const myInfoApi = (setData) => {
       },
       (error) => {
         console.log(error.response)
+      }
+    )
+  }
+
+  // 글쓰기 API
+  export const postingApi = (title, field, stack, content, contact) => {
+    const url = "http://localhost:3001/write"
+    const data = {
+      title: title,
+      field: field,
+      stack: stack,
+      content: content,
+      contact: contact
+    }
+    const options = {
+      method: 'post',
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: cookies.get('accessToken')
+      },
+      data: data,
+      url,
+    };
+    axios(options).then(
+      (r) => {
+        console.log(r.data)
+      },
+      (error) => {
+        alert(error.response)
       }
     )
   }
