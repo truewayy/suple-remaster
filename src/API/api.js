@@ -2,6 +2,27 @@ import axios from 'axios';
 import { Cookies } from 'react-cookie';
 const cookies = new Cookies();
 
+// 메인 페이지 리스트 API
+export const mainApi = (setData) => {
+  const url = "http://localhost:3001"
+  const options = {
+    method: 'get',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    url,
+  };
+  axios(options).then(
+    (r) => {
+      setData(r.data)
+      console.log(r.data)
+    },
+    (error) => {
+      console.log(error.response);
+    }
+  )
+}
+
 
 // 로그인 API
 export const loginApi = (setData, setLoading, id, pw) => {

@@ -1,14 +1,18 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import * as Styled from './styled'
 import TeamList from "../../components/TeamList/index"
 import { useNavigate } from "react-router-dom"
 import moment from 'moment';
 import 'moment/locale/ko';
-
+import { mainApi } from "../../API/api";
 // designed by soo kyung
 
 const Main = () => {
-    let navigate = useNavigate()
+    let navigate = useNavigate();
+    const [db, setData] = useState();
+    useEffect(() => {
+        mainApi(setData)
+    },[])
     const nowTime = moment().format('YYYY년 M월 D일')
     const [search, setSearch] = useState();
     const [part, setPart] = useState('frontEnd');
@@ -57,7 +61,7 @@ const Main = () => {
                             <Styled.MainText id="bottom">오늘의 공지사항 →</Styled.MainText>
                         </Styled.NoticeContainer>
                     </Styled.NoticeWrapper>
-                    <TeamList />
+                    <TeamList db={db}/>
                 </Styled.ContentWrapper>
             </Styled.Container>
         </Styled.Wrapper>
