@@ -4,6 +4,7 @@ export const Wrapper = styled.div`
   width: 180px;
   border: 1px solid white;
   border-radius: 15px;
+  margin-right: 1px;
   margin-bottom: 30px;
   background-color: #00a0e9;
   box-shadow: 0px 0px 10px 5px #e0e0e0;
@@ -47,7 +48,10 @@ export const ContentTitle = styled.div`
   color: #fff;
   font-weight: 500;
   letter-spacing: 1px;
-  margin-bottom: 30px;
+  height: 65px;
+  @media screen and (max-width: 767px) {
+    height: 30px;
+}
 `
 
 export const ContentDate = styled.div`
