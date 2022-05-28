@@ -179,11 +179,10 @@ export const myInfoApi = (setData) => {
   }
 
   // 글쓰기 API
-  export const postingApi = (setData, setLoading, title, field, stack, content, contact) => {
+  export const postingApi = (setData, setLoading, title, stack, content, contact) => {
     const url = "http://localhost:3001/write"
     const data = {
       title: title,
-      field: field,
       stack: stack,
       content: content,
       contact: contact

@@ -7,11 +7,11 @@ import { useNavigate } from 'react-router-dom';
 export const StackSelect = (props) => {
     
     return props.field==='0' ? (
-        <FrontSelect setStack={props.setFront} stack={props.front}/>
+        <FrontSelect setStack={props.setStack} stack={props.stack}/>
     ) : props.field==='1' ? (
-        <BackSelect setStack={props.setBack} stack={props.back}/>
+        <BackSelect setStack={props.setStack} stack={props.stack}/>
     ) : props.field==='2' ? (
-        <AppSelect setStack={props.setApp} stack={props.app}/>
+        <AppSelect setStack={props.setStack} stack={props.stack}/>
     ) : null
 }
 
@@ -21,33 +21,30 @@ const WriteForm = () => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [field, setField] = useState(``); //분야 선택
-    const [front, setFront] = useState('');
-    const [back, setBack] = useState('');
-    const [app, setApp] = useState('');
     const [contact, setContact] = useState('');
     const [stack, setStack] = useState([]);
     const [db, setData] = useState({
         tf: false,
     });
     const [loading, setLoading] = useState(false);
-    
     const fieldChange = (e) => {
         setField(e.target.value);
       };
     const onSubmit = () => {
-        setStack([front,back,app].join(', '));
         if(title==='') {
             alert("제목을 입력해주세요")
         } else if(field==='') {
             alert("분야/스택(을) 선택해주세요")
-        } else if(stack===[]) {
+        } else if(stack.length===0) {
             alert("스택을 선택해주세요")
         } else if(content==='') {
             alert("내용을 입력해주세요")
         } else if(contact==='') {
             alert("카카오톡 오픈채팅 URL을 입력해주세요")
+        } else if(stack.length > 4) {
+            alert("스택은 4개까지 선택할 수 있습니다")
         } else {
-            postingApi(setData, setLoading, title, field, stack, content, contact);
+            postingApi(setData, setLoading, title, stack.join(', '), content, contact);
         }
     }
     useEffect(()=>{
@@ -84,9 +81,9 @@ const WriteForm = () => {
                 <Styled.FlexRow id='stack'>
                     {field !== '' ? (<Styled.FormText id='subtext'>기술<br/></Styled.FormText>) : null}
                     {field==='0' ? 
-                    <StackSelect field={field} front={front} setFront={setFront}/> : field==='1' ? 
-                    <StackSelect field={field} back={back} setBack={setBack}/> : 
-                    <StackSelect field={field} app={app} setApp={setApp}/>}
+                    <StackSelect field={field} stack={stack} setStack={setStack}/> : field==='1' ? 
+                    <StackSelect field={field} stack={stack} setStack={setStack}/> : 
+                    <StackSelect field={field} stack={stack} setStack={setStack}/>}
                 </Styled.FlexRow>
                 <Styled.FlexRow>
                     <Styled.FormText id='title'>내용</Styled.FormText>
