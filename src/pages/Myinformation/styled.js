@@ -35,19 +35,31 @@ export const ContentTitle = styled.div`
     padding-bottom: 30px;
 `
 
+export const RowWrapper = styled.div`
+    display: flex;
+`
+
 export const DetailWrapper = styled.div`
-    padding-bottom: 23px;
-    &#bottom {
-        padding-bottom: 0px;
-    }
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 `
 
 export const ContentDetail = styled.span`
     font-size: 14px;
-    margin-right: 44px;
+    width: 80px;
+    margin-bottom: 20px;
+    margin-right: 30px;
+    &#bottom {
+        margin-bottom: 0px;
+    }
 `
 
 export const DetailData = styled.span`
     font-size: 16px;
     font-weight: 100;
+    margin-bottom: 20px;
+    &#bottom {
+        margin-bottom: 0px;
+    }
 `

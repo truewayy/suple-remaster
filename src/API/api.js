@@ -179,7 +179,7 @@ export const myInfoApi = (setData) => {
   }
 
   // 글쓰기 API
-  export const postingApi = (title, field, stack, content, contact) => {
+  export const postingApi = (setData, setLoading, title, field, stack, content, contact) => {
     const url = "http://localhost:3001/write"
     const data = {
       title: title,
@@ -199,10 +199,11 @@ export const myInfoApi = (setData) => {
     };
     axios(options).then(
       (r) => {
-        console.log(r.data)
+        setData(r.data);
+        setLoading(true);
       },
       (error) => {
-        alert(error.response)
+        alert(error.response.data.message)
       }
     )
   }
