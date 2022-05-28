@@ -27,7 +27,7 @@ export const Team = (props) => {
 const TeamList = (props) => {
          
   return(
-      props.db.map((v,i)=>{
+      props.db && props.db.map((v,i)=>{
           return(
             <Team title={v.title} content={v.content} date={v.date_format} key={i} stack={v.stack}/>
           )
