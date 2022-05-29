@@ -24,6 +24,10 @@ export const Wrapper = styled.div`
   }
 `
 
+export const TagWrapper = styled.div`
+  height: 70px;
+`
+
 export const TagBox = styled.div`
   display: flex;
   justify-content: flex-start;

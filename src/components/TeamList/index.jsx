@@ -5,6 +5,7 @@ export const Team = (props) => {
 
     return(
       <Styled.Wrapper>
+        <Styled.TagWrapper>
           <Styled.TagBox>
             {stack.filter((v,i)=>!(i%2))
             .map((v,i)=>(
@@ -17,8 +18,9 @@ export const Team = (props) => {
                 <Styled.ContentTag key={i}>#{v}</Styled.ContentTag>
             ))}
           </Styled.TagBox>
-          <Styled.ContentTitle>{props.title}</Styled.ContentTitle>
-          <Styled.ContentDate>{props.date}</Styled.ContentDate>
+        </Styled.TagWrapper>
+        <Styled.ContentTitle>{props.title}</Styled.ContentTitle>
+        <Styled.ContentDate>{props.date}</Styled.ContentDate>
       </Styled.Wrapper>
     )
   
