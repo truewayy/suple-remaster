@@ -1,8 +1,37 @@
 import {React, useState, useEffect } from 'react'
 import Modal from 'react-modal';
-import { myInfoApi } from '../../API/api'
+import { deletePostApi, myInfoApi } from '../../API/api'
+import EditPosting from '../../components/EditPosting';
 import PostingDetail from '../../components/PostingDetail';
 import * as Styled from './styled'
+
+const 모달스타일 = {
+    overlay: {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: 'rgba(0, 0, 0, 0.4)',
+      zIndex: 1100,
+    },
+    content: {
+      display: 'flex',
+      justifyContent: 'center',
+      background: '#ffffff',
+      overflow: 'auto',
+      maxWidth: '580px',
+      minWidth: '350px',
+      maxHeight: '700px',
+      left: '50%',
+      top: '3%',
+      transform: 'translate(-50%, 3%)',
+      WebkitOverflowScrolling: 'touch',
+      borderRadius: '14px',
+      outline: 'none',
+      zIndex: 1100,
+    },
+  };
 
 const ModalStyle = {
     overlay: {
@@ -34,6 +63,7 @@ const ModalStyle = {
 
 export const MyPosting = (props) => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [editModal, setEditModal] = useState(false);
     let title = props.title
     let content = props.content
     if (title.length >= 11) {
@@ -42,15 +72,22 @@ export const MyPosting = (props) => {
     if (content.length >= 30) {
         content = props.content.substr(0, 30) + '...';
     }
+    const onDelete = () => {
+        if (window.confirm('게시글을 삭제하시겠습니까?') === true) {
+          deletePostApi(props.post_key);
+        } else {
+          return;
+        }
+      };
 
     return(
         <div>
-            <Styled.myPostingWrapper onClick={()=>setModalIsOpen(true)}>
-                <Styled.PostingTitle>{title}</Styled.PostingTitle>
+            <Styled.myPostingWrapper>
+                <Styled.PostingTitle onClick={()=>setModalIsOpen(true)}>{title}</Styled.PostingTitle>
                 <Styled.PostingContent>{content}</Styled.PostingContent>
                 <Styled.ButtonGroup>
-                    <Styled.EditButton>수정</Styled.EditButton>
-                    <Styled.DeleteButton>삭제</Styled.DeleteButton>
+                    <Styled.EditButton onClick={()=>setEditModal(true)}>수정</Styled.EditButton>
+                    <Styled.DeleteButton onClick={onDelete}>삭제</Styled.DeleteButton>
                 </Styled.ButtonGroup>
             </Styled.myPostingWrapper>
             <Modal
@@ -63,6 +100,16 @@ export const MyPosting = (props) => {
                 <PostingDetail setModalIsOpen={setModalIsOpen} title={props.title} content={props.content} 
                     stack={props.stack} contact={props.contact} date={props.date} />
             </Modal>
+            <Modal
+                isOpen={editModal}
+                style={모달스타일}
+                // 오버레이나 esc를 누르면 핸들러 동작
+                ariaHideApp={false}
+                onRequestClose={() => setEditModal(false)}
+                >
+                <EditPosting setEditModal={setEditModal} title={props.title} content={props.content} 
+                    stack={props.stack} contact={props.contact} date={props.date} post_key={props.post_key} />
+            </Modal>
 
         </div>
     
@@ -73,7 +120,7 @@ export const MyPostingList = (props) => {
     return(
         props.post && props.post.map((v,i)=>{
             return(
-                <MyPosting title={v.title} stack={v.stack} content={v.content} contact={v.contact} key={v.post_key} date={v.date_format} />
+                <MyPosting title={v.title} stack={v.stack} content={v.content} contact={v.contact} post_key={v.post_key} date={v.date_format} />
             )
     }))
 }

@@ -227,3 +227,62 @@ export const myInfoApi = (setData) => {
       }
     )
   }
+
+  // 글수정 API
+  export const updatePostApi = (setData, setLoading, title, stack, content, contact, post_key) => {
+    const url = "http://localhost:3001/update"
+    const data = {
+      title: title,
+      stack: stack,
+      content: content,
+      contact: contact,
+      post_key: post_key
+    }
+    const options = {
+      method: 'post',
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: cookies.get('accessToken')
+      },
+      data: data,
+      url,
+    };
+    axios(options).then(
+      (r) => {
+        setData(r.data);
+        setLoading(true);
+      },
+      (error) => {
+        alert(error.response.data.message)
+      }
+    )
+  }
+
+// 글삭제 API
+export const deletePostApi = (post_key) => {
+  const url = "http://localhost:3001/delete"
+  const data = {
+    post_key: post_key
+  }
+  const options = {
+    method: 'delete',
+    headers: {
+      'Content-type': 'application/json',
+      Authorization: cookies.get('accessToken')
+    },
+    data: data,
+    url,
+  };
+  axios(options).then(
+    (r) => {
+      if(r.data.tf===true) {
+        window.location.reload();
+      } else {
+        alert("삭제 실패");
+      }
+    },
+    (error) => {
+      alert(error.response.data.message)
+    }
+  )
+}

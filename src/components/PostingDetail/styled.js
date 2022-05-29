@@ -74,6 +74,9 @@ export const WantingStack = styled.div`
     @media screen and (max-width: 767px) {
         font-size: 12px;
     }
+    &#url {
+        font-size: 13px;
+    }
 `
 
 export const SubTitle = styled.div`

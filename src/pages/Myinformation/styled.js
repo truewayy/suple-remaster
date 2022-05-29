@@ -74,8 +74,7 @@ export const myPostingWrapper = styled.div`
     border-radius: 15px;
     margin-top: 10px;
     &:hover {
-        cursor: pointer;
-        border: 1px solid #00a0e9;
+        border-color: #00a0e9;
     }
 `
 
@@ -83,6 +82,9 @@ export const PostingTitle = styled.div`
     font-size: 14px;
     font-weight: 500;
     width: 160px;
+    &:hover {
+        cursor: pointer;
+    }
 `
 
 export const PostingContent = styled.div`
