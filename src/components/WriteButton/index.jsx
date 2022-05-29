@@ -11,7 +11,7 @@ const WriteButton = () => {
   let cookie = cookies.get("accessToken")
   const onClick = () => {
     if(cookie) {
-      alert('성공');
+      navigate('/write');
     }
     else {
       navigate('/login');
@@ -19,8 +19,8 @@ const WriteButton = () => {
   }
   return (
     <div>
-      <Styled.TopButton>
-        <FontAwesomeIcon icon={faPlus} onClick={onClick}/>
+      <Styled.TopButton onClick={onClick}>
+        <FontAwesomeIcon icon={faPlus}/>
       </Styled.TopButton>
     </div>
   );

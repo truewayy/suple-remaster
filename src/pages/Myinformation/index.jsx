@@ -5,8 +5,8 @@ import * as Styled from './styled'
 export const MyPosting = (props) => {
     let title = props.title
     let content = props.content
-    if (title.length >= 14) {
-        title = props.title.substr(0, 14) + '...';
+    if (title.length >= 11) {
+        title = props.title.substr(0, 11) + '...';
       }
     if (content.length >= 30) {
         content = props.content.substr(0, 30) + '...';
@@ -28,7 +28,7 @@ export const MyPostingList = (props) => {
     return(
         props.post && props.post.map((v,i)=>{
             return(
-                <MyPosting title={v.title} stack={v.stack} content={v.content} contact={v.contact} />
+                <MyPosting title={v.title} stack={v.stack} content={v.content} contact={v.contact} key={i} />
             )
     }))
 }

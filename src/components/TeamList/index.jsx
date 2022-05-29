@@ -2,7 +2,10 @@ import * as Styled from './styled'
 
 export const Team = (props) => {
     const stack = props.stack.split(', ');
-
+    let title = props.title
+    if (title.length >= 25) {
+      title = props.title.substr(0, 25) + '...';
+    }
     return(
       <Styled.Wrapper>
         <Styled.TagWrapper>
@@ -19,7 +22,7 @@ export const Team = (props) => {
             ))}
           </Styled.TagBox>
         </Styled.TagWrapper>
-        <Styled.ContentTitle>{props.title}</Styled.ContentTitle>
+        <Styled.ContentTitle>{title}</Styled.ContentTitle>
         <Styled.ContentDate>{props.date}</Styled.ContentDate>
       </Styled.Wrapper>
     )
