@@ -28,7 +28,7 @@ const Nav = () => {
             </Styled.MobileIcon>
             <Styled.NavMenu onClick={handleClick} click={click}>
                 { !cookie ? 
-                    <Styled.NavLinks onClick={() => navigate("/login")}>글 쓰기</Styled.NavLinks> : 
+                    <Styled.NavLinks onClick={() => {alert("로그인 후 이용해주세요"); navigate("/login")}}>글 쓰기</Styled.NavLinks> : 
                     <Styled.NavLinks onClick={() => navigate("/write")}>글 쓰기</Styled.NavLinks> }
                 <Styled.NavLinks onClick={() => navigate("/notice")}>공지사항</Styled.NavLinks>
                 { !cookie ? 
