@@ -82,8 +82,7 @@ export const myPostingWrapper = styled.div`
 export const PostingTitle = styled.div`
     font-size: 14px;
     font-weight: 500;
-    margin-right: 30px;
-    max-width: 153px;
+    width: 160px;
 `
 
 export const PostingContent = styled.div`
