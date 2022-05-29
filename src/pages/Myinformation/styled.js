@@ -56,6 +56,9 @@ export const ContentDetail = styled.span`
     &#bottom {
         margin-bottom: 0px;
     }
+    &#extra {
+        cursor: pointer;
+    }
 `
 
 export const DetailData = styled.span`

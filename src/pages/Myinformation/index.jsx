@@ -153,6 +153,15 @@ const Myinformation = () => {
                         <Styled.ContentTitle id='posting'>내가 쓴 글</Styled.ContentTitle>
                         <MyPostingList post={db.post}/>
                     </Styled.ContentWrapper>
+                    <Styled.ContentWrapper>
+                        <Styled.ContentTitle>부가 기능</Styled.ContentTitle>
+                        <Styled.RowWrapper>
+                        <Styled.DetailWrapper>
+                            <Styled.ContentDetail id='extra'>비밀번호 변경</Styled.ContentDetail>
+                            <Styled.ContentDetail id='extra' style={{marginBottom: "0px"}}>회원 탈퇴</Styled.ContentDetail>
+                        </Styled.DetailWrapper>
+                        </Styled.RowWrapper>
+                    </Styled.ContentWrapper>
                 </Styled.Container>
             </Styled.Wrapper>
     )

@@ -14,6 +14,7 @@ export const FormContainer = styled.div`
     margin: 20px;
     flex-direction: column;
     @media screen and (max-width: 960px) {
+        width: 100%;
     }
 `
 
@@ -21,6 +22,7 @@ export const FormText = styled.div`
     font-size: 20px;
     font-weight: 500;
     margin: 20px;
+    margin-top: 0px;
     &#title {
         font-size: 18px;
         margin: 0px;
@@ -61,8 +63,14 @@ export const FlexRow = styled.div`
     &#field {
         align-items: center;
         margin-bottom: 10px;
+        @media only screen and (max-width: 960px) {
+          flex-direction: column;
+          align-items: flex-start;
+          width: 90%;
+        }
     }
     @media only screen and (max-width: 960px) {
+        flex-direction: column;
         width: 90%;
       }
 `
@@ -79,6 +87,10 @@ export const TitleInput = styled.textarea`
         outline: 1px solid #00a0e9;
         border-color: #00a0e9;
     }
+    @media only screen and (max-width: 960px) {
+      width: 100%;
+      margin-top: 10px;
+    }
 `
 
 export const ContentTextArea = styled.textarea`
@@ -93,14 +105,18 @@ export const ContentTextArea = styled.textarea`
         outline: 1px solid #00a0e9;
         border-color: #00a0e9;
     }
+    @media only screen and (max-width: 960px) {
+      width: 100%;
+      margin-top: 10px;
+    }
 `
 
 export const Content = styled.form`
   display: flex;
   width: 85%;
-  align-items: cener;
-  &#group {
-    margin-bottom: 1.5rem;
+  align-items: flex-start;
+
+  @media only screen and (max-width: 960px) {
   }
 `;
 
@@ -110,6 +126,12 @@ export const ContentTitle = styled.div`
     width: 30%;
   }
 `;
+
+export const CustomBr = styled.br`
+  @media only screen and (max-width: 960px) {
+    display: none;
+  }
+`
 
 // 라디오버튼 스타일
 export const FormLabel = styled.label`
@@ -128,6 +150,7 @@ export const FormCheckText = styled.span`
   margin-right: 8px;
   @media only screen and (max-width: 960px) {
     font-size: 14px;
+    padding: 4px 10px;
   }
 `;
 

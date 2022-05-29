@@ -78,7 +78,7 @@ const EditPosting = (props) => {
                     </Styled.Content>
                 </Styled.FlexRow>
                 <Styled.FlexRow id='stack'>
-                    {field !== '' ? (<Styled.FormText id='subtext'>기술<br/></Styled.FormText>) : null}
+                    {field !== '' ? (<Styled.FormText id='subtext'>기술<Styled.CustomBr /></Styled.FormText>) : null}
                     {field==='0' ? 
                     <StackSelect field={field} stack={stack} setStack={setStack}/> : field==='1' ? 
                     <StackSelect field={field} stack={stack} setStack={setStack}/> : 
@@ -89,7 +89,7 @@ const EditPosting = (props) => {
                     <Styled.ContentTextArea rows={15} defaultValue={props.content} onChange={(e)=>{setContent(e.target.value)}}/>
                 </Styled.FlexRow>
                 <Styled.FlexRow>
-                    <Styled.FormText id='url'>오픈채팅<br />URL</Styled.FormText>
+                    <Styled.FormText id='url'>오픈채팅<Styled.CustomBr />URL</Styled.FormText>
                     <Styled.TitleInput rows={1} defaultValue={props.contact} onChange={(e)=>{setContact(e.target.value)}}/>
                 </Styled.FlexRow>
             </Styled.FormContainer>
