@@ -2,6 +2,37 @@ import {React, useState, useEffect } from 'react'
 import { myInfoApi } from '../../API/api'
 import * as Styled from './styled'
 
+export const MyPosting = (props) => {
+    let title = props.title
+    let content = props.content
+    if (title.length >= 14) {
+        title = props.title.substr(0, 14) + '...';
+      }
+    if (content.length >= 30) {
+        content = props.content.substr(0, 30) + '...';
+    }
+
+    return(
+        <Styled.myPostingWrapper>
+            <Styled.PostingTitle>{title}</Styled.PostingTitle>
+            <Styled.PostingContent>{content}</Styled.PostingContent>
+            <Styled.ButtonGroup>
+                <Styled.EditButton>수정</Styled.EditButton>
+                <Styled.DeleteButton>삭제</Styled.DeleteButton>
+            </Styled.ButtonGroup>
+        </Styled.myPostingWrapper>
+    )
+}
+
+export const MyPostingList = (props) => {
+    return(
+        props.post && props.post.map((v,i)=>{
+            return(
+                <MyPosting title={v.title} stack={v.stack} content={v.content} contact={v.contact} />
+            )
+    }))
+}
+
 const Myinformation = () => {
     const [db, setData] = useState({})
     useEffect(()=> {
@@ -26,8 +57,8 @@ const Myinformation = () => {
                     </Styled.RowWrapper>
                 </Styled.ContentWrapper>
                 <Styled.ContentWrapper>
-                    <Styled.ContentTitle>내가 쓴 글</Styled.ContentTitle>
-                    
+                    <Styled.ContentTitle id='posting'>내가 쓴 글</Styled.ContentTitle>
+                    <MyPostingList post={db.post}/>
                 </Styled.ContentWrapper>
             </Styled.Container>
         </Styled.Wrapper>

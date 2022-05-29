@@ -33,6 +33,9 @@ export const ContentTitle = styled.div`
     font-size: 16px;
     font-weight: 500;
     padding-bottom: 30px;
+    &#posting {
+        padding-bottom: 20px;
+    }
 `
 
 export const RowWrapper = styled.div`
@@ -62,4 +65,50 @@ export const DetailData = styled.span`
     &#bottom {
         margin-bottom: 0px;
     }
+`
+
+export const myPostingWrapper = styled.div`
+    display: flex;
+    border: 1px solid #e0e0e0;
+    padding: 15px;
+    border-radius: 15px;
+    margin-top: 10px;
+    &:hover {
+        cursor: pointer;
+        border: 1px solid #00a0e9;
+    }
+`
+
+export const PostingTitle = styled.div`
+    font-size: 14px;
+    font-weight: 500;
+    margin-right: 30px;
+    max-width: 153px;
+`
+
+export const PostingContent = styled.div`
+    font-size: 14px;
+    font-weight: 200;
+    @media screen and (max-width: 767px) {
+        display: none;
+    }
+`
+
+export const ButtonGroup = styled.div`
+    display: flex;
+    align-items: flex-start;
+    margin-left: auto;
+`
+
+export const EditButton = styled.div`
+    font-size: 12px;
+    cursor: pointer;
+    color: #a3a3a3;
+    &:hover {
+        color: #222;
+    }
+`
+
+export const DeleteButton = styled(EditButton)`
+    padding-left: 10px;
 `
