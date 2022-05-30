@@ -2,9 +2,11 @@ import axios from 'axios';
 import { Cookies } from 'react-cookie';
 const cookies = new Cookies();
 
+const rootUrl = "http://localhost:8080"
+
 // 메인 페이지 리스트 API
 export const mainApi = (setData) => {
-  const url = "http://localhost:3001"
+  const url = rootUrl
   const options = {
     method: 'get',
     headers: {
@@ -29,7 +31,7 @@ export const loginApi = (setData, setLoading, id, pw) => {
     let now = new Date;
     let after1m = new Date();
     after1m.setMinutes(now.getMinutes() +100);
-    const url = `http://localhost:3001/login`;
+    const url = `${rootUrl}/login`;
     const data = {
       user_id: id,
       user_password: pw,
@@ -68,7 +70,7 @@ export const loginApi = (setData, setLoading, id, pw) => {
 
 // 공지사항 API
   export const noticeApi = (setData) => {
-    const url = "http://localhost:3001/notice"
+    const url = `${rootUrl}/notice`
     const options = {
       method: 'get',
       headers: {
@@ -89,7 +91,7 @@ export const loginApi = (setData, setLoading, id, pw) => {
 
 // 내 정보 API
 export const myInfoApi = (setData) => {
-  const url = "http://localhost:3001/myinformation"
+  const url = `${rootUrl}/myinformation`
   const options = {
     method: 'get',
     headers: {
@@ -112,7 +114,7 @@ export const myInfoApi = (setData) => {
 
 // 회원가입 API
   export const signUpApi = (setData, setLoading, username, password, email) => {
-    const url = "http://localhost:3001/signup"
+    const url = `${rootUrl}/signup`
     const data = {
       user_id: username,
       user_password: password,
@@ -139,7 +141,7 @@ export const myInfoApi = (setData) => {
 
 // 회원가입 - 아이디중복확인 API
   export const checkIdApi = (setCheckID, username) => {
-    const url = "http://localhost:3001/signup/checkid"
+    const url = `${rootUrl}/signup/checkid`
     const data = {
       user_id : username
     }
@@ -170,7 +172,7 @@ export const myInfoApi = (setData) => {
 
   // 회원가입 - 이메일중복확인 API
   export const checkEmailApi = (setCheckEmail, email) => {
-    const url = "http://localhost:3001/signup/checkemail"
+    const url = `${rootUrl}/signup/checkemail`
     const data = {
       user_email : email
     }
@@ -201,7 +203,7 @@ export const myInfoApi = (setData) => {
 
   // 회원가입 - 이메일 인증코드전송 API
   export const submitCodeApi = (setIsCode, setCode, email) => {
-    const url = "http://localhost:3001/signup/mail"
+    const url = `${rootUrl}/signup/mail`
     const data = {
       mail : email
     }
@@ -227,7 +229,7 @@ export const myInfoApi = (setData) => {
 
   // 글쓰기 API
   export const postingApi = (setData, setLoading, title, stack, content, contact) => {
-    const url = "http://localhost:3001/write"
+    const url = `${rootUrl}/write`
     const data = {
       title: title,
       stack: stack,
@@ -256,7 +258,7 @@ export const myInfoApi = (setData) => {
 
   // 글수정 API
   export const updatePostApi = (setData, setLoading, title, stack, content, contact, post_key) => {
-    const url = "http://localhost:3001/update"
+    const url = `${rootUrl}/update`
     const data = {
       title: title,
       stack: stack,
@@ -286,7 +288,7 @@ export const myInfoApi = (setData) => {
 
 // 글삭제 API
 export const deletePostApi = (post_key) => {
-  const url = "http://localhost:3001/delete"
+  const url = `${rootUrl}/delete`
   const data = {
     post_key: post_key
   }
@@ -305,6 +307,34 @@ export const deletePostApi = (post_key) => {
         window.location.reload();
       } else {
         alert("삭제 실패");
+      }
+    },
+    (error) => {
+      alert(error.response.data.message)
+    }
+  )
+}
+
+// 아이디찾기 API
+export const findIdApi = (email) => {
+  const url = `${rootUrl}/findIdx`
+  const data = {
+    email: email
+  }
+  const options = {
+    method: 'post',
+    headers: {
+      'Content-type': 'application/json',
+    },
+    data: data,
+    url,
+  };
+  axios(options).then(
+    (r) => {
+      if(r.data.tf===true) {
+        alert("이메일로 아이디를 전송하였습니다")
+      } else {
+        alert("전송 실패");
       }
     },
     (error) => {

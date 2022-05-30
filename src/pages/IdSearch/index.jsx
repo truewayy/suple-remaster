@@ -2,14 +2,12 @@ import {React, useState, useEffect} from 'react'
 import * as Styled from './styled'
 import { TextField } from '@material-ui/core';
 import { useNavigate } from 'react-router-dom';
+import { findIdApi } from '../../API/api'
 
 const IdSearch = () => {
-    const navigate = useNavigate();
-    const [password, setPassword] = useState();
-    const [db, setData] = useState({
-        user: [],
-      });
+    const [email, setEmail] = useState();
     const onSubmit = () => {
+        findIdApi(email);
     };
 
     return(
@@ -28,8 +26,8 @@ const IdSearch = () => {
                         required
                         autoComplete="current-email" 
                         style={{paddingBottom:"10px"}}
-                        onChange={(e)=>setPassword(e.target.value)} />
-                    <Styled.SubmitButton>전송</Styled.SubmitButton>
+                        onChange={(e)=>setEmail(e.target.value)} />
+                    <Styled.SubmitButton onClick={onSubmit}>전송</Styled.SubmitButton>
                     
                 </Styled.FindWrapper>
             </Styled.Container>
