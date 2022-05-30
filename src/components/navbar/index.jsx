@@ -14,6 +14,7 @@ const Nav = () => {
     }
     const Logout = () => {
         cookies.remove("accessToken");
+        cookies.remove("refreshToken");
         navigate("/")
     }
     let cookie = cookies.get("accessToken")
