@@ -22,6 +22,7 @@
 .env.production.local
 
 .env
+/template
 
 npm-debug.log*
 yarn-debug.log*

@@ -1,7 +1,7 @@
 import {React, useState, useCallback, useEffect} from 'react'
 import * as Styled from './styled'
 import { TextField } from '@material-ui/core';
-import { checkEmailApi, checkIdApi, signUpApi } from '../../API/api';
+import { checkEmailApi, checkIdApi, signUpApi, submitCodeApi } from '../../API/api';
 import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
@@ -24,6 +24,11 @@ const SignUp = () => {
     const [email, setEmail] = useState('');
     const [isEmail, setIsEmail] = useState(false);
     const [emailMessage, setEmailMessage] = useState('');
+
+    const [code, setCode] = useState('');
+    const [isCode, setIsCode] = useState(false);
+    const [inputCode, setInputCode] = useState();
+    const [checkCode, setCheckCode] = useState(false);
 
     // 아이디 중복확인
     const [checkID, setCheckID] = useState(false);
@@ -120,7 +125,27 @@ const SignUp = () => {
     }
 
     const EmailCheck = () => {
-        checkEmailApi(setCheckEmail, email)
+        if(email.includes('@suwon.ac.kr')===false) {
+            alert("수원대학교 이메일을 입력해주세요")
+        } else {
+            checkEmailApi(setCheckEmail, email)
+        }
+    }
+
+    const SubmitCode = () => {
+        submitCodeApi(setIsCode, setCode, email)
+    }
+
+    const CheckCode = () => {
+        console.log(inputCode, code);
+        if(inputCode==code) {
+            setCheckCode(true);
+            alert("인증이 완료되었습니다")
+        }
+        else {
+            setCheckCode(false);
+            alert("인증 번호가 일치하지 않습니다")
+        }
     }
 
     return(
@@ -154,12 +179,21 @@ const SignUp = () => {
                     <TextField label="학교 이메일 (@suwon.ac.kr)" style={{paddingBottom:"10px", width:"80%"}}
                        onChange={onChangeEmail} /><Styled.OverlapButton onClick={EmailCheck} disabled={isEmail===false ? true : false}>중복확인</Styled.OverlapButton>
                     {email.length > 0 && (
-                        <Styled.CheckText id='check' className={`message ${isEmail ? 'success' : 'error'}`}>
+                        <Styled.CheckText id='email' className={`message ${isEmail ? 'success' : 'error'}`}>
                             {emailMessage}
                         </Styled.CheckText>
                         )}
+                    {checkEmail===true ? 
+                        <div style={{width:"100%", marginTop:"20px"}}>
+                        <TextField label="인증코드 6자리 입력" style={{paddingBottom:"10px", width:"60%"}}
+                            onChange={(e)=>setInputCode(e.target.value)} />
+                            <Styled.OverlapButton id='code' disabled={checkEmail===false ? true : false}
+                            onClick={SubmitCode}>코드전송</Styled.OverlapButton>
+                            <Styled.OverlapButton id='code' disabled={isCode===false ? true : false} onClick={CheckCode}>코드확인</Styled.OverlapButton>
+                        </div> : null
+                    }
                     <Styled.CheckText>* 수원대 메일 인증 후 서비스 이용 가능합니다</Styled.CheckText>
-                    <Styled.LoginButton disabled={checkID===false || checkEmail===false || isPasswordConfirm===false ? true : false} onClick={signUp}>회원가입</Styled.LoginButton>
+                    <Styled.LoginButton disabled={checkID===false || checkEmail===false || isPasswordConfirm===false || checkCode===false ? true : false} onClick={signUp}>회원가입</Styled.LoginButton>
                 </Styled.LoginWrapper>
 
             </Styled.Container>

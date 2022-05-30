@@ -199,6 +199,32 @@ export const myInfoApi = (setData) => {
     )
   }
 
+  // 회원가입 - 이메일 인증코드전송 API
+  export const submitCodeApi = (setIsCode, setCode, email) => {
+    const url = "http://localhost:3001/signup/mail"
+    const data = {
+      mail : email
+    }
+    const options = {
+      method: 'post',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      url,
+      data: data
+    };
+    axios(options).then(
+      (r) => {
+        setIsCode(true);
+        setCode(r.data);
+        alert("이메일로 인증코드가 발급되었습니다")
+      },
+      (error) => {
+        console.log(error.response)
+      }
+    )
+  }
+
   // 글쓰기 API
   export const postingApi = (setData, setLoading, title, stack, content, contact) => {
     const url = "http://localhost:3001/write"

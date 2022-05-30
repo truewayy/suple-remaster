@@ -56,6 +56,10 @@ export const OverlapButton = styled.button`
         background-color: #eee;
         cursor: default;
     }
+    &#code {
+        width: 18%;
+        margin-right: 5px;
+    }
 `
 
 export const CheckText = styled.div`
@@ -65,6 +69,10 @@ export const CheckText = styled.div`
     &#check{
         padding-top: 0px;
         padding-bottom: 10px;
+    }
+    &#email {
+        padding-top: 0px;
+        padding-bottom: 0px;
     }
 `
 
