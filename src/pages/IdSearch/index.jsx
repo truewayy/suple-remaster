@@ -1,7 +1,6 @@
-import {React, useState, useEffect} from 'react'
+import {React, useState} from 'react'
 import * as Styled from './styled'
 import { TextField } from '@material-ui/core';
-import { useNavigate } from 'react-router-dom';
 import { findIdApi } from '../../API/api'
 
 const IdSearch = () => {

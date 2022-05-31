@@ -28,7 +28,7 @@ export const mainApi = (setData) => {
 
 // 로그인 API
 export const loginApi = (setData, setLoading, id, pw) => {
-    let now = new Date;
+    let now = new Date();
     let after1m = new Date();
     after1m.setMinutes(now.getMinutes() +100);
     const url = `${rootUrl}/login`;

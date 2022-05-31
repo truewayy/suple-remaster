@@ -82,14 +82,14 @@ export const MyPosting = (props) => {
 
     return(
         <div>
-            <Styled.myPostingWrapper>
+            <Styled.MyPostingWrapper>
                 <Styled.PostingTitle onClick={()=>setModalIsOpen(true)}>{title}</Styled.PostingTitle>
                 <Styled.PostingContent>{content}</Styled.PostingContent>
                 <Styled.ButtonGroup>
                     <Styled.EditButton onClick={()=>setEditModal(true)}>수정</Styled.EditButton>
                     <Styled.DeleteButton onClick={onDelete}>삭제</Styled.DeleteButton>
                 </Styled.ButtonGroup>
-            </Styled.myPostingWrapper>
+            </Styled.MyPostingWrapper>
             <Modal
                 isOpen={modalIsOpen}
                 style={ModalStyle}

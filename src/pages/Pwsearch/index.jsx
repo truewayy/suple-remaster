@@ -1,18 +1,13 @@
-import {React, useState, useEffect} from 'react'
+import {React, useState} from 'react'
 import * as Styled from './styled'
 import { TextField } from '@material-ui/core';
 import { useNavigate } from 'react-router-dom';
 
 const PwSearch = () => {
-    const navigate = useNavigate();
-    const [username, setUsername] = useState();
+//    const navigate = useNavigate();
+/*     const [username, setUsername] = useState();
     const [email, setEmail] = useState();
-    const [db, setData] = useState({
-        user: [],
-      });
-    const onSubmit = () => {
-    };
-      
+ */      
     return(
         <Styled.Wrapper>
             <Styled.Container>
@@ -29,7 +24,7 @@ const PwSearch = () => {
                         required 
                         autoComplete="id" 
                         style={{paddingBottom:"20px"}}
-                        onChange={(e)=>setUsername(e.target.value)} />
+                        /* onChange={(e)=>setUsername(e.target.value)} */ />
                     <TextField 
                         type='email'
                         id='email'
@@ -38,7 +33,7 @@ const PwSearch = () => {
                         required
                         autoComplete="current-email" 
                         style={{paddingBottom:"10px"}}
-                        onChange={(e)=>setEmail(e.target.value)} />
+                        /* onChange={(e)=>setEmail(e.target.value)} */ />
                     <Styled.SubmitButton>전송</Styled.SubmitButton>
                 </Styled.FindWrapper>
 

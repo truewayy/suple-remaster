@@ -138,7 +138,7 @@ const SignUp = () => {
 
     const CheckCode = () => {
         console.log(inputCode, code);
-        if(inputCode==code) {
+        if(parseInt(inputCode)===code) {
             setCheckCode(true);
             alert("인증이 완료되었습니다")
         }

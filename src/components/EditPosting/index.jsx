@@ -16,8 +16,6 @@ export const StackSelect = (props) => {
 }
 
 const EditPosting = (props) => {
-    const navigate = useNavigate();
-
     const [title, setTitle] = useState(`${props.title}`);
     const [content, setContent] = useState(`${props.content}`);
     const [field, setField] = useState(`0`); //분야 선택

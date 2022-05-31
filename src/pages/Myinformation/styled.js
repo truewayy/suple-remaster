@@ -70,7 +70,7 @@ export const DetailData = styled.span`
     }
 `
 
-export const myPostingWrapper = styled.div`
+export const MyPostingWrapper = styled.div`
     display: flex;
     border: 1px solid #e0e0e0;
     padding: 15px;

@@ -17,8 +17,10 @@ const Main = () => {
     const [search, setSearch] = useState();
     const [part, setPart] = useState('frontEnd');
     const handler = (e) => {
+        console.log(part)
         setPart(e);        
     }
+    console.log(search)
     const options = [
         {
           name: '프론트엔드',

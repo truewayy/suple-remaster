@@ -3,7 +3,6 @@ import * as Styled from './styled'
 import { TextField, FormControlLabel, Checkbox } from '@material-ui/core';
 import { loginApi } from '../../API/api';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 
 const Login = () => {
     const navigate = useNavigate();
