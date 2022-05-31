@@ -2,7 +2,6 @@ import {React, useEffect, useState} from 'react'
 import { updatePostApi } from '../../API/api';
 import { AppSelect, BackSelect, FrontSelect } from '../../components/StackSelect';
 import * as Styled from './styled'
-import { useNavigate } from 'react-router-dom';
 
 export const StackSelect = (props) => {
     

@@ -1,7 +1,6 @@
-import {React, useState} from 'react'
+import {React} from 'react'
 import * as Styled from './styled'
 import { TextField } from '@material-ui/core';
-import { useNavigate } from 'react-router-dom';
 
 const PwSearch = () => {
 //    const navigate = useNavigate();

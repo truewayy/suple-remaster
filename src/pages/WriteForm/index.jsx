@@ -52,7 +52,7 @@ const WriteForm = () => {
                 alert("작성 완료");
                 navigate("/myinformation");
             }
-    }, [loading, db. navigate])
+    }, [loading, db.tf, navigate])
     return(
         <Styled.FlexForm>
             <Styled.FormContainer>
