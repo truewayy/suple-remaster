@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Cookies } from 'react-cookie';
 const cookies = new Cookies();
 
-const rootUrl = "http://localhost:8080"
+const rootUrl = "http://localhost:8001"
 
 // 메인 페이지 리스트 API
 export const mainApi = (setData) => {
