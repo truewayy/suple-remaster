@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom"
 import moment from 'moment';
 import 'moment/locale/ko';
 import { mainApi } from "../../API/api";
+import noticePath from '../../img/notice.png'
 // designed by soo kyung
 
 const Main = () => {
@@ -57,7 +58,7 @@ const Main = () => {
                     <Styled.NoticeWrapper onClick={()=>{navigate("notice")}}>
                         <Styled.NoticeContainer>
                             <Styled.MainText id="notice">오늘은 <Styled.PaddingBottom />{nowTime} 입니다.</Styled.MainText>
-                            <Styled.NoticeImg src="notice.png" />
+                            <Styled.NoticeImg src={noticePath} />
                         </Styled.NoticeContainer>
                         <Styled.NoticeContainer id="bottom">
                             <Styled.MainText id="bottom">오늘의 공지사항 →</Styled.MainText>

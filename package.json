@@ -1,6 +1,7 @@
 {
   "name": "suwon_project",
   "version": "0.1.0",
+  "homepage": "http://suple.cafe24app.com",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.9.0",

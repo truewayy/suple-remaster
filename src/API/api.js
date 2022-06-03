@@ -6,7 +6,7 @@ const rootUrl = "http://suple.cafe24app.com"
 
 // 메인 페이지 리스트 API
 export const mainApi = (setData) => {
-  const url = rootUrl
+  const url = `${rootUrl}/api/main`;
   const options = {
     method: 'get',
     headers: {
@@ -31,7 +31,7 @@ export const loginApi = (setData, setLoading, id, pw) => {
     let now = new Date();
     let after1m = new Date();
     after1m.setMinutes(now.getMinutes() +100);
-    const url = `${rootUrl}/login`;
+    const url = `${rootUrl}/api/login`;
     const data = {
       user_id: id,
       user_password: pw,
@@ -47,13 +47,13 @@ export const loginApi = (setData, setLoading, id, pw) => {
     axios(options).then(
       (r) => {
         cookies.set('accessToken', r.data.Authorization['accessToken'], {
-          path: '/',
+          path: `${rootUrl}`,
           secure: true,
           sameSite: false,
           expires: after1m
         });
         cookies.set('refreshToken', r.data.Authorization['refreshToken'], {
-          path: '/',
+          path: `${rootUrl}`,
           secure: true,
           sameSite: false,
           expires: after1m
@@ -70,7 +70,7 @@ export const loginApi = (setData, setLoading, id, pw) => {
 
 // 공지사항 API
   export const noticeApi = (setData) => {
-    const url = `${rootUrl}/notice`
+    const url = `${rootUrl}/api/notice`
     const options = {
       method: 'get',
       headers: {
@@ -91,7 +91,7 @@ export const loginApi = (setData, setLoading, id, pw) => {
 
 // 내 정보 API
 export const myInfoApi = (setData) => {
-  const url = `${rootUrl}/myinformation`
+  const url = `${rootUrl}/api/myinformation`
   const options = {
     method: 'get',
     headers: {
@@ -114,7 +114,7 @@ export const myInfoApi = (setData) => {
 
 // 회원가입 API
   export const signUpApi = (setData, setLoading, username, password, email) => {
-    const url = `${rootUrl}/signup`
+    const url = `${rootUrl}/api/signup`
     const data = {
       user_id: username,
       user_password: password,
@@ -141,7 +141,7 @@ export const myInfoApi = (setData) => {
 
 // 회원가입 - 아이디중복확인 API
   export const checkIdApi = (setCheckID, username) => {
-    const url = `${rootUrl}/signup/checkid`
+    const url = `${rootUrl}/api/signup/checkid`
     const data = {
       user_id : username
     }
@@ -172,7 +172,7 @@ export const myInfoApi = (setData) => {
 
   // 회원가입 - 이메일중복확인 API
   export const checkEmailApi = (setCheckEmail, email) => {
-    const url = `${rootUrl}/signup/checkemail`
+    const url = `${rootUrl}/api/signup/checkemail`
     const data = {
       user_email : email
     }
@@ -203,7 +203,7 @@ export const myInfoApi = (setData) => {
 
   // 회원가입 - 이메일 인증코드전송 API
   export const submitCodeApi = (setIsCode, setCode, email) => {
-    const url = `${rootUrl}/signup/mail`
+    const url = `${rootUrl}/api/signup/mail`
     const data = {
       mail : email
     }
@@ -229,7 +229,7 @@ export const myInfoApi = (setData) => {
 
   // 글쓰기 API
   export const postingApi = (setData, setLoading, title, stack, content, contact) => {
-    const url = `${rootUrl}/write`
+    const url = `${rootUrl}/api/write`
     const data = {
       title: title,
       stack: stack,
@@ -258,7 +258,7 @@ export const myInfoApi = (setData) => {
 
   // 글수정 API
   export const updatePostApi = (setData, setLoading, title, stack, content, contact, post_key) => {
-    const url = `${rootUrl}/update`
+    const url = `${rootUrl}/api/update`
     const data = {
       title: title,
       stack: stack,
@@ -288,7 +288,7 @@ export const myInfoApi = (setData) => {
 
 // 글삭제 API
 export const deletePostApi = (post_key) => {
-  const url = `${rootUrl}/delete`
+  const url = `${rootUrl}/api/delete`
   const data = {
     post_key: post_key
   }
@@ -317,7 +317,7 @@ export const deletePostApi = (post_key) => {
 
 // 아이디찾기 API
 export const findIdApi = (email) => {
-  const url = `${rootUrl}/findIdx`
+  const url = `${rootUrl}/api/findIdx`
   const data = {
     email: email
   }
