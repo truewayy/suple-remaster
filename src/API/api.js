@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Cookies } from 'react-cookie';
 const cookies = new Cookies();
 
-const rootUrl = "http://suple.cafe24app.com"
+const rootUrl = "http://localhost:8001"
 
 // 메인 페이지 리스트 API
 export const mainApi = (setData) => {
@@ -47,15 +47,11 @@ export const loginApi = (setData, setLoading, id, pw) => {
     axios(options).then(
       (r) => {
         cookies.set('accessToken', r.data.Authorization['accessToken'], {
-          path: `${rootUrl}`,
-          secure: true,
-          sameSite: false,
+          path: '/',
           expires: after1m
         });
         cookies.set('refreshToken', r.data.Authorization['refreshToken'], {
-          path: `${rootUrl}`,
-          secure: true,
-          sameSite: false,
+          path: '/',
           expires: after1m
         });
         setData(r.data)
@@ -88,6 +84,28 @@ export const loginApi = (setData, setLoading, id, pw) => {
       }
     )
   }
+
+// 전체 글 API
+export const WrittenPostApi = (setData) => {
+  const url = `${rootUrl}/api/total`
+  const options = {
+    method: 'get',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    url,
+  };
+  axios(options).then(
+    (r) => {
+      setData(r.data)
+      console.log(r.data)
+    },
+    (error) => {
+      console.log(error.response);
+    }
+  )
+}
+
 
 // 내 정보 API
 export const myInfoApi = (setData) => {

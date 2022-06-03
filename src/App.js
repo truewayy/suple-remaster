@@ -10,6 +10,7 @@ import Nav from "./components/navbar/index"
 import GlobalStyle from "./globalStyles"
 import WriteButton from "./components/WriteButton"
 import WriteForm from "./pages/WriteForm"
+import WrittenPost from "./pages/WrittenPost"
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/notice" element={<Notice />} />
         <Route path="/myinformation" element={<Myinformation />} />
         <Route path="/write" element={<WriteForm />} />
+        <Route path="/total" element={<WrittenPost />} />
       </Routes>
       <WriteButton />
     </BrowserRouter>

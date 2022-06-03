@@ -71,6 +71,29 @@ export const MainText = styled.div`
       font-weight: 600;
   }
 `
+
+export const GrayText = styled.span`
+  font-size: 14px;
+  text-decoration: underline;
+  color: #a3a3a3;
+  cursor: pointer;
+  @media screen and (max-width: 767px) {
+    display: none;
+}
+`
+
+export const MobileGrayText = styled.div`
+  display: none;
+  @media screen and (max-width: 767px) {
+    display: block;
+    font-size: 14px;
+    text-decoration: underline;
+    color: #a3a3a3;
+    cursor: pointer;
+    margin-top: 15px;
+}
+`
+
 export const PaddingBottom = styled.div`
     padding-bottom: 5px;
 `

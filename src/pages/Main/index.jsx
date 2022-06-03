@@ -44,7 +44,9 @@ const Main = () => {
                 <Styled.SelectWrapper>
                     <Styled.MainTextBox>
                         <Styled.MainText>분야별로</Styled.MainText>
-                        <Styled.MainText>나의 팀원들을 찾아보세요!</Styled.MainText>
+                        <Styled.MainText>나의 팀원들을 찾아보세요! <Styled.GrayText onClick={()=>navigate("/total")}>{'글 목록 >'}</Styled.GrayText>
+                        <Styled.MobileGrayText onClick={()=>navigate("/total")}>{'글 목록 >'}</Styled.MobileGrayText>
+                        </Styled.MainText>
                     </Styled.MainTextBox>
                     <Styled.CustomSelect defaultValue={'frontEnd'} onChange={handler}>
                         {options.map((index) => (
