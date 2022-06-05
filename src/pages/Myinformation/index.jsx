@@ -160,7 +160,7 @@ const Myinformation = () => {
                         <Styled.RowWrapper>
                         <Styled.DetailWrapper>
                             <Styled.ContentDetail id='extra' onClick={()=>navigate("changePassword")}>비밀번호 변경</Styled.ContentDetail>
-                            <Styled.ContentDetail id='extra' style={{marginBottom: "0px"}}>회원 탈퇴</Styled.ContentDetail>
+                            <Styled.ContentDetail id='extra' onClick={()=>navigate("quit")} style={{marginBottom: "0px"}}>회원 탈퇴</Styled.ContentDetail>
                         </Styled.DetailWrapper>
                         </Styled.RowWrapper>
                     </Styled.ContentWrapper>

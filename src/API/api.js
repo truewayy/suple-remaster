@@ -409,3 +409,29 @@ export const findIdApi = (email) => {
     }
   )
 }
+
+// 회원탈퇴 API
+export const quitApi = (setData, setLoading, password) => {
+  const url = `${rootUrl}/api/quit`
+  const data = {
+    password: password
+  }
+  const options = {
+    method: 'delete',
+    headers: {
+      'Content-type': 'application/json',
+      Authorization: cookies.get('accessToken')
+    },
+    data: data,
+    url,
+  };
+  axios(options).then(
+    (r) => {
+      setData(r.data);
+      setLoading(true);
+    },
+    (error) => {
+      alert(error.response.data.message)
+    }
+  )
+}

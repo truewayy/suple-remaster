@@ -13,6 +13,7 @@ import WriteForm from "./pages/WriteForm"
 import WrittenPost from "./pages/WrittenPost"
 import Search from "./pages/Search"
 import PwChange from "./pages/ChangePassword"
+import AccountQuit from "./pages/AccountQuit"
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route path="/notice" element={<Notice />} />
         <Route path="/myinformation" element={<Myinformation />} />
         <Route path="/myinformation/changePassword" element={<PwChange />} />
+        <Route path="/myinformation/quit" element={<AccountQuit />} />
         <Route path="/write" element={<WriteForm />} />
         <Route path="/total" element={<WrittenPost />} />
         <Route path="/search" element={<Search />} />
