@@ -3,7 +3,7 @@ import Modal from 'react-modal';
 import * as Styled from './styled'
 import PostingDetail from '../PostingDetail';
 
-const ModalStyle = {
+export const ModalStyle = {
     overlay: {
       position: 'fixed',
       top: 0,

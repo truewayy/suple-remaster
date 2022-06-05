@@ -29,8 +29,8 @@ export const mainApi = (setData) => {
 // 로그인 API
 export const loginApi = (setData, setLoading, id, pw) => {
     let now = new Date();
-    let after1m = new Date();
-    after1m.setMinutes(now.getMinutes() +100);
+    let after100m = new Date();
+    after100m.setMinutes(now.getMinutes() +100);
     const url = `${rootUrl}/api/login`;
     const data = {
       user_id: id,
@@ -48,11 +48,11 @@ export const loginApi = (setData, setLoading, id, pw) => {
       (r) => {
         cookies.set('accessToken', r.data.Authorization['accessToken'], {
           path: '/',
-          expires: after1m
+          expires: after100m
         });
         cookies.set('refreshToken', r.data.Authorization['refreshToken'], {
           path: '/',
-          expires: after1m
+          expires: after100m
         });
         setData(r.data)
         setLoading(true)

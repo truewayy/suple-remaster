@@ -8,7 +8,7 @@ const WrittenPost = () => {
 
     useEffect(()=>{
         WrittenPostApi(setData);
-    }, [])
+    }, [setData])
     return(
         <Styled.Wrapper>
             <Styled.Container>
