@@ -106,6 +106,27 @@ export const WrittenPostApi = (setData) => {
   )
 }
 
+// 검색 API
+export const SearchApi = (setData, search_value) => {
+  const url = `${rootUrl}/api/search/${search_value}`
+  const options = {
+    method: 'get',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    url,
+  };
+  axios(options).then(
+    (r) => {
+      setData(r.data)
+      console.log(r.data)
+    },
+    (error) => {
+      console.log(error.response);
+    }
+  )
+}
+
 
 // 내 정보 API
 export const myInfoApi = (setData) => {

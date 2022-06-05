@@ -15,13 +15,20 @@ const Main = () => {
         mainApi(setData)
     },[])
     const nowTime = moment().format('YYYY년 M월 D일')
-    const [search, setSearch] = useState();
+    const [search, setSearch] = useState('');
     const [part, setPart] = useState('frontEnd');
     const handler = (e) => {
-        console.log(part)
         setPart(e);        
     }
-    console.log(search)
+    const onKeypress = (e) => {
+        if (e.key === 'Enter') {
+          navigate(`/search`, {
+            state: {
+              search_value: search,
+            },
+          });
+        }
+      };
     const options = [
         {
           name: '프론트엔드',
@@ -40,7 +47,8 @@ const Main = () => {
     return(
         <Styled.Wrapper>
             <Styled.Container>
-                <Styled.SearchInput placeholder="원하는 기술스택, 제목으로 프로젝트를 검색해보세요!" onChange={(e)=>{setSearch(e.target.value)}}/>
+                <Styled.SearchInput placeholder="원하는 기술스택, 제목으로 프로젝트를 검색해보세요!" 
+                onChange={(e)=>{setSearch(e.target.value)}} onKeyPress={onKeypress}/>
                 <Styled.SelectWrapper>
                     <Styled.MainTextBox>
                         <Styled.MainText>분야별로</Styled.MainText>

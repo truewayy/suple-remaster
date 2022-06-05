@@ -11,6 +11,7 @@ import GlobalStyle from "./globalStyles"
 import WriteButton from "./components/WriteButton"
 import WriteForm from "./pages/WriteForm"
 import WrittenPost from "./pages/WrittenPost"
+import Search from "./pages/Search"
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/myinformation" element={<Myinformation />} />
         <Route path="/write" element={<WriteForm />} />
         <Route path="/total" element={<WrittenPost />} />
+        <Route path="/search" element={<Search />} />
       </Routes>
       <WriteButton />
     </BrowserRouter>
