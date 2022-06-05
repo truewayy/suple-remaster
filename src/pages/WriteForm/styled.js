@@ -79,6 +79,12 @@ export const TitleInput = styled.textarea`
         outline: 1px solid #00a0e9;
         border-color: #00a0e9;
     }
+    @media only screen and (max-width: 960px) {
+      font-size: 16px;
+      ::placeholder {
+        font-size: 13px;
+      }
+    }
 `
 
 export const ContentTextArea = styled.textarea`
@@ -92,6 +98,12 @@ export const ContentTextArea = styled.textarea`
     &:focus {
         outline: 1px solid #00a0e9;
         border-color: #00a0e9;
+    }
+    @media only screen and (max-width: 960px) {
+      font-size: 16px;
+      ::placeholder {
+        font-size: 13px;
+      }
     }
 `
 

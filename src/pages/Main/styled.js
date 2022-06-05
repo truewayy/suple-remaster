@@ -21,6 +21,7 @@ export const Container = styled.div`
 
 export const SearchInput = styled.input`
     width: 70%;
+    font-size: 16px;
     border: 2px solid #00a0e9;
     border-radius: 15px;
     padding: 10px 20px;
@@ -36,7 +37,11 @@ export const SearchInput = styled.input`
         border-color: #5D8BF4;
     }
     @media screen and (max-width: 767px) {
-      width: 80%;
+      width: 90%;
+      transform: scale(0.92);
+      ::placeholder {
+        font-size: 13px;
+      }
   }
 `
 
