@@ -193,7 +193,7 @@ const SignUp = () => {
                         </div> : null
                     }
                     <Styled.CheckText>* 수원대 메일 인증 후 서비스 이용 가능합니다</Styled.CheckText>
-                    <Styled.LoginButton disabled={checkID===false || checkEmail===false || isPasswordConfirm===false || checkCode===false ? true : false} onClick={signUp}>회원가입</Styled.LoginButton>
+                    <Styled.LoginButton disabled={checkID===false || checkEmail===false || isPasswordConfirm===false || isPassword===false || checkCode===false ? true : false} onClick={signUp}>회원가입</Styled.LoginButton>
                 </Styled.LoginWrapper>
 
             </Styled.Container>

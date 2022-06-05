@@ -295,6 +295,34 @@ export const myInfoApi = (setData) => {
     )
   }
 
+  // 비밀번호 변경 API
+  export const changePasswordApi = (setData, setLoading, currentPassword, newPassword) => {
+    const url = `${rootUrl}/api/updatePassword`
+    const data = {
+      currentPassword: currentPassword,
+      newPassword: newPassword,
+    }
+    const options = {
+      method: 'post',
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: cookies.get('accessToken')
+      },
+      data: data,
+      url,
+    };
+    axios(options).then(
+      (r) => {
+        setData(r.data);
+        setLoading(true);
+      },
+      (error) => {
+        alert(error.response.data.message)
+      }
+    )
+  }
+
+
   // 글수정 API
   export const updatePostApi = (setData, setLoading, title, stack, content, contact, post_key) => {
     const url = `${rootUrl}/api/update`

@@ -4,6 +4,7 @@ import { deletePostApi, myInfoApi } from '../../API/api'
 import EditPosting from '../../components/EditPosting';
 import PostingDetail from '../../components/PostingDetail';
 import * as Styled from './styled'
+import { useNavigate } from "react-router-dom"
 
 const 모달스타일 = {
     overlay: {
@@ -127,6 +128,7 @@ export const MyPostingList = (props) => {
 
 const Myinformation = () => {
     const [db, setData] = useState({})
+    let navigate = useNavigate();
 
     useEffect(()=> {
         myInfoApi(setData)
@@ -157,7 +159,7 @@ const Myinformation = () => {
                         <Styled.ContentTitle>부가 기능</Styled.ContentTitle>
                         <Styled.RowWrapper>
                         <Styled.DetailWrapper>
-                            <Styled.ContentDetail id='extra'>비밀번호 변경</Styled.ContentDetail>
+                            <Styled.ContentDetail id='extra' onClick={()=>navigate("changePassword")}>비밀번호 변경</Styled.ContentDetail>
                             <Styled.ContentDetail id='extra' style={{marginBottom: "0px"}}>회원 탈퇴</Styled.ContentDetail>
                         </Styled.DetailWrapper>
                         </Styled.RowWrapper>

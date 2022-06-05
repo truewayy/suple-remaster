@@ -30,7 +30,7 @@ const Search = () => {
         <Styled.Wrapper>
             <Styled.Container>
                 <Styled.SearchWrapper>
-                    <Styled.SearchInput placeholder="원하는 기술스택, 제목으로 프로젝트를 검색해보세요!" 
+                    <Styled.SearchInput placeholder="원하는 기술스택, 제목으로 프로젝트를 검색해보세요!" defaultValue={search_value} 
                         onChange={(e)=>{setSearch(e.target.value)}} onKeyPress={onKeypress}/>
                 </Styled.SearchWrapper>
                 <Styled.TitleWrapper>
