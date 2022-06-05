@@ -91,7 +91,7 @@ const WriteForm = () => {
                 </Styled.FlexRow>
                 <Styled.FlexRow>
                     <Styled.FormText id='url'>오픈채팅<br />URL</Styled.FormText>
-                    <Styled.TitleInput rows={1} placeholder='카카오톡 오픈채팅 URL' onChange={(e)=>{setContact(e.target.value)}}/>
+                    <Styled.TitleInput rows={1} placeholder='카카오톡 오픈채팅 URL (https:// ....)' onChange={(e)=>{setContact(e.target.value)}}/>
                 </Styled.FlexRow>
             </Styled.FormContainer>
             <Styled.SubmitButton onClick={onSubmit}>작성하기</Styled.SubmitButton>

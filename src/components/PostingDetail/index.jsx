@@ -1,7 +1,11 @@
 import {React} from "react"
 import * as Styled from './styled'
+import { Cookies } from "react-cookie";
 
 const PostingDetail = (props) => {
+    let cookies = new Cookies()
+    let cookie = cookies.get("accessToken")
+
     return(
         <Styled.Wrapper>
             <Styled.TitleBox>
@@ -17,7 +21,7 @@ const PostingDetail = (props) => {
             </Styled.ContentBox>
             <Styled.StackWrapper>
                 <Styled.SubTitle>오픈채팅 URL</Styled.SubTitle>
-                <Styled.WantingStack id="url">{props.contact}</Styled.WantingStack>
+                <Styled.WantingStack id="url">{!cookie ? "로그인 후 이용해주세요" : <a href={props.contact} target="_blank">{props.contact}</a>}</Styled.WantingStack>
             </Styled.StackWrapper>
             <Styled.Date>작성일자 {props.date}</Styled.Date>
         </Styled.Wrapper>
