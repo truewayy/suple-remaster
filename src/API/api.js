@@ -295,6 +295,37 @@ export const myInfoApi = (setData) => {
     )
   }
 
+  // 비밀번호 찾기 API
+  export const findPasswordApi = (username, email) => {
+    const url = `${rootUrl}/api/findPw`
+    const data = {
+      user_id: username,
+      user_email: email,
+    }
+    const options = {
+      method: 'post',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      data: data,
+      url,
+    };
+    axios(options).then(
+      (r) => {
+        if(r.data.tf===true) {
+          alert("이메일로 임시 비밀번호를 전송하였습니다");
+          window.location.reload();
+        } else {
+          alert("전송 실패");
+        }
+      },
+      (error) => {
+        alert(error.response)
+      }
+    )
+  }
+
+  
   // 비밀번호 변경 API
   export const changePasswordApi = (setData, setLoading, currentPassword, newPassword) => {
     const url = `${rootUrl}/api/updatePassword`
@@ -400,6 +431,7 @@ export const findIdApi = (email) => {
     (r) => {
       if(r.data.tf===true) {
         alert("이메일로 아이디를 전송하였습니다")
+        window.location.reload();
       } else {
         alert("전송 실패");
       }

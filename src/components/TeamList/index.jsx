@@ -1,4 +1,4 @@
-import {React, useState} from 'react'
+import {React, useEffect, useState} from 'react'
 import * as Styled from './styled'
 import Modal from 'react-modal';
 import {ModalStyle} from '../WrittenPostList/index'
@@ -49,13 +49,26 @@ export const Team = (props) => {
   }
   
 const TeamList = (props) => {
-         
+  const [stack, setStack] = useState(['React.js','Vue.js','Anguler.js','jQuery','Node.js','Spring','Django','Ruby','RN','Flutter','Kotlin','Swift'])
+
+  useEffect(()=>{
+    if(props.part==='frontEnd') {
+      setStack(['React.js','Vue.js','Anguler.js','jQuery'])
+    } else if(props.part==='backEnd') {
+      setStack(['Node.js','Spring','Django','Ruby'])
+    } else if(props.part==='app') {
+      setStack(['RN','Flutter','Kotlin','Swift'])
+    } else {
+      setStack(['React.js','Vue.js','Anguler.js','jQuery','Node.js','Spring','Django','Ruby','RN','Flutter','Kotlin','Swift'])
+    }
+  },[props.part])
   return(
-      props.db && props.db.map((v,i)=>{
+      props.db && props.db.filter((v,i)=>(v.stack.split(', ').filter((v,i)=>stack.includes(v))).length!==0).map((v,i)=>{
           return(
             <Team title={v.title} content={v.content} date={v.date_format} key={i} stack={v.stack} contact={v.contact}/>
           )
-      }))
-  }
+      })
+  )
+}
 
 export default TeamList

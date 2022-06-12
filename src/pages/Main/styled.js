@@ -124,13 +124,13 @@ export const NoticeWrapper = styled.div`
   border: 1px solid white;
   border-radius: 15px;
   background-color: #fff;
-  box-shadow: 0px 0px 10px 5px #e0e0e0;
+  box-shadow: 0px 0px 20px 1px #e5e5e5;
   padding: 40px;
   margin-bottom: 30px;
   &:hover {
       cursor: pointer;
       border: 1px solid rgba(102, 186, 255, 0.4);
-      box-shadow: 0px 0px 20px 10px rgba(102, 186, 255, 0.4);
+      box-shadow: 0px 0px 20px 1px rgba(102, 186, 255, 0.4);
   }
   @media screen and (max-width: 1023px) {
     width: 100%;

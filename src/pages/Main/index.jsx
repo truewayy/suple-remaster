@@ -8,6 +8,25 @@ import { mainApi } from "../../API/api";
 import noticePath from '../../img/notice.png'
 // designed by soo kyung
 
+export const options = [
+  {
+    name: '전체',
+    lec: 'all',
+  },
+  {
+    name: '프론트엔드',
+    lec: 'frontEnd',
+  },
+  {
+    name: '백엔드',
+    lec: 'backEnd',
+  },
+  {
+    name: '앱',
+    lec: 'app',
+  },
+];
+
 const Main = () => {
     let navigate = useNavigate();
     const [db, setData] = useState();
@@ -16,10 +35,11 @@ const Main = () => {
     },[])
     const nowTime = moment().format('YYYY년 M월 D일')
     const [search, setSearch] = useState('');
-    const [part, setPart] = useState('frontEnd');
+    const [part, setPart] = useState('all');
     const handler = (e) => {
         setPart(e);        
     }
+
     const onKeypress = (e) => {
         if (e.key === 'Enter') {
           navigate(`/search`, {
@@ -29,20 +49,6 @@ const Main = () => {
           });
         }
       };
-    const options = [
-        {
-          name: '프론트엔드',
-          lec: 'frontEnd',
-        },
-        {
-          name: '백엔드',
-          lec: 'backEnd',
-        },
-        {
-          name: '앱',
-          lec: 'app',
-        },
-      ];
 
     return(
         <Styled.Wrapper>
@@ -56,7 +62,7 @@ const Main = () => {
                         <Styled.MobileGrayText onClick={()=>navigate("/total")}>{'글 목록 >'}</Styled.MobileGrayText>
                         </Styled.MainText>
                     </Styled.MainTextBox>
-                    <Styled.CustomSelect defaultValue={'frontEnd'} onChange={handler}>
+                    <Styled.CustomSelect defaultValue={'all'} onChange={handler}>
                         {options.map((index) => (
                             <Styled.StyledOption key={index.name} value={index.lec}>
                                 {index.name}
@@ -74,7 +80,7 @@ const Main = () => {
                             <Styled.MainText id="bottom">오늘의 공지사항 →</Styled.MainText>
                         </Styled.NoticeContainer>
                     </Styled.NoticeWrapper>
-                    <TeamList db={db}/>
+                    <TeamList db={db} part={part}/>
                 </Styled.ContentWrapper>
             </Styled.Container>
         </Styled.Wrapper>

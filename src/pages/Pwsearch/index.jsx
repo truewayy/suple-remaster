@@ -1,12 +1,16 @@
-import {React} from 'react'
+import {React, useState} from 'react'
 import * as Styled from './styled'
 import { TextField } from '@material-ui/core';
+import { findPasswordApi } from '../../API/api';
 
 const PwSearch = () => {
-//    const navigate = useNavigate();
-/*     const [username, setUsername] = useState();
+    const [username, setUsername] = useState();
     const [email, setEmail] = useState();
- */      
+    
+    const onSubmit = () => {
+        findPasswordApi(username, email);
+    }
+    
     return(
         <Styled.Wrapper>
             <Styled.Container>
@@ -23,7 +27,7 @@ const PwSearch = () => {
                         required 
                         autoComplete="id" 
                         style={{paddingBottom:"20px"}}
-                        /* onChange={(e)=>setUsername(e.target.value)} */ />
+                        onChange={(e)=>setUsername(e.target.value)} />
                     <TextField 
                         type='email'
                         id='email'
@@ -32,8 +36,8 @@ const PwSearch = () => {
                         required
                         autoComplete="current-email" 
                         style={{paddingBottom:"10px"}}
-                        /* onChange={(e)=>setEmail(e.target.value)} */ />
-                    <Styled.SubmitButton>전송</Styled.SubmitButton>
+                        onChange={(e)=>setEmail(e.target.value)} />
+                    <Styled.SubmitButton onClick={onSubmit}>전송</Styled.SubmitButton>
                 </Styled.FindWrapper>
 
             </Styled.Container>
