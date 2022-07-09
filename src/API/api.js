@@ -17,7 +17,6 @@ export const mainApi = (setData) => {
   axios(options).then(
     (r) => {
       setData(r.data)
-      console.log(r.data)
     },
     (error) => {
       console.log(error.response);
@@ -77,7 +76,6 @@ export const loginApi = (setData, setLoading, id, pw) => {
     axios(options).then(
       (r) => {
         setData(r.data)
-        console.log(r.data)
       },
       (error) => {
         console.log(error.response);
@@ -98,7 +96,6 @@ export const WrittenPostApi = (setData) => {
   axios(options).then(
     (r) => {
       setData(r.data)
-      console.log(r.data)
     },
     (error) => {
       console.log(error.response);
@@ -119,7 +116,6 @@ export const SearchApi = (setData, search_value) => {
   axios(options).then(
     (r) => {
       setData(r.data)
-      console.log(r.data)
     },
     (error) => {
       console.log(error.response);
@@ -142,7 +138,6 @@ export const myInfoApi = (setData) => {
   axios(options).then(
     (r) => {
       setData(r.data)
-      console.log(r.data)
     },
     (error) => {
       console.log(error.response);
