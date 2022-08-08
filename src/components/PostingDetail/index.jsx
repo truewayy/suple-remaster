@@ -36,7 +36,7 @@ const PostingDetail = (props) => {
           {!cookie ? (
             "로그인 후 이용해주세요"
           ) : (
-            <a href={props.contact} target="_blank">
+            <a href={props.contact} rel="noreferrer" target="_blank">
               {props.contact}
             </a>
           )}
