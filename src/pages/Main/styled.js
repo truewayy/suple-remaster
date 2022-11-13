@@ -108,36 +108,40 @@ export const PaddingBottom = styled.div`
 `;
 
 export const ContentWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   width: 100%;
   margin-top: 35px;
+  row-gap: 30px;
+  column-gap: 50px;
   @media screen and (max-width: 1023px) {
-    justify-content: ;
+    grid-template-columns: 1fr 1fr 1fr;
   }
   @media screen and (max-width: 767px) {
-    justify-content: center;
+    grid-template-columns: 1fr;
   }
 `;
 
 export const NoticeWrapper = styled.div`
-  width: 420px;
   display: flex;
+  grid-column-start: 1;
+  grid-column-end: 3;
   flex-direction: column;
   border: 1px solid white;
   border-radius: 15px;
   background-color: #fff;
   box-shadow: 0px 0px 20px 1px #e5e5e5;
   padding: 40px;
-  margin-bottom: 30px;
   &:hover {
     cursor: pointer;
     border: 1px solid rgba(102, 186, 255, 0.4);
     box-shadow: 0px 0px 20px 1px rgba(102, 186, 255, 0.4);
   }
   @media screen and (max-width: 1023px) {
-    width: 100%;
+    grid-column-end: 4;
+  }
+  @media screen and (max-width: 767px) {
+    grid-column-end: 1;
   }
 `;
 

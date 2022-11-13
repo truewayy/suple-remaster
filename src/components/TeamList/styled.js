@@ -1,17 +1,11 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  width: 180px;
   border: 1px solid white;
   border-radius: 15px;
-  margin-right: 1px;
-  margin-bottom: 30px;
   background-color: #00a0e9;
   box-shadow: 0px 0px 20px 1px #e5e5e5;
   padding: 20px;
-  @media screen and (max-width: 1023px) {
-    width: 30%;
-  }
   @media screen and (max-width: 767px) {
     width: 100%;
     font-size: 0.8rem;
