@@ -33,7 +33,7 @@ export const LoginButton = styled.button`
     cursor: pointer;
   }
   &:disabled {
-    background-color: #eee;
+    background-color: #bbb;
     cursor: default;
   }
 `;
@@ -53,7 +53,7 @@ export const OverlapButton = styled.button`
     cursor: pointer;
   }
   &:disabled {
-    background-color: #eee;
+    background-color: #bbb;
     cursor: default;
   }
   &#code {
