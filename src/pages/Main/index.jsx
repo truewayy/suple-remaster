@@ -39,7 +39,6 @@ const Main = () => {
   const handler = (e) => {
     setPart(e);
   };
-
   const onKeypress = (e) => {
     if (e.key === "Enter") {
       navigate(`/search`, {

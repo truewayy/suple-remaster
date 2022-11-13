@@ -82,7 +82,7 @@ const TeamList = (props) => {
         "React.js",
         "Vue.js",
         "Anguler.js",
-        "jQuery",
+        "JQuery",
         "Node.js",
         "Spring",
         "Django",
