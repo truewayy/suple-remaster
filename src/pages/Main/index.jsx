@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import * as Styled from "./styled";
 import TeamList from "../../components/TeamList/index";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import "moment/locale/ko";
-import { mainApi } from "../../API/api";
 import noticePath from "../../img/notice.png";
+import { useRecoilState } from "recoil";
+import { partState, userInfoState } from "../../store/state";
+import { Cookies } from "react-cookie";
+import jwt_decode from "jwt-decode";
 // designed by soo kyung
 
 export const options = [
@@ -28,14 +31,12 @@ export const options = [
 ];
 
 const Main = () => {
+  const cookies = new Cookies();
   let navigate = useNavigate();
-  const [db, setData] = useState();
-  useEffect(() => {
-    mainApi(setData);
-  }, []);
   const nowTime = moment().format("YYYY년 M월 D일");
   const [search, setSearch] = useState("");
-  const [part, setPart] = useState("all");
+  const [part, setPart] = useRecoilState(partState);
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
   const handler = (e) => {
     setPart(e);
   };
@@ -48,7 +49,12 @@ const Main = () => {
       });
     }
   };
-
+  useEffect(() => {
+    const token = cookies.get("accessToken");
+    if (!token) return;
+    let parsed = jwt_decode(token);
+    setUserInfo(parsed);
+  }, []);
   return (
     <Styled.Wrapper>
       <Styled.Container>
@@ -72,7 +78,7 @@ const Main = () => {
               </Styled.MobileGrayText>
             </Styled.MainText>
           </Styled.MainTextBox>
-          <Styled.CustomSelect defaultValue={"all"} onChange={handler}>
+          <Styled.CustomSelect value={part} onChange={handler}>
             {options.map((index) => (
               <Styled.StyledOption key={index.name} value={index.lec}>
                 {index.name}
@@ -88,7 +94,8 @@ const Main = () => {
           >
             <Styled.NoticeContainer>
               <Styled.MainText id="notice">
-                오늘은 <Styled.PaddingBottom />
+                {userInfo ? <span>{userInfo.id}님</span> : null} 오늘은{" "}
+                <Styled.PaddingBottom />
                 {nowTime} 입니다.
               </Styled.MainText>
               <Styled.NoticeImg src={noticePath} />
@@ -97,7 +104,7 @@ const Main = () => {
               <Styled.MainText id="bottom">오늘의 공지사항 →</Styled.MainText>
             </Styled.NoticeContainer>
           </Styled.NoticeWrapper>
-          <TeamList db={db} part={part} />
+          <TeamList />
         </Styled.ContentWrapper>
       </Styled.Container>
     </Styled.Wrapper>

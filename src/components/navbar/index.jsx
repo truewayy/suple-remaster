@@ -4,10 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Cookies } from "react-cookie";
-
+import { useSetRecoilState } from "recoil";
+import { userInfoState } from "../../store/state";
 const Nav = () => {
   let navigate = useNavigate();
   let cookies = new Cookies();
+  const setUserInfo = useSetRecoilState(userInfoState);
   const [click, setClick] = useState(false);
   const handleClick = () => {
     setClick(!click);
@@ -15,6 +17,7 @@ const Nav = () => {
   const Logout = () => {
     cookies.remove("accessToken");
     cookies.remove("refreshToken");
+    setUserInfo(undefined);
     navigate("/");
   };
   let cookie = cookies.get("accessToken");

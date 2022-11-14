@@ -5,7 +5,7 @@ const cookies = new Cookies();
 const rootUrl = "http://suple.cafe24app.com";
 
 // 메인 페이지 리스트 API
-export const mainApi = (setData) => {
+export const mainApi = async () => {
   const url = `${rootUrl}/api/main`;
   const options = {
     method: "get",
@@ -14,14 +14,7 @@ export const mainApi = (setData) => {
     },
     url,
   };
-  axios(options).then(
-    (r) => {
-      setData(r.data);
-    },
-    (error) => {
-      console.log(error.response);
-    }
-  );
+  return axios(options);
 };
 
 // 로그인 API

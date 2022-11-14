@@ -3,7 +3,10 @@ import * as Styled from "./styled";
 import Modal from "react-modal";
 import { ModalStyle } from "../WrittenPostList/index";
 import PostingDetail from "../PostingDetail";
-
+import { useQuery } from "react-query";
+import { mainApi } from "../../API/api";
+import { useRecoilValue } from "recoil";
+import { partState } from "../../store/state";
 export const Team = (props) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const stack = props.stack.split(", ");
@@ -47,14 +50,18 @@ export const Team = (props) => {
           content={props.content}
           contact={props.contact}
           stack={props.stack}
-          key={props.key}
         />
       </Modal>
     </>
   );
 };
 
-const TeamList = (props) => {
+const TeamList = () => {
+  const part = useRecoilValue(partState);
+  const { data } = useQuery("main", mainApi, {
+    cacheTime: 1000 * 60 * 5,
+    staleTime: 1000 * 60 * 5,
+  });
   const [stack, setStack] = useState([
     "React.js",
     "Vue.js",
@@ -69,51 +76,52 @@ const TeamList = (props) => {
     "Kotlin",
     "Swift",
   ]);
-
   useEffect(() => {
-    if (props.part === "frontEnd") {
-      setStack(["React.js", "Vue.js", "Anguler.js", "jQuery"]);
-    } else if (props.part === "backEnd") {
-      setStack(["Node.js", "Spring", "Django", "Ruby"]);
-    } else if (props.part === "app") {
-      setStack(["RN", "Flutter", "Kotlin", "Swift"]);
-    } else {
-      setStack([
-        "React.js",
-        "Vue.js",
-        "Anguler.js",
-        "JQuery",
-        "Node.js",
-        "Spring",
-        "Django",
-        "Ruby",
-        "RN",
-        "Flutter",
-        "Kotlin",
-        "Swift",
-      ]);
+    switch (part) {
+      case "all":
+        setStack([
+          "React.js",
+          "Vue.js",
+          "Anguler.js",
+          "JQuery",
+          "Node.js",
+          "Spring",
+          "Django",
+          "Ruby",
+          "RN",
+          "Flutter",
+          "Kotlin",
+          "Swift",
+        ]);
+        break;
+      case "frontEnd":
+        setStack(["React.js", "Vue.js", "Anguler.js", "jQuery"]);
+        break;
+      case "backEnd":
+        setStack(["Node.js", "Spring", "Django", "Ruby"]);
+        break;
+      case "app":
+        setStack(["RN", "Flutter", "Kotlin", "Swift"]);
+        break;
     }
-  }, [props.part]);
-  return (
-    props.db &&
-    props.db
-      .filter(
-        (v, i) =>
-          v.stack.split(", ").filter((v, i) => stack.includes(v)).length !== 0
-      )
-      .map((v, i) => {
-        return (
-          <Team
-            title={v.title}
-            content={v.content}
-            date={v.date_format}
-            key={i}
-            stack={v.stack}
-            contact={v.contact}
-          />
-        );
-      })
-  );
+  }, [part]);
+  return data?.data
+    .filter(
+      (v) =>
+        v.stack.split(", ").filter((v, i) => stack.includes(v)).length !== 0
+    )
+    .map((v, i) => {
+      return (
+        <Team
+          title={v.title}
+          content={v.content}
+          date={v.date_format}
+          key={i}
+          stack={v.stack}
+          contact={v.contact}
+        />
+      );
+    });
 };
 
 export default TeamList;
