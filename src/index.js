@@ -4,10 +4,9 @@ import "./index.css";
 import App from "./App";
 import { CookiesProvider } from "react-cookie";
 import { RecoilRoot } from "recoil";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
-const queryClient = new QueryClient();
-
+export const queryClient = new QueryClient();
 ReactDOM.render(
   <React.StrictMode>
     <CookiesProvider>
@@ -15,7 +14,6 @@ ReactDOM.render(
         <RecoilRoot>
           <App />
         </RecoilRoot>
-        <ReactQueryDevtools />
       </QueryClientProvider>
     </CookiesProvider>
   </React.StrictMode>,

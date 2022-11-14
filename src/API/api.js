@@ -1,7 +1,6 @@
 import axios from "axios";
 import { Cookies } from "react-cookie";
 const cookies = new Cookies();
-
 const rootUrl = "http://suple.cafe24app.com";
 
 // 메인 페이지 리스트 API
@@ -249,14 +248,7 @@ export const submitCodeApi = (setIsCode, setCode, email) => {
 };
 
 // 글쓰기 API
-export const postingApi = (
-  setData,
-  setLoading,
-  title,
-  stack,
-  content,
-  contact
-) => {
+export const postingApi = (title, stack, content, contact) => {
   const url = `${rootUrl}/api/write`;
   const data = {
     title: title,
@@ -273,15 +265,7 @@ export const postingApi = (
     data: data,
     url,
   };
-  axios(options).then(
-    (r) => {
-      setData(r.data);
-      setLoading(true);
-    },
-    (error) => {
-      alert(error.response.data.message);
-    }
-  );
+  return axios(options);
 };
 
 // 비밀번호 찾기 API

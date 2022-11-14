@@ -54,7 +54,6 @@ export const PostContent = (props) => {
           content={props.content}
           contact={props.contact}
           stack={props.stack}
-          key={props.key}
         />
       </Modal>
     </div>

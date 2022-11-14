@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from "react";
+import { React, useState } from "react";
 import { postingApi } from "../../API/api";
 import {
   AppSelect,
@@ -7,7 +7,8 @@ import {
 } from "../../components/StackSelect";
 import * as Styled from "./styled";
 import { useNavigate } from "react-router-dom";
-
+import { useMutation } from "react-query";
+import { queryClient } from "../..";
 export const StackSelect = (props) => {
   return props.field === "0" ? (
     <FrontSelect setStack={props.setStack} stack={props.stack} />
@@ -20,16 +21,22 @@ export const StackSelect = (props) => {
 
 const WriteForm = () => {
   const navigate = useNavigate();
-
+  const addPost = useMutation(
+    () => postingApi(title, stack, content, contact),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("main");
+        alert("작성 완료");
+        navigate("/myinformation");
+      },
+      onError: (err) => alert(err.response.data.message),
+    }
+  );
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [field, setField] = useState(``); //분야 선택
   const [contact, setContact] = useState("");
   const [stack, setStack] = useState([]);
-  const [db, setData] = useState({
-    tf: false,
-  });
-  const [loading, setLoading] = useState(false);
   const fieldChange = (e) => {
     setField(e.target.value);
   };
@@ -47,22 +54,9 @@ const WriteForm = () => {
     } else if (stack.length > 4) {
       alert("스택은 4개까지 선택할 수 있습니다");
     } else {
-      postingApi(
-        setData,
-        setLoading,
-        title,
-        stack.join(", "),
-        content,
-        contact
-      );
+      addPost.mutate();
     }
   };
-  useEffect(() => {
-    if (db.tf === true) {
-      alert("작성 완료");
-      navigate("/myinformation");
-    }
-  }, [loading, db.tf, navigate]);
   return (
     <Styled.FlexForm>
       <Styled.FormContainer>

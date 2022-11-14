@@ -138,6 +138,7 @@ export const MyPostingList = (props) => {
     props.post.map((v, i) => {
       return (
         <MyPosting
+          key={i}
           title={v.title}
           stack={v.stack}
           content={v.content}
