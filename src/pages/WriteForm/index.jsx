@@ -22,7 +22,7 @@ export const StackSelect = (props) => {
 const WriteForm = () => {
   const navigate = useNavigate();
   const addPost = useMutation(
-    () => postingApi(title, stack, content, contact),
+    () => postingApi(title, stack.join(", "), content, contact),
     {
       onSuccess: () => {
         queryClient.invalidateQueries("main");
