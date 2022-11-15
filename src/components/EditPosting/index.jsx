@@ -1,4 +1,6 @@
 import { React, useEffect, useState } from "react";
+import { useMutation } from "react-query";
+import { queryClient } from "../..";
 import { updatePostApi } from "../../API/api";
 import {
   AppSelect,
@@ -23,10 +25,21 @@ const EditPosting = (props) => {
   const [field, setField] = useState(`0`); //분야 선택
   const [contact, setContact] = useState(`${props.contact}`);
   const [stack, setStack] = useState(() => props.stack.split(", "));
-  const [db, setData] = useState({
-    tf: false,
-  });
-  const [loading, setLoading] = useState(false);
+  const editPost = useMutation(
+    () =>
+      updatePostApi(title, stack.join(", "), content, contact, props.post_key),
+    {
+      onSuccess: (res) => {
+        if (res.data.tf === true) {
+          queryClient.invalidateQueries("main");
+          queryClient.invalidateQueries("myInfo");
+        } else {
+          alert("수정 실패");
+        }
+      },
+      onError: (err) => alert(err.response.data.message),
+    }
+  );
   const fieldChange = (e) => {
     setField(e.target.value);
   };
@@ -44,22 +57,10 @@ const EditPosting = (props) => {
     } else if (stack.length > 4) {
       alert("스택은 4개까지 선택할 수 있습니다");
     } else {
-      updatePostApi(
-        setData,
-        setLoading,
-        title,
-        stack.join(", "),
-        content,
-        contact,
-        props.post_key
-      );
+      props.setEditModal(false);
+      editPost.mutate();
     }
   };
-  useEffect(() => {
-    if (db.tf === true) {
-      window.location.reload();
-    }
-  }, [loading, db]);
   return (
     <Styled.FlexForm>
       <Styled.FormContainer>

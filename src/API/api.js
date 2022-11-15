@@ -324,15 +324,7 @@ export const changePasswordApi = (
 };
 
 // 글수정 API
-export const updatePostApi = (
-  setData,
-  setLoading,
-  title,
-  stack,
-  content,
-  contact,
-  post_key
-) => {
+export const updatePostApi = (title, stack, content, contact, post_key) => {
   const url = `${rootUrl}/api/update`;
   const data = {
     title: title,
@@ -350,15 +342,7 @@ export const updatePostApi = (
     data: data,
     url,
   };
-  axios(options).then(
-    (r) => {
-      setData(r.data);
-      setLoading(true);
-    },
-    (error) => {
-      alert(error.response.data.message);
-    }
-  );
+  return axios(options);
 };
 
 // 글삭제 API
