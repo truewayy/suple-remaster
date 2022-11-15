@@ -1,10 +1,12 @@
-import { React, useState, useEffect } from "react";
+import { React, useState } from "react";
 import Modal from "react-modal";
 import { deletePostApi, myInfoApi } from "../../API/api";
 import EditPosting from "../../components/EditPosting";
 import PostingDetail from "../../components/PostingDetail";
 import * as Styled from "./styled";
 import { useNavigate } from "react-router-dom";
+import { useMutation, useQuery } from "react-query";
+import { queryClient } from "../..";
 
 const 모달스타일 = {
   overlay: {
@@ -65,6 +67,17 @@ const ModalStyle = {
 export const MyPosting = (props) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [editModal, setEditModal] = useState(false);
+  const deletePost = useMutation(() => deletePostApi(props.post_key), {
+    onSuccess: (res) => {
+      if (res.data.tf === true) {
+        queryClient.invalidateQueries("main");
+        queryClient.refetchQueries("myInfo");
+      } else {
+        alert("삭제 실패");
+      }
+    },
+    onError: (err) => alert(err.response.data.message),
+  });
   let title = props.title;
   let content = props.content;
   if (title.length >= 11) {
@@ -75,7 +88,7 @@ export const MyPosting = (props) => {
   }
   const onDelete = () => {
     if (window.confirm("게시글을 삭제하시겠습니까?") === true) {
-      deletePostApi(props.post_key);
+      deletePost.mutate();
     } else {
       return;
     }
@@ -152,12 +165,12 @@ export const MyPostingList = (props) => {
 };
 
 const Myinformation = () => {
-  const [db, setData] = useState({});
   let navigate = useNavigate();
-
-  useEffect(() => {
-    myInfoApi(setData);
-  }, []);
+  const { data } = useQuery("myInfo", myInfoApi, {
+    refetchOnWindowFocus: false,
+    cacheTime: 1000 * 60 * 5,
+    staleTime: 1000 * 60 * 5,
+  });
 
   return (
     <Styled.Wrapper>
@@ -173,14 +186,16 @@ const Myinformation = () => {
               </Styled.ContentDetail>
             </Styled.DetailWrapper>
             <Styled.DetailWrapper>
-              <Styled.DetailData>{db.id}</Styled.DetailData>
-              <Styled.DetailData id="bottom">{db.email}</Styled.DetailData>
+              <Styled.DetailData>{data?.data.id}</Styled.DetailData>
+              <Styled.DetailData id="bottom">
+                {data?.data.email}
+              </Styled.DetailData>
             </Styled.DetailWrapper>
           </Styled.RowWrapper>
         </Styled.ContentWrapper>
         <Styled.ContentWrapper>
           <Styled.ContentTitle id="posting">내가 쓴 글</Styled.ContentTitle>
-          <MyPostingList post={db.post} />
+          <MyPostingList post={data?.data.post} />
         </Styled.ContentWrapper>
         <Styled.ContentWrapper>
           <Styled.ContentTitle>부가 기능</Styled.ContentTitle>

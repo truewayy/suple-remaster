@@ -26,6 +26,7 @@ const WriteForm = () => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries("main");
+        queryClient.invalidateQueries("myInfo");
         alert("작성 완료");
         navigate("/myinformation");
       },

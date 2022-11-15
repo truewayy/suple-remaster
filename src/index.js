@@ -14,6 +14,7 @@ ReactDOM.render(
         <RecoilRoot>
           <App />
         </RecoilRoot>
+        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </CookiesProvider>
   </React.StrictMode>,

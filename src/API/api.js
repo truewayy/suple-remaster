@@ -114,7 +114,7 @@ export const SearchApi = (setData, search_value) => {
 };
 
 // 내 정보 API
-export const myInfoApi = (setData) => {
+export const myInfoApi = async () => {
   const url = `${rootUrl}/api/myinformation`;
   const options = {
     method: "get",
@@ -124,14 +124,7 @@ export const myInfoApi = (setData) => {
     },
     url,
   };
-  axios(options).then(
-    (r) => {
-      setData(r.data);
-    },
-    (error) => {
-      console.log(error.response);
-    }
-  );
+  return axios(options);
 };
 
 // 회원가입 API
@@ -383,18 +376,7 @@ export const deletePostApi = (post_key) => {
     data: data,
     url,
   };
-  axios(options).then(
-    (r) => {
-      if (r.data.tf === true) {
-        window.location.reload();
-      } else {
-        alert("삭제 실패");
-      }
-    },
-    (error) => {
-      alert(error.response.data.message);
-    }
-  );
+  return axios(options);
 };
 
 // 아이디찾기 API
