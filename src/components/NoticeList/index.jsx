@@ -2,6 +2,8 @@ import { React, useState } from "react";
 import Modal from "react-modal";
 import * as Styled from "./styled";
 import NoticeDetail from "../NoticeDetail/index";
+import { useQuery } from "react-query";
+import { noticeApi } from "../../API/api";
 
 const ModalStyle = {
   overlay: {
@@ -58,20 +60,22 @@ export const NoticeContent = (props) => {
   );
 };
 
-const NoticeList = (props) => {
-  return (
-    props.db &&
-    props.db.map((v, i) => {
-      return (
-        <NoticeContent
-          title={v.title}
-          date={v.date}
-          content={v.content}
-          key={v.notice_id}
-        />
-      );
-    })
-  );
+const NoticeList = () => {
+  const { data } = useQuery("notice", noticeApi, {
+    refetchOnWindowFocus: false,
+    cacheTime: 1000 * 60 * 20,
+    staleTime: 1000 * 60 * 20,
+  });
+  return data?.data.map((v, i) => {
+    return (
+      <NoticeContent
+        title={v.title}
+        date={v.date}
+        content={v.content}
+        key={v.notice_id}
+      />
+    );
+  });
 };
 
 export default NoticeList;

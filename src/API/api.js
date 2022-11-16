@@ -54,7 +54,7 @@ export const loginApi = (setData, setLoading, id, pw) => {
 };
 
 // 공지사항 API
-export const noticeApi = (setData) => {
+export const noticeApi = async () => {
   const url = `${rootUrl}/api/notice`;
   const options = {
     method: "get",
@@ -63,14 +63,7 @@ export const noticeApi = (setData) => {
     },
     url,
   };
-  axios(options).then(
-    (r) => {
-      setData(r.data);
-    },
-    (error) => {
-      console.log(error.response);
-    }
-  );
+  return axios(options);
 };
 
 // 전체 글 API
