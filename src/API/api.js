@@ -25,12 +25,14 @@ export const loginApi = (id, pw) => {
 };
 
 // 토큰 리프레시 API
-export const refreshTokenApi = async (uID) => {
+export const refreshTokenApi = async (id) => {
+  const token = getToken("refreshToken");
+  console.log(token);
   return instance({
     method: "get",
-    url: `${rootUrl}/api/refresh/${uID}`,
+    url: `${rootUrl}/api/refresh/${id}`,
     headers: {
-      Authorization: getToken("refreshToken"),
+      Authorization: token,
     },
   });
 };

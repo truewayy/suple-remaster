@@ -76,7 +76,7 @@ instance.interceptors.request.use(async (request) => {
     }
     const result = await refreshingToken();
     if (!result) {
-      // redirecting();
+      redirecting();
       alert("로그인 시간이 만료되었습니다. \n다시 로그인 해주세요.");
       return Promise.reject(new Error("Token expired"));
     }
