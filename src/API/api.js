@@ -1,56 +1,41 @@
 import axios from "axios";
 import { Cookies } from "react-cookie";
+import instance from "./apiController";
 const cookies = new Cookies();
 const rootUrl = "http://suple.cafe24app.com";
 
 // 메인 페이지 리스트 API
 export const mainApi = async () => {
-  const url = `${rootUrl}/api/main`;
+  return instance({
+    method: "get",
+    url: `${rootUrl}/api/main`,
+  });
+};
+
+// 로그인 API
+export const loginApi = (id, pw) => {
+  return instance({
+    method: "post",
+    url: `${rootUrl}/api/login`,
+    data: {
+      user_id: id,
+      user_password: pw,
+    },
+  });
+};
+
+// 토큰 리프레시 API
+export const refreshTokenApi = async (uID) => {
+  const url = `${rootUrl}/api/refresh/${uID}`;
   const options = {
     method: "get",
     headers: {
       "Content-Type": "application/json",
+      Authorization: cookies.get("refreshToken"),
     },
     url,
   };
   return axios(options);
-};
-
-// 로그인 API
-export const loginApi = (setData, setLoading, id, pw) => {
-  let now = new Date();
-  let after100m = new Date();
-  after100m.setMinutes(now.getMinutes() + 100);
-  const url = `${rootUrl}/api/login`;
-  const data = {
-    user_id: id,
-    user_password: pw,
-  };
-  const options = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    data: data,
-    url,
-  };
-  axios(options).then(
-    (r) => {
-      cookies.set("accessToken", r.data.Authorization["accessToken"], {
-        path: "/",
-        expires: after100m,
-      });
-      cookies.set("refreshToken", r.data.Authorization["refreshToken"], {
-        path: "/",
-        expires: after100m,
-      });
-      setData(r.data);
-      setLoading(true);
-    },
-    (error) => {
-      alert(error.response.data.message);
-    }
-  );
 };
 
 // 공지사항 API

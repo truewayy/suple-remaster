@@ -1,34 +1,43 @@
-import { React, useState, useEffect } from "react";
+import { React, useState } from "react";
 import * as Styled from "./styled";
 import { TextField, FormControlLabel, Checkbox } from "@material-ui/core";
 import { loginApi } from "../../API/api";
 import { useNavigate } from "react-router-dom";
+import { setToken } from "../../API/apiController";
 
 const Login = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   const [check, setCheck] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  const [db, setData] = useState({
-    success: false,
-  });
   const onLogin = () => {
-    loginApi(setData, setLoading, username, password);
+    loginApi(username, password)
+      .then((r) => {
+        if (r.data.success === true) {
+          setToken("accessToken", r.data.Authorization["accessToken"]);
+          setToken("refreshToken", r.data.Authorization["refreshToken"]);
+          navigate("/");
+        }
+      })
+      .catch((error) => {
+        alert(error.response.data.message);
+      });
   };
   const onKeypress = (e) => {
     if (e.key === "Enter") {
-      loginApi(setData, setLoading, username, password);
+      loginApi(username, password)
+        .then((r) => {
+          if (r.data.success === true) {
+            setToken("accessToken", r.data.Authorization["accessToken"]);
+            setToken("refreshToken", r.data.Authorization["refreshToken"]);
+            navigate("/");
+          }
+        })
+        .catch((error) => {
+          alert(error.response.data.message);
+        });
     }
   };
-  useEffect(() => {
-    if (loading === true) {
-      if (db.success === true) {
-        navigate("/");
-      }
-    }
-  });
 
   return (
     <Styled.Wrapper>
