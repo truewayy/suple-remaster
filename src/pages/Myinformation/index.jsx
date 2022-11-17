@@ -186,16 +186,16 @@ const Myinformation = () => {
               </Styled.ContentDetail>
             </Styled.DetailWrapper>
             <Styled.DetailWrapper>
-              <Styled.DetailData>{data?.data.id}</Styled.DetailData>
+              <Styled.DetailData>{data?.data?.id}</Styled.DetailData>
               <Styled.DetailData id="bottom">
-                {data?.data.email}
+                {data?.data?.email}
               </Styled.DetailData>
             </Styled.DetailWrapper>
           </Styled.RowWrapper>
         </Styled.ContentWrapper>
         <Styled.ContentWrapper>
           <Styled.ContentTitle id="posting">내가 쓴 글</Styled.ContentTitle>
-          <MyPostingList post={data?.data.post} />
+          <MyPostingList post={data?.data?.post} />
         </Styled.ContentWrapper>
         <Styled.ContentWrapper>
           <Styled.ContentTitle>부가 기능</Styled.ContentTitle>

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Cookies } from "react-cookie";
-import instance from "./apiController";
+import instance, { getToken } from "./apiController";
 const cookies = new Cookies();
 const rootUrl = "http://suple.cafe24app.com";
 
@@ -26,83 +26,52 @@ export const loginApi = (id, pw) => {
 
 // 토큰 리프레시 API
 export const refreshTokenApi = async (uID) => {
-  const url = `${rootUrl}/api/refresh/${uID}`;
-  const options = {
+  return instance({
     method: "get",
+    url: `${rootUrl}/api/refresh/${uID}`,
     headers: {
-      "Content-Type": "application/json",
-      Authorization: cookies.get("refreshToken"),
+      Authorization: getToken("refreshToken"),
     },
-    url,
-  };
-  return axios(options);
+  });
 };
 
 // 공지사항 API
 export const noticeApi = async () => {
-  const url = `${rootUrl}/api/notice`;
-  const options = {
+  return instance({
     method: "get",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    url,
-  };
-  return axios(options);
+    url: `${rootUrl}/api/notice`,
+  });
 };
 
 // 전체 글 API
 export const WrittenPostApi = (setData) => {
-  const url = `${rootUrl}/api/total`;
-  const options = {
+  return instance({
     method: "get",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    url,
-  };
-  axios(options).then(
-    (r) => {
-      setData(r.data);
-    },
-    (error) => {
-      console.log(error.response);
-    }
-  );
+    url: `${rootUrl}/api/total`,
+  }).then((res) => {
+    setData(res.data);
+  });
 };
 
 // 검색 API
-export const SearchApi = (setData, search_value) => {
-  const url = `${rootUrl}/api/search/${search_value}`;
-  const options = {
+export const SearchApi = async (setData, search_value) => {
+  return instance({
     method: "get",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    url,
-  };
-  axios(options).then(
-    (r) => {
-      setData(r.data);
-    },
-    (error) => {
-      console.log(error.response);
-    }
-  );
+    url: `${rootUrl}/api/search/${search_value}`,
+  }).then((res) => {
+    setData(res.data);
+  });
 };
 
 // 내 정보 API
 export const myInfoApi = async () => {
-  const url = `${rootUrl}/api/myinformation`;
-  const options = {
+  return instance({
     method: "get",
+    url: `${rootUrl}/api/myinformation`,
     headers: {
-      "Content-Type": "application/json",
-      Authorization: cookies.get("accessToken"),
+      Authorization: getToken("accessToken"),
     },
-    url,
-  };
-  return axios(options);
+  });
 };
 
 // 회원가입 API

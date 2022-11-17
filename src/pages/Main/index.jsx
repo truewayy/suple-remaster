@@ -7,8 +7,8 @@ import "moment/locale/ko";
 import noticePath from "../../img/notice.png";
 import { useRecoilState } from "recoil";
 import { partState, userInfoState } from "../../store/state";
-import { Cookies } from "react-cookie";
 import jwt_decode from "jwt-decode";
+import { getToken } from "../../API/apiController";
 // designed by soo kyung
 
 export const options = [
@@ -31,7 +31,6 @@ export const options = [
 ];
 
 const Main = () => {
-  const cookies = new Cookies();
   let navigate = useNavigate();
   const nowTime = moment().format("YYYY년 M월 D일");
   const [search, setSearch] = useState("");
@@ -50,10 +49,12 @@ const Main = () => {
     }
   };
   useEffect(() => {
-    const token = cookies.get("accessToken");
-    if (!token) return;
-    let parsed = jwt_decode(token);
-    setUserInfo(parsed);
+    const token = getToken("accessToken");
+    if (token === "undefined" || !token) return;
+    else {
+      let parsed = jwt_decode(token);
+      setUserInfo(parsed);
+    }
   }, []);
   return (
     <Styled.Wrapper>

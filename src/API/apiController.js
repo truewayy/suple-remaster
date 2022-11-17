@@ -22,12 +22,12 @@ export const getToken = (token) => {
 const redirecting = () => {
   removeToken("accessToken");
   removeToken("refreshToken");
-  window.location.href = "/signin";
+  window.location.href = "/login";
 };
 
 const isAccessTokenValid = () => {
   const token = getToken("accessToken");
-  if (!token) return false;
+  if (!token || token === "undefined") return false;
   const tokenInfo = jwtDecode(token);
   if (tokenInfo.exp <= Date.now() / 1000) return false;
   return true;
@@ -45,8 +45,9 @@ const refreshingToken = async () => {
     const res = await refreshTokenApi(id);
     if (res.status !== 200) {
       throw new Error(`Response status is ${res.status}`);
+    } else {
+      setToken("accessToken", res.data.accessToken);
     }
-    setToken("accessToken", res.data.accessToken);
   } catch (error) {
     console.error("refreshToken ERROR", error);
     return false;
@@ -75,13 +76,13 @@ instance.interceptors.request.use(async (request) => {
     }
     const result = await refreshingToken();
     if (!result) {
-      redirecting();
+      // redirecting();
       alert("로그인 시간이 만료되었습니다. \n다시 로그인 해주세요.");
       return Promise.reject(new Error("Token expired"));
     }
-    request.headers.Authorization = `Bearer ${getToken("accessToken")}`;
+    request.headers.Authorization = getToken("accessToken");
   } else {
-    request.headers.Authorization = `Bearer ${getToken("accessToken")}`;
+    request.headers.Authorization = getToken("accessToken");
   }
   return request;
 });
