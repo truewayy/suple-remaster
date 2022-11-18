@@ -1,4 +1,4 @@
-import { React, useState, useCallback, useEffect } from "react";
+import { React, useState, useCallback } from "react";
 import * as Styled from "./styled";
 import { TextField } from "@material-ui/core";
 import {
@@ -11,10 +11,6 @@ import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
   const navigate = useNavigate();
-  const [db, setData] = useState({
-    data: "",
-  });
-  const [loading, setLoading] = useState(false);
   const [username, setUsername] = useState("");
   const [nameMessage, setNameMessage] = useState("");
   const [isName, setIsName] = useState(false);
@@ -114,19 +110,21 @@ const SignUp = () => {
     } else if (isPasswordConfirm === false || isPassword === false) {
       alert("비밀번호를 확인해주세요");
     } else {
-      signUpApi(setData, setLoading, username, password, email);
+      signUpApi(username, password, email)
+        .then((res) => {
+          if (res.data.tf === true) {
+            alert("회원가입이 완료되었습니다.");
+            navigate("/login");
+          } else {
+            alert("회원가입에 실패했습니다.");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          alert("회원가입에 실패했습니다.");
+        });
     }
   };
-  useEffect(() => {
-    if (loading) {
-      if (db.data !== null) {
-        alert("회원가입 성공");
-        navigate("/");
-      } else {
-        alert("회원가입 실패");
-      }
-    }
-  });
   const IDcheck = () => {
     checkIdApi(setCheckID, username);
   };

@@ -64,7 +64,8 @@ instance.interceptors.request.use(async (request) => {
     request.url.includes("/findIdx") ||
     request.url.includes("/main") ||
     request.url.includes("/total") ||
-    request.url.includes("/search")
+    request.url.includes("/search") ||
+    request.url.includes("/notice")
   ) {
   } else if (!isAccessTokenValid()) {
     const accessToken = getToken("accessToken");

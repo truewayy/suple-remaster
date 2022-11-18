@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Cookies } from "react-cookie";
 import { useSetRecoilState } from "recoil";
 import { userInfoState } from "../../store/state";
+import { queryClient } from "../..";
+import { getToken } from "../../API/apiController";
 const Nav = () => {
   let navigate = useNavigate();
   let cookies = new Cookies();
@@ -19,8 +21,9 @@ const Nav = () => {
     cookies.remove("refreshToken");
     setUserInfo(undefined);
     navigate("/");
+    queryClient.invalidateQueries("myInfo");
   };
-  let cookie = cookies.get("accessToken");
+  let cookie = getToken("accessToken");
 
   return (
     <Styled.Navbar>

@@ -2,13 +2,13 @@ import axios from "axios";
 import { Cookies } from "react-cookie";
 import instance, { getToken } from "./apiController";
 const cookies = new Cookies();
-const rootUrl = "http://suple.cafe24app.com";
+const rootUrl = "http://suple.cafe24app.com/api";
 
 // 메인 페이지 리스트 API
 export const mainApi = async () => {
   return instance({
     method: "get",
-    url: `${rootUrl}/api/main`,
+    url: `${rootUrl}/main`,
   });
 };
 
@@ -16,7 +16,7 @@ export const mainApi = async () => {
 export const loginApi = (id, pw) => {
   return instance({
     method: "post",
-    url: `${rootUrl}/api/login`,
+    url: `${rootUrl}/login`,
     data: {
       user_id: id,
       user_password: pw,
@@ -27,10 +27,9 @@ export const loginApi = (id, pw) => {
 // 토큰 리프레시 API
 export const refreshTokenApi = async (id) => {
   const token = getToken("refreshToken");
-  console.log(token);
   return instance({
     method: "get",
-    url: `${rootUrl}/api/refresh/${id}`,
+    url: `${rootUrl}/refresh/${id}`,
     headers: {
       Authorization: token,
     },
@@ -41,15 +40,15 @@ export const refreshTokenApi = async (id) => {
 export const noticeApi = async () => {
   return instance({
     method: "get",
-    url: `${rootUrl}/api/notice`,
+    url: `${rootUrl}/notice`,
   });
 };
 
 // 전체 글 API
-export const WrittenPostApi = (setData) => {
+export const WrittenPostApi = async (setData) => {
   return instance({
     method: "get",
-    url: `${rootUrl}/api/total`,
+    url: `${rootUrl}/total`,
   }).then((res) => {
     setData(res.data);
   });
@@ -59,7 +58,7 @@ export const WrittenPostApi = (setData) => {
 export const SearchApi = async (setData, search_value) => {
   return instance({
     method: "get",
-    url: `${rootUrl}/api/search/${search_value}`,
+    url: `${rootUrl}/search/${search_value}`,
   }).then((res) => {
     setData(res.data);
   });
@@ -69,7 +68,7 @@ export const SearchApi = async (setData, search_value) => {
 export const myInfoApi = async () => {
   return instance({
     method: "get",
-    url: `${rootUrl}/api/myinformation`,
+    url: `${rootUrl}/myinformation`,
     headers: {
       Authorization: getToken("accessToken"),
     },
@@ -77,35 +76,21 @@ export const myInfoApi = async () => {
 };
 
 // 회원가입 API
-export const signUpApi = (setData, setLoading, username, password, email) => {
-  const url = `${rootUrl}/api/signup`;
-  const data = {
-    user_id: username,
-    user_password: password,
-    user_email: email,
-  };
-  const options = {
+export const signUpApi = async (username, password, email) => {
+  return instance({
     method: "post",
-    headers: {
-      "Content-type": "application/json",
+    url: `${rootUrl}/signup`,
+    data: {
+      user_id: username,
+      user_password: password,
+      user_email: email,
     },
-    data: data,
-    url,
-  };
-  axios(options).then(
-    (r) => {
-      setData(r.data);
-      setLoading(true);
-    },
-    (error) => {
-      alert(error.response);
-    }
-  );
+  });
 };
 
 // 회원가입 - 아이디중복확인 API
 export const checkIdApi = (setCheckID, username) => {
-  const url = `${rootUrl}/api/signup/checkid`;
+  const url = `${rootUrl}/signup/checkid`;
   const data = {
     user_id: username,
   };
@@ -135,7 +120,7 @@ export const checkIdApi = (setCheckID, username) => {
 
 // 회원가입 - 이메일중복확인 API
 export const checkEmailApi = (setCheckEmail, email) => {
-  const url = `${rootUrl}/api/signup/checkemail`;
+  const url = `${rootUrl}/signup/checkemail`;
   const data = {
     user_email: email,
   };
@@ -165,7 +150,7 @@ export const checkEmailApi = (setCheckEmail, email) => {
 
 // 회원가입 - 이메일 인증코드전송 API
 export const submitCodeApi = (setIsCode, setCode, email) => {
-  const url = `${rootUrl}/api/signup/mail`;
+  const url = `${rootUrl}/signup/mail`;
   const data = {
     mail: email,
   };
@@ -191,28 +176,21 @@ export const submitCodeApi = (setIsCode, setCode, email) => {
 
 // 글쓰기 API
 export const postingApi = (title, stack, content, contact) => {
-  const url = `${rootUrl}/api/write`;
-  const data = {
-    title: title,
-    stack: stack,
-    content: content,
-    contact: contact,
-  };
-  const options = {
+  return instance({
     method: "post",
-    headers: {
-      "Content-type": "application/json",
-      Authorization: cookies.get("accessToken"),
+    url: `${rootUrl}/write`,
+    data: {
+      title: title,
+      stack: stack,
+      content: content,
+      contact: contact,
     },
-    data: data,
-    url,
-  };
-  return axios(options);
+  });
 };
 
 // 비밀번호 찾기 API
 export const findPasswordApi = (username, email) => {
-  const url = `${rootUrl}/api/findPw`;
+  const url = `${rootUrl}/findPw`;
   const data = {
     user_id: username,
     user_email: email,
@@ -247,7 +225,7 @@ export const changePasswordApi = (
   currentPassword,
   newPassword
 ) => {
-  const url = `${rootUrl}/api/updatePassword`;
+  const url = `${rootUrl}/updatePassword`;
   const data = {
     currentPassword: currentPassword,
     newPassword: newPassword,
@@ -274,47 +252,33 @@ export const changePasswordApi = (
 
 // 글수정 API
 export const updatePostApi = (title, stack, content, contact, post_key) => {
-  const url = `${rootUrl}/api/update`;
-  const data = {
-    title: title,
-    stack: stack,
-    content: content,
-    contact: contact,
-    post_key: post_key,
-  };
-  const options = {
+  return instance({
     method: "post",
-    headers: {
-      "Content-type": "application/json",
-      Authorization: cookies.get("accessToken"),
+    url: `${rootUrl}/update`,
+    data: {
+      title: title,
+      stack: stack,
+      content: content,
+      contact: contact,
+      post_key: post_key,
     },
-    data: data,
-    url,
-  };
-  return axios(options);
+  });
 };
 
 // 글삭제 API
 export const deletePostApi = (post_key) => {
-  const url = `${rootUrl}/api/delete`;
-  const data = {
-    post_key: post_key,
-  };
-  const options = {
+  return instance({
     method: "delete",
-    headers: {
-      "Content-type": "application/json",
-      Authorization: cookies.get("accessToken"),
+    url: `${rootUrl}/delete`,
+    data: {
+      post_key: post_key,
     },
-    data: data,
-    url,
-  };
-  return axios(options);
+  });
 };
 
 // 아이디찾기 API
 export const findIdApi = (email) => {
-  const url = `${rootUrl}/api/findIdx`;
+  const url = `${rootUrl}/findIdx`;
   const data = {
     email: email,
   };
@@ -343,7 +307,7 @@ export const findIdApi = (email) => {
 
 // 회원탈퇴 API
 export const quitApi = (setData, setLoading, password) => {
-  const url = `${rootUrl}/api/quit`;
+  const url = `${rootUrl}/quit`;
   const data = {
     password: password,
   };
