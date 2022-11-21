@@ -41,11 +41,7 @@ const Main = () => {
   };
   const onKeypress = (e) => {
     if (e.key === "Enter") {
-      navigate(`/search`, {
-        state: {
-          search_value: search,
-        },
-      });
+      navigate(`/search?q=${search}`);
     }
   };
   useEffect(() => {
@@ -55,7 +51,7 @@ const Main = () => {
       let parsed = jwt_decode(token);
       setUserInfo(parsed);
     }
-  }, []);
+  }, [setUserInfo]);
   return (
     <Styled.Wrapper>
       <Styled.Container>

@@ -53,12 +53,10 @@ export const WrittenPostApi = async () => {
 };
 
 // 검색 API
-export const SearchApi = async (setData, search_value) => {
+export const SearchApi = async (search_value) => {
   return instance({
     method: "get",
     url: `${rootUrl}/search/${search_value}`,
-  }).then((res) => {
-    setData(res.data);
   });
 };
 
