@@ -45,12 +45,10 @@ export const noticeApi = async () => {
 };
 
 // 전체 글 API
-export const WrittenPostApi = async (setData) => {
+export const WrittenPostApi = async () => {
   return instance({
     method: "get",
     url: `${rootUrl}/total`,
-  }).then((res) => {
-    setData(res.data);
   });
 };
 
