@@ -1,26 +1,27 @@
 import { React } from "react";
 import * as Styled from "./styled";
 import { Cookies } from "react-cookie";
-
-const PostingDetail = (props) => {
+import { useSetRecoilState } from "recoil";
+import { modalState } from "../../store/state";
+const PostingDetail = ({ row }) => {
   let cookies = new Cookies();
   let cookie = cookies.get("accessToken");
-
+  const onModal = useSetRecoilState(modalState);
   return (
     <Styled.Wrapper>
       <Styled.TitleBox>
-        <Styled.Title>{props.title}</Styled.Title>
-        <Styled.CloseButton onClick={() => props.setModalIsOpen(false)}>
+        <Styled.Title>{row.title}</Styled.Title>
+        <Styled.CloseButton onClick={() => onModal(false)}>
           X
         </Styled.CloseButton>
       </Styled.TitleBox>
       <Styled.StackWrapper>
         <Styled.SubTitle>모집 기술</Styled.SubTitle>
-        <Styled.WantingStack>{props.stack}</Styled.WantingStack>
+        <Styled.WantingStack>{row.stack}</Styled.WantingStack>
       </Styled.StackWrapper>
       <Styled.ContentBox>
         <Styled.Content>
-          {props.content.split("\n").map((value, index) => {
+          {row.content.split("\n").map((value, index) => {
             return (
               <div key={index}>
                 {value}
@@ -36,13 +37,13 @@ const PostingDetail = (props) => {
           {!cookie ? (
             "로그인 후 이용해주세요"
           ) : (
-            <a href={props.contact} rel="noreferrer" target="_blank">
-              {props.contact}
+            <a href={row.contact} rel="noreferrer" target="_blank">
+              {row.contact}
             </a>
           )}
         </Styled.WantingStack>
       </Styled.StackWrapper>
-      <Styled.Date>작성일자 {props.date}</Styled.Date>
+      <Styled.Date>작성일자 {row.date}</Styled.Date>
     </Styled.Wrapper>
   );
 };

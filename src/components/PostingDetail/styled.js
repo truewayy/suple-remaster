@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  padding: 30px;
   width: 500px;
 `;
 
@@ -39,6 +39,7 @@ export const Content = styled.div`
   font-weight: normal;
   font-size: 15px;
   word-break: break-all;
+  text-align: left;
   @media screen and (max-width: 767px) {
     font-size: 12px;
   }
