@@ -4,7 +4,7 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
-  width: 500px;
+  width: 100%;
 `;
 
 export const Title = styled.div`
@@ -29,9 +29,6 @@ export const ContentBox = styled.div`
   padding: 10px;
   margin-bottom: 30px;
   height: 200px;
-  @media screen and (max-width: 767px) {
-    width: 280px;
-  }
 `;
 
 export const Content = styled.div`

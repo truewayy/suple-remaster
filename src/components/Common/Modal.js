@@ -58,14 +58,14 @@ const ModalContainer = styled.div`
 `;
 
 const ModalBody = styled.div`
+  display: flex;
   position: absolute;
   width: ${(props) => props.width}px;
-  height: ${(props) => props.height}px;
   text-align: left;
   background-color: rgb(255, 255, 255);
   border-radius: 15px;
   animation: ${modalShow} 0.2s;
-  @media screen and (max-width: 550px) {
-    width: 70%;
+  @media screen and (max-width: 767px) {
+    width: 80%;
   }
 `;

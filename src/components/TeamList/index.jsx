@@ -33,7 +33,7 @@ export const Team = ({ row }) => {
           </Styled.TagBox>
         </Styled.TagWrapper>
         <Styled.ContentTitle>{title}</Styled.ContentTitle>
-        <Styled.ContentDate>{row.date}</Styled.ContentDate>
+        <Styled.ContentDate>{row.date_format}</Styled.ContentDate>
       </Styled.Wrapper>
       {modalID === row.post_key ? (
         <Modal id={row.post_key} width={500} height={500}>

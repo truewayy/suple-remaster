@@ -41,7 +41,7 @@ const PostingDetail = ({ row }) => {
           )}
         </Styled.WantingStack>
       </Styled.StackWrapper>
-      <Styled.Date>작성일자 {row.date}</Styled.Date>
+      <Styled.Date>작성일자 {row.date_format}</Styled.Date>
     </Styled.Wrapper>
   );
 };
