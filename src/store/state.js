@@ -12,5 +12,5 @@ export const userInfoState = atom({
 
 export const modalState = atom({
   key: "modalState",
-  default: false,
+  default: "",
 });

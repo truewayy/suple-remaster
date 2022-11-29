@@ -11,9 +11,7 @@ const PostingDetail = ({ row }) => {
     <Styled.Wrapper>
       <Styled.TitleBox>
         <Styled.Title>{row.title}</Styled.Title>
-        <Styled.CloseButton onClick={() => onModal(false)}>
-          X
-        </Styled.CloseButton>
+        <Styled.CloseButton onClick={() => onModal("")}>X</Styled.CloseButton>
       </Styled.TitleBox>
       <Styled.StackWrapper>
         <Styled.SubTitle>모집 기술</Styled.SubTitle>

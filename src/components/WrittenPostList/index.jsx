@@ -7,68 +7,34 @@ import Modal from "../Common/Modal";
 import { useRecoilState } from "recoil";
 import { modalState } from "../../store/state";
 
-export const ModalStyle = {
-  overlay: {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: "rgba(0, 0, 0, 0.4)",
-    zIndex: 100,
-  },
-  content: {
-    display: "flex",
-    justifyContent: "center",
-    background: "#ffffff",
-    overflow: "auto",
-    maxWidth: "500px",
-    minWidth: "300px",
-    maxHeight: "500px",
-    left: "50%",
-    top: "20%",
-    transform: "translate(-50%, 2%)",
-    WebkitOverflowScrolling: "touch",
-    borderRadius: "14px",
-    outline: "none",
-    zIndex: 100,
-  },
-};
-
 export const PostContent = ({ row }) => {
+  const [modalID, setModalID] = useRecoilState(modalState);
+
   return (
-    <Styled.ContentWrapper>
-      <Styled.NoticeTitle>{row.title}</Styled.NoticeTitle>
-      <Styled.NoticeDate>{row.posting_date}</Styled.NoticeDate>
-    </Styled.ContentWrapper>
+    <div>
+      <Styled.ContentWrapper onClick={() => setModalID(row.post_key)}>
+        <Styled.NoticeTitle>{row.title}</Styled.NoticeTitle>
+        <Styled.NoticeDate>{row.posting_date}</Styled.NoticeDate>
+      </Styled.ContentWrapper>
+      {modalID === row.post_key ? (
+        <Modal id={row.post_key} width={500} height={500}>
+          <PostingDetail row={row} />
+        </Modal>
+      ) : null}
+    </div>
   );
 };
 
 const PostList = () => {
-  const [modal, onModal] = useRecoilState(modalState);
   const { data } = useQuery("total", WrittenPostApi, {
     refetchOnWindowFocus: false,
     cacheTime: 1000 * 60 * 5,
     staleTime: 1000 * 60 * 5,
   });
 
-  return (
-    <>
-      {data?.data.map((v) => (
-        <div onClick={() => onModal(true)}>
-          <Styled.ContentWrapper>
-            <Styled.NoticeTitle>{v.title}</Styled.NoticeTitle>
-            <Styled.NoticeDate>{v.posting_date}</Styled.NoticeDate>
-          </Styled.ContentWrapper>
-          {modal ? (
-            <Modal width={500} height={500}>
-              <PostingDetail row={v} />
-            </Modal>
-          ) : null}
-        </div>
-      ))}
-    </>
-  );
+  return data?.data.map((v, i) => {
+    return <PostContent key={v.post_key} row={v} />;
+  });
 };
 
 export default PostList;

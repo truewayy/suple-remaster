@@ -14,7 +14,12 @@ const Modal = ({ id, width, height, children }) => {
     }
   };
   return (
-    <ModalContainer tabIndex={0} onClick={closeModal} onKeyDown={onKeyPress}>
+    <ModalContainer
+      id={id}
+      tabIndex={0}
+      onClick={closeModal}
+      onKeyDown={onKeyPress}
+    >
       <ModalBody
         className="modalBody"
         id={id}
@@ -33,11 +38,9 @@ export default Modal;
 const modalShow = keyframes`
 from {
   opacity: 0;
-  margin-top: -50px;
 }
 to {
   opacity: 1;
-  margin-top: 0;
 }
 `;
 
@@ -47,7 +50,7 @@ const ModalContainer = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.08);
+  background-color: rgba(0, 0, 0, 0.4);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -61,7 +64,7 @@ const ModalBody = styled.div`
   text-align: left;
   background-color: rgb(255, 255, 255);
   border-radius: 15px;
-  animation: ${modalShow} 0.3s;
+  animation: ${modalShow} 0.2s;
   @media screen and (max-width: 550px) {
     width: 70%;
   }
