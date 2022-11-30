@@ -1,5 +1,4 @@
-import { React, useState } from "react";
-import Modal from "react-modal";
+import { React } from "react";
 import { deletePostApi, myInfoApi } from "../../API/api";
 import EditPosting from "../../components/EditPosting";
 import PostingDetail from "../../components/PostingDetail";
@@ -7,67 +6,13 @@ import * as Styled from "./styled";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery } from "react-query";
 import { queryClient } from "../..";
+import { modalState } from "../../store/state";
+import { useRecoilState } from "recoil";
+import Modal from "../../components/Common/Modal";
 
-const 모달스타일 = {
-  overlay: {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: "rgba(0, 0, 0, 0.4)",
-    zIndex: 1100,
-  },
-  content: {
-    display: "flex",
-    justifyContent: "center",
-    background: "#ffffff",
-    overflow: "auto",
-    maxWidth: "580px",
-    minWidth: "350px",
-    maxHeight: "700px",
-    left: "50%",
-    top: "3%",
-    transform: "translate(-50%, 3%)",
-    WebkitOverflowScrolling: "touch",
-    borderRadius: "14px",
-    outline: "none",
-    zIndex: 1100,
-  },
-};
-
-const ModalStyle = {
-  overlay: {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: "rgba(0, 0, 0, 0.4)",
-    zIndex: 100,
-  },
-  content: {
-    display: "flex",
-    justifyContent: "center",
-    background: "#ffffff",
-    overflow: "auto",
-    maxWidth: "500px",
-    minWidth: "300px",
-    maxHeight: "500px",
-    left: "50%",
-    top: "20%",
-    transform: "translate(-50%, 2%)",
-    WebkitOverflowScrolling: "touch",
-    borderRadius: "14px",
-    outline: "none",
-    zIndex: 100,
-  },
-};
-
-export const MyPosting = (props) => {
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [editModal, setEditModal] = useState(false);
-  const deletePost = useMutation(() => deletePostApi(props.post_key), {
+export const MyPosting = ({ row }) => {
+  const [modalID, setModalID] = useRecoilState(modalState);
+  const deletePost = useMutation(() => deletePostApi(row.post_key), {
     onSuccess: (res) => {
       if (res.data.tf === true) {
         queryClient.invalidateQueries("main");
@@ -78,14 +23,14 @@ export const MyPosting = (props) => {
     },
     onError: (err) => alert(err.response.data.message),
   });
-  let title = props.title;
-  let content = props.content;
-  if (title.length >= 11) {
-    title = props.title.substr(0, 11) + "...";
-  }
-  if (content.length >= 30) {
-    content = props.content.substr(0, 30) + "...";
-  }
+
+  const Substr = (str, size) => {
+    if (str.length >= size) {
+      str = str.substr(0, size) + "...";
+    }
+    return str;
+  };
+
   const onDelete = () => {
     if (window.confirm("게시글을 삭제하시겠습니까?") === true) {
       deletePost.mutate();
@@ -97,80 +42,48 @@ export const MyPosting = (props) => {
   return (
     <div>
       <Styled.MyPostingWrapper>
-        <Styled.PostingTitle onClick={() => setModalIsOpen(true)}>
-          {title}
+        <Styled.PostingTitle onClick={() => setModalID(row.post_key + "View")}>
+          {Substr(row.title, 11)}
         </Styled.PostingTitle>
-        <Styled.PostingContent>{content}</Styled.PostingContent>
+        <Styled.PostingContent>{Substr(row.content, 30)}</Styled.PostingContent>
         <Styled.ButtonGroup>
-          <Styled.EditButton onClick={() => setEditModal(true)}>
+          <Styled.EditButton onClick={() => setModalID(row.post_key + "Edit")}>
             수정
           </Styled.EditButton>
           <Styled.DeleteButton onClick={onDelete}>삭제</Styled.DeleteButton>
         </Styled.ButtonGroup>
       </Styled.MyPostingWrapper>
-      <Modal
-        isOpen={modalIsOpen}
-        style={ModalStyle}
-        // 오버레이나 esc를 누르면 핸들러 동작
-        ariaHideApp={false}
-        onRequestClose={() => setModalIsOpen(false)}
-      >
-        <PostingDetail
-          setModalIsOpen={setModalIsOpen}
-          title={props.title}
-          content={props.content}
-          stack={props.stack}
-          contact={props.contact}
-          date={props.date}
-        />
-      </Modal>
-      <Modal
-        isOpen={editModal}
-        style={모달스타일}
-        // 오버레이나 esc를 누르면 핸들러 동작
-        ariaHideApp={false}
-        onRequestClose={() => setEditModal(false)}
-      >
-        <EditPosting
-          setEditModal={setEditModal}
-          title={props.title}
-          content={props.content}
-          stack={props.stack}
-          contact={props.contact}
-          date={props.date}
-          post_key={props.post_key}
-        />
-      </Modal>
+
+      {modalID === row.post_key + "View" ? (
+        <Modal width={500}>
+          <PostingDetail row={row} />
+        </Modal>
+      ) : null}
+      {modalID === row.post_key + "Edit" ? (
+        <Modal id="edit" width={600}>
+          <EditPosting row={row} />
+        </Modal>
+      ) : null}
     </div>
   );
 };
 
-export const MyPostingList = (props) => {
-  return (
-    props.post &&
-    props.post.map((v, i) => {
-      return (
-        <MyPosting
-          key={i}
-          title={v.title}
-          stack={v.stack}
-          content={v.content}
-          contact={v.contact}
-          post_key={v.post_key}
-          date={v.date_format}
-        />
-      );
-    })
-  );
+export const MyPostingList = ({ post }) => {
+  return post.map((v) => {
+    return <MyPosting key={Math.random()} row={v} />;
+  });
 };
 
 const Myinformation = () => {
   let navigate = useNavigate();
-  const { data } = useQuery("myInfo", myInfoApi, {
+  const { data, isLoading } = useQuery("myInfo", myInfoApi, {
     refetchOnWindowFocus: false,
     cacheTime: 1000 * 60 * 5,
     staleTime: 1000 * 60 * 5,
   });
+  if (isLoading)
+    return <Styled.Wrapper id="loading">로딩 중...</Styled.Wrapper>;
+  const user = data.data;
 
   return (
     <Styled.Wrapper>
@@ -186,16 +99,14 @@ const Myinformation = () => {
               </Styled.ContentDetail>
             </Styled.DetailWrapper>
             <Styled.DetailWrapper>
-              <Styled.DetailData>{data?.data?.id}</Styled.DetailData>
-              <Styled.DetailData id="bottom">
-                {data?.data?.email}
-              </Styled.DetailData>
+              <Styled.DetailData>{user.id}</Styled.DetailData>
+              <Styled.DetailData id="bottom">{user.email}</Styled.DetailData>
             </Styled.DetailWrapper>
           </Styled.RowWrapper>
         </Styled.ContentWrapper>
         <Styled.ContentWrapper>
           <Styled.ContentTitle id="posting">내가 쓴 글</Styled.ContentTitle>
-          <MyPostingList post={data?.data?.post} />
+          <MyPostingList post={user.post} />
         </Styled.ContentWrapper>
         <Styled.ContentWrapper>
           <Styled.ContentTitle>부가 기능</Styled.ContentTitle>

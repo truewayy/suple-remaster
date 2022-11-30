@@ -57,7 +57,6 @@ export const ContentTextArea = styled.textarea`
 export const Content = styled.form`
   display: flex;
   width: 85%;
-  align-items: cener;
   &#group {
     margin-bottom: 1.5rem;
   }

@@ -2,7 +2,8 @@ import styled from "styled-components";
 
 export const FlexForm = styled.div`
   display: flex;
-  width: 600px;
+  width: 100%;
+  padding: 0px 30px;
   flex-direction: column;
   align-items: center;
 `;
@@ -55,10 +56,12 @@ export const FlexRow = styled.div`
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  width: 70%;
+  width: 100%;
   margin-bottom: 20px;
   &#stack {
     margin-bottom: 20px;
+    @media only screen and (max-width: 960px) {
+    }
   }
   &#field {
     align-items: center;
@@ -66,12 +69,10 @@ export const FlexRow = styled.div`
     @media only screen and (max-width: 960px) {
       flex-direction: column;
       align-items: flex-start;
-      width: 90%;
     }
   }
   @media only screen and (max-width: 960px) {
     flex-direction: column;
-    width: 90%;
   }
 `;
 
@@ -115,9 +116,6 @@ export const Content = styled.form`
   display: flex;
   width: 85%;
   align-items: flex-start;
-
-  @media only screen and (max-width: 960px) {
-  }
 `;
 
 export const ContentTitle = styled.div`
@@ -225,6 +223,7 @@ export const SubmitButton = styled.div`
   color: white;
   background-color: #00a0e9;
   padding: 10px 15px;
+  margin-bottom: 30px;
   &:hover {
     cursor: pointer;
   }

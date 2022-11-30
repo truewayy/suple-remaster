@@ -67,5 +67,8 @@ const ModalBody = styled.div`
   animation: ${modalShow} 0.2s;
   @media screen and (max-width: 767px) {
     width: 80%;
+    &#edit {
+      width: 90%;
+    }
   }
 `;

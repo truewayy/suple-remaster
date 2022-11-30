@@ -3,6 +3,10 @@ import styled from "styled-components";
 export const Wrapper = styled.div`
   display: flex;
   justify-content: center;
+  &#loading {
+    height: 60vh;
+    align-items: center;
+  }
 `;
 
 export const Container = styled.div`

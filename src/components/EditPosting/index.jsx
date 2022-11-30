@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from "react";
+import { React, useState } from "react";
 import { useMutation } from "react-query";
 import { queryClient } from "../..";
 import { updatePostApi } from "../../API/api";
@@ -19,15 +19,15 @@ export const StackSelect = (props) => {
   ) : null;
 };
 
-const EditPosting = (props) => {
-  const [title, setTitle] = useState(`${props.title}`);
-  const [content, setContent] = useState(`${props.content}`);
+const EditPosting = ({ row }) => {
+  const [title, setTitle] = useState(`${row.title}`);
+  const [content, setContent] = useState(`${row.content}`);
   const [field, setField] = useState(`0`); //분야 선택
-  const [contact, setContact] = useState(`${props.contact}`);
-  const [stack, setStack] = useState(() => props.stack.split(", "));
+  const [contact, setContact] = useState(`${row.contact}`);
+  const [stack, setStack] = useState(() => row.stack.split(", "));
   const editPost = useMutation(
     () =>
-      updatePostApi(title, stack.join(", "), content, contact, props.post_key),
+      updatePostApi(title, stack.join(", "), content, contact, row.post_key),
     {
       onSuccess: (res) => {
         if (res.data.tf === true) {
@@ -57,7 +57,7 @@ const EditPosting = (props) => {
     } else if (stack.length > 4) {
       alert("스택은 4개까지 선택할 수 있습니다");
     } else {
-      props.setEditModal(false);
+      row.setEditModal(false);
       editPost.mutate();
     }
   };
@@ -69,7 +69,7 @@ const EditPosting = (props) => {
           <Styled.FormText id="title">제목</Styled.FormText>
           <Styled.TitleInput
             rows={1}
-            defaultValue={props.title}
+            defaultValue={row.title}
             onChange={(e) => {
               setTitle(e.target.value);
             }}
@@ -129,8 +129,8 @@ const EditPosting = (props) => {
         <Styled.FlexRow>
           <Styled.FormText id="title">내용</Styled.FormText>
           <Styled.ContentTextArea
-            rows={15}
-            defaultValue={props.content}
+            rows={8}
+            defaultValue={row.content}
             onChange={(e) => {
               setContent(e.target.value);
             }}
@@ -144,7 +144,7 @@ const EditPosting = (props) => {
           </Styled.FormText>
           <Styled.TitleInput
             rows={1}
-            defaultValue={props.contact}
+            defaultValue={row.contact}
             onChange={(e) => {
               setContact(e.target.value);
             }}

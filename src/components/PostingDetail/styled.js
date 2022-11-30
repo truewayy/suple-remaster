@@ -5,6 +5,9 @@ export const Wrapper = styled.div`
   flex-direction: column;
   padding: 30px;
   width: 100%;
+  @media screen and (max-width: 767px) {
+    padding: 20px;
+  }
 `;
 
 export const Title = styled.div`
@@ -61,6 +64,7 @@ export const CloseButton = styled.div`
 
 export const StackWrapper = styled.div`
   display: flex;
+  justify-content: space-between;
   align-items: center;
   margin-bottom: 15px;
 `;
@@ -71,18 +75,19 @@ export const WantingStack = styled.div`
   border: 1px solid rgb(224, 224, 224);
   border-radius: 15px;
   padding: 10px;
+  width: 70%;
   @media screen and (max-width: 767px) {
     font-size: 12px;
   }
   &#url {
     font-size: 13px;
+    overflow-x: scroll;
   }
 `;
 
 export const SubTitle = styled.div`
   font-size: 15px;
   font-weight: 500;
-  margin-right: 15px;
   @media screen and (max-width: 767px) {
     font-size: 12px;
   }

@@ -17,7 +17,7 @@ export const PostContent = ({ row }) => {
         <Styled.NoticeDate>{row.posting_date}</Styled.NoticeDate>
       </Styled.ContentWrapper>
       {modalID === row.post_key ? (
-        <Modal id={row.post_key} width={500} height={500}>
+        <Modal id={row.post_key} width={500}>
           <PostingDetail row={row} />
         </Modal>
       ) : null}
