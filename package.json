@@ -38,10 +38,8 @@
     "react-router": "^6.3.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.0",
-    "react-slick": "^0.28.1",
     "recoil": "^0.7.6",
     "redis": "^4.1.0",
-    "slick-carousel": "^1.8.1",
     "styled-components": "^5.3.5",
     "web-vitals": "^2.1.4"
   },

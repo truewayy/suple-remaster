@@ -6,11 +6,11 @@ const Modal = ({ id, width, height, children }) => {
   const [, onModal] = useRecoilState(modalState);
 
   const closeModal = () => {
-    onModal(false);
+    onModal("");
   };
   const onKeyPress = (e) => {
     if (e.key === "Escape") {
-      onModal(false);
+      onModal("");
     }
   };
   return (

@@ -1,5 +1,6 @@
 import { React, useState } from "react";
 import { useMutation } from "react-query";
+import { useSetRecoilState } from "recoil";
 import { queryClient } from "../..";
 import { updatePostApi } from "../../API/api";
 import {
@@ -7,6 +8,7 @@ import {
   BackSelect,
   FrontSelect,
 } from "../../components/StackSelect";
+import { modalState } from "../../store/state";
 import * as Styled from "./styled";
 
 export const StackSelect = (props) => {
@@ -20,6 +22,7 @@ export const StackSelect = (props) => {
 };
 
 const EditPosting = ({ row }) => {
+  const onModal = useSetRecoilState(modalState);
   const [title, setTitle] = useState(`${row.title}`);
   const [content, setContent] = useState(`${row.content}`);
   const [field, setField] = useState(`0`); //분야 선택
@@ -57,7 +60,7 @@ const EditPosting = ({ row }) => {
     } else if (stack.length > 4) {
       alert("스택은 4개까지 선택할 수 있습니다");
     } else {
-      row.setEditModal(false);
+      onModal("");
       editPost.mutate();
     }
   };
