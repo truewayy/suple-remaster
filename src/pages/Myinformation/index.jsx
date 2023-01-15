@@ -8,7 +8,7 @@ import { useMutation, useQuery } from "react-query";
 import { queryClient } from "../..";
 import { modalState } from "../../store/state";
 import { useRecoilState } from "recoil";
-import Modal from "../../components/Common/Modal";
+import Modal from "../../components/Modal";
 
 export const MyPosting = ({ row }) => {
   const [modalID, setModalID] = useRecoilState(modalState);

@@ -1,13 +1,33 @@
+import { React } from "react";
+import { useSetRecoilState } from "recoil";
+import { modalState } from "../store/state";
 import styled from "styled-components";
 
-export const Wrapper = styled.div`
+const NoticeDetail = ({ notice }) => {
+  const setModalID = useSetRecoilState(modalState);
+  return (
+    <Wrapper>
+      <TitleBox>
+        <Title>{notice.title}</Title>
+        <CloseButton onClick={() => setModalID("")}>X</CloseButton>
+      </TitleBox>
+      <ContentBox>
+        <Content>{notice.content}</Content>
+      </ContentBox>
+      <Date>작성일자 {notice.date}</Date>
+    </Wrapper>
+  );
+};
+export default NoticeDetail;
+
+const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
   width: 100%;
 `;
 
-export const Title = styled.div`
+const Title = styled.div`
   font-size: 25px;
   font-weight: bold;
   margin-bottom: 30px;
@@ -16,13 +36,13 @@ export const Title = styled.div`
   }
 `;
 
-export const TitleBox = styled.div`
+const TitleBox = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 `;
 
-export const ContentBox = styled.div`
+const ContentBox = styled.div`
   display: flex;
   border: 1px solid rgb(224, 224, 224);
   border-radius: 15px;
@@ -31,7 +51,7 @@ export const ContentBox = styled.div`
   height: 200px;
 `;
 
-export const Content = styled.div`
+const Content = styled.div`
   font-weight: normal;
   font-size: 15px;
   @media screen and (max-width: 767px) {
@@ -39,7 +59,7 @@ export const Content = styled.div`
   }
 `;
 
-export const Date = styled.div`
+const Date = styled.div`
   font-size: 13px;
   font-weight: 300;
   @media screen and (max-width: 767px) {
@@ -47,7 +67,7 @@ export const Date = styled.div`
   }
 `;
 
-export const CloseButton = styled.div`
+const CloseButton = styled.div`
   font-weight: bold;
   font-size: 25px;
   &:hover {

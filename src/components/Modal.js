@@ -1,6 +1,6 @@
 import React from "react";
 import { useRecoilState } from "recoil";
-import { modalState } from "../../store/state";
+import { modalState } from "../store/state";
 import styled, { keyframes } from "styled-components";
 const Modal = ({ id, width, height, children }) => {
   const [, onModal] = useRecoilState(modalState);

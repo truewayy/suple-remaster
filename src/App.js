@@ -6,7 +6,7 @@ import PwSearch from "./pages/PwSearch/index";
 import SignUp from "./pages/SignUp/index";
 import Notice from "./pages/Notice/index";
 import Myinformation from "./pages/Myinformation";
-import Nav from "./components/navbar/index";
+import Nav from "./components/Nav";
 import GlobalStyle from "./globalStyles";
 import WriteButton from "./components/WriteButton";
 import WriteForm from "./pages/WriteForm";

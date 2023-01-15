@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import * as Styled from "./styled";
-import TeamList from "../../components/TeamList/index";
+import TeamList from "../../components/TeamList";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import "moment/locale/ko";

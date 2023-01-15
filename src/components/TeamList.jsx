@@ -1,11 +1,12 @@
 import { React, useEffect, useState } from "react";
-import * as Styled from "./styled";
-import PostingDetail from "../PostingDetail";
+import styled from "styled-components";
+import PostingDetail from "./PostingDetail";
 import { useQuery } from "react-query";
-import { mainApi } from "../../API/api";
+import { mainApi } from "../API/api";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { modalState, partState } from "../../store/state";
-import Modal from "../Common/Modal";
+import { modalState, partState } from "../store/state";
+import Modal from "./Modal";
+
 export const Team = ({ row }) => {
   const [modalID, setModalID] = useRecoilState(modalState);
   const stack = row.stack.split(", ");
@@ -15,26 +16,26 @@ export const Team = ({ row }) => {
   }
   return (
     <>
-      <Styled.Wrapper onClick={() => setModalID(row.post_key)}>
-        <Styled.TagWrapper>
-          <Styled.TagBox>
+      <Wrapper onClick={() => setModalID(row.post_key)}>
+        <TagWrapper>
+          <TagBox>
             {stack
               .filter((v, i) => !(i % 2))
               .map((v, i) => (
-                <Styled.ContentTag key={i}>#{v}</Styled.ContentTag>
+                <ContentTag key={i}>#{v}</ContentTag>
               ))}
-          </Styled.TagBox>
-          <Styled.TagBox id="bottom">
+          </TagBox>
+          <TagBox id="bottom">
             {stack
               .filter((v, i) => i % 2)
               .map((v, i) => (
-                <Styled.ContentTag key={i}>#{v}</Styled.ContentTag>
+                <ContentTag key={i}>#{v}</ContentTag>
               ))}
-          </Styled.TagBox>
-        </Styled.TagWrapper>
-        <Styled.ContentTitle>{title}</Styled.ContentTitle>
-        <Styled.ContentDate>{row.date_format}</Styled.ContentDate>
-      </Styled.Wrapper>
+          </TagBox>
+        </TagWrapper>
+        <ContentTitle>{title}</ContentTitle>
+        <ContentDate>{row.date_format}</ContentDate>
+      </Wrapper>
       {modalID === row.post_key ? (
         <Modal id={row.post_key} width={500} height={500}>
           <PostingDetail row={row} />
@@ -91,6 +92,22 @@ const TeamList = () => {
       case "app":
         setStack(["RN", "Flutter", "Kotlin", "Swift"]);
         break;
+      default:
+        setStack([
+          "React.js",
+          "Vue.js",
+          "Anguler.js",
+          "JQuery",
+          "Node.js",
+          "Spring",
+          "Django",
+          "Ruby",
+          "RN",
+          "Flutter",
+          "Kotlin",
+          "Swift",
+        ]);
+        break;
     }
   }, [part]);
   return data?.data
@@ -104,3 +121,62 @@ const TeamList = () => {
 };
 
 export default TeamList;
+
+const Wrapper = styled.div`
+  border: 1px solid white;
+  border-radius: 15px;
+  background-color: #00a0e9;
+  box-shadow: 0px 0px 20px 1px #e5e5e5;
+  padding: 20px;
+  @media screen and (max-width: 767px) {
+    width: 100%;
+    font-size: 0.8rem;
+  }
+
+  &:hover {
+    cursor: pointer;
+    border: 1px solid rgba(102, 186, 255, 0.4);
+    box-shadow: 0px 0px 20px 3px rgba(102, 186, 255, 0.4);
+  }
+`;
+
+const TagWrapper = styled.div`
+  height: 70px;
+`;
+
+const TagBox = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+  &#bottom {
+    margin-bottom: 20px;
+  }
+`;
+
+const ContentTag = styled.div`
+  color: #00a0e9;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 5px;
+  background-color: #fff;
+  border-radius: 10px;
+  margin-right: 5px;
+`;
+
+const ContentTitle = styled.div`
+  color: #fff;
+  font-weight: 500;
+  letter-spacing: 1px;
+  height: 65px;
+  @media screen and (max-width: 767px) {
+    height: 30px;
+  }
+`;
+
+const ContentDate = styled.div`
+  font-size: 11px;
+  font-weight: normal;
+  text-align: right;
+  color: #fff;
+`;
