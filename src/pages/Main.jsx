@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import SelectUnstyled, {
   selectUnstyledClasses,
@@ -9,13 +9,121 @@ import OptionUnstyled, {
 import PopperUnstyled from "@mui/base/PopperUnstyled";
 import { styled as styled_mui } from "@mui/system";
 import PropTypes from "prop-types";
+import TeamList from "../components/TeamList";
+import { useNavigate } from "react-router-dom";
+import moment from "moment";
+import "moment/locale/ko";
+import { useRecoilState } from "recoil";
+import { partState, userInfoState } from "../store/state";
+import jwt_decode from "jwt-decode";
+import { getToken } from "../API/apiController";
+// designed by soo kyung
 
-export const Wrapper = styled.div`
+export const options = [
+  {
+    name: "전체",
+    lec: "all",
+  },
+  {
+    name: "프론트엔드",
+    lec: "frontEnd",
+  },
+  {
+    name: "백엔드",
+    lec: "backEnd",
+  },
+  {
+    name: "앱",
+    lec: "app",
+  },
+];
+
+const Main = () => {
+  let navigate = useNavigate();
+  const nowTime = moment().format("YYYY년 M월 D일");
+  const [search, setSearch] = useState("");
+  const [part, setPart] = useRecoilState(partState);
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+  const handler = (e) => {
+    setPart(e);
+  };
+  const onKeypress = (e) => {
+    if (e.key === "Enter") {
+      navigate(`/search?q=${search}`);
+    }
+  };
+  useEffect(() => {
+    const token = getToken("accessToken");
+    if (token === "undefined" || !token) return;
+    else {
+      let parsed = jwt_decode(token);
+      setUserInfo(parsed);
+    }
+  }, [setUserInfo]);
+  return (
+    <Wrapper>
+      <Container>
+        <SearchInput
+          placeholder="원하는 기술스택, 제목으로 프로젝트를 검색해보세요!"
+          onChange={(e) => {
+            setSearch(e.target.value);
+          }}
+          onKeyPress={onKeypress}
+        />
+        <SelectWrapper>
+          <MainTextBox>
+            <MainText>분야별로</MainText>
+            <MainText>
+              나의 팀원들을 찾아보세요!{" "}
+              <GrayText onClick={() => navigate("/total")}>
+                {"글 목록 >"}
+              </GrayText>
+              <MobileGrayText onClick={() => navigate("/total")}>
+                {"글 목록 >"}
+              </MobileGrayText>
+            </MainText>
+          </MainTextBox>
+          <CustomSelect value={part} onChange={handler}>
+            {options.map((index) => (
+              <StyledOption key={index.name} value={index.lec}>
+                {index.name}
+              </StyledOption>
+            ))}
+          </CustomSelect>
+        </SelectWrapper>
+        <ContentWrapper>
+          <NoticeWrapper
+            onClick={() => {
+              navigate("notice");
+            }}
+          >
+            <NoticeContainer>
+              <MainText id="notice">
+                {userInfo ? <span>{userInfo.id}님</span> : null} 오늘은{" "}
+                <PaddingBottom />
+                {nowTime} 입니다.
+              </MainText>
+              <NoticeImg src="/notice.png" />
+            </NoticeContainer>
+            <NoticeContainer id="bottom">
+              <MainText id="bottom">오늘의 공지사항 →</MainText>
+            </NoticeContainer>
+          </NoticeWrapper>
+          <TeamList />
+        </ContentWrapper>
+      </Container>
+    </Wrapper>
+  );
+};
+
+export default Main;
+
+const Wrapper = styled.div`
   display: flex;
   justify-content: center;
 `;
 
-export const Container = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -23,7 +131,7 @@ export const Container = styled.div`
   margin: 20px;
 `;
 
-export const SearchInput = styled.input`
+const SearchInput = styled.input`
   width: 70%;
   font-size: 16px;
   border: 2px solid #00a0e9;
@@ -49,7 +157,7 @@ export const SearchInput = styled.input`
   }
 `;
 
-export const SelectWrapper = styled.div`
+const SelectWrapper = styled.div`
   display: flex;
   width: 100%;
   flex-direction: row;
@@ -57,12 +165,12 @@ export const SelectWrapper = styled.div`
   justify-content: space-between;
 `;
 
-export const MainTextBox = styled.div`
+const MainTextBox = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
-export const MainText = styled.div`
+const MainText = styled.div`
   font-weight: 500;
   font-size: 22px;
   padding-bottom: 5px;
@@ -81,7 +189,7 @@ export const MainText = styled.div`
   }
 `;
 
-export const GrayText = styled.span`
+const GrayText = styled.span`
   font-size: 14px;
   text-decoration: underline;
   color: #a3a3a3;
@@ -91,7 +199,7 @@ export const GrayText = styled.span`
   }
 `;
 
-export const MobileGrayText = styled.div`
+const MobileGrayText = styled.div`
   display: none;
   @media screen and (max-width: 767px) {
     display: block;
@@ -103,11 +211,11 @@ export const MobileGrayText = styled.div`
   }
 `;
 
-export const PaddingBottom = styled.div`
+const PaddingBottom = styled.div`
   padding-bottom: 5px;
 `;
 
-export const ContentWrapper = styled.div`
+const ContentWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   width: 100%;
@@ -122,7 +230,7 @@ export const ContentWrapper = styled.div`
   }
 `;
 
-export const NoticeWrapper = styled.div`
+const NoticeWrapper = styled.div`
   display: flex;
   grid-column-start: 1;
   grid-column-end: 3;
@@ -145,7 +253,7 @@ export const NoticeWrapper = styled.div`
   }
 `;
 
-export const NoticeContainer = styled.div`
+const NoticeContainer = styled.div`
   display: flex;
   justify-content: space-between;
   &#bottom {
@@ -153,7 +261,7 @@ export const NoticeContainer = styled.div`
   }
 `;
 
-export const NoticeImg = styled.img`
+const NoticeImg = styled.img`
   width: 70px; 
   height: 70px; 
   transform: rotate(10deg);
@@ -248,7 +356,7 @@ const StyledListbox = styled_mui("ul")(
     `
 );
 
-export const StyledOption = styled_mui(OptionUnstyled)(
+const StyledOption = styled_mui(OptionUnstyled)(
   ({ theme }) => `
     list-style: none;
     padding: 8px;
@@ -297,7 +405,7 @@ const StyledPopper = styled_mui(PopperUnstyled)`
     z-index: 1;
   `;
 
-export const CustomSelect = React.forwardRef(function CustomSelect(props, ref) {
+const CustomSelect = React.forwardRef(function CustomSelect(props, ref) {
   const components = {
     Root: StyledButton,
     Listbox: StyledListbox,

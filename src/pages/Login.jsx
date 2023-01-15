@@ -1,9 +1,9 @@
+import styled from "styled-components";
 import { React, useState } from "react";
-import * as Styled from "./styled";
 import { TextField, FormControlLabel, Checkbox } from "@material-ui/core";
-import { loginApi } from "../../API/api";
+import { loginApi } from "../API/api";
 import { useNavigate } from "react-router-dom";
-import { setToken } from "../../API/apiController";
+import { setToken } from "../API/apiController";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -40,10 +40,10 @@ const Login = () => {
   };
 
   return (
-    <Styled.Wrapper>
-      <Styled.Container>
-        <Styled.LoginWrapper>
-          <Styled.LoginText>로그인</Styled.LoginText>
+    <Wrapper>
+      <Container>
+        <LoginWrapper>
+          <LoginText>로그인</LoginText>
 
           <TextField
             type="id"
@@ -66,7 +66,7 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
             onKeyPress={onKeypress}
           />
-          <Styled.LoginWrapper id="search">
+          <LoginWrapper id="search">
             <FormControlLabel
               control={
                 <Checkbox
@@ -77,21 +77,88 @@ const Login = () => {
               }
               label="로그인 유지"
             />
-          </Styled.LoginWrapper>
-          <Styled.LoginButton onClick={onLogin}>로그인</Styled.LoginButton>
-        </Styled.LoginWrapper>
+          </LoginWrapper>
+          <LoginButton onClick={onLogin}>로그인</LoginButton>
+        </LoginWrapper>
 
-        <Styled.LoginWrapper id="search">
-          <Styled.SearchLink id="id" onClick={() => navigate("/idsearch")}>
+        <LoginWrapper id="search">
+          <SearchLink id="id" onClick={() => navigate("/idsearch")}>
             아이디 찾기
-          </Styled.SearchLink>
-          <Styled.SearchLink id="pw" onClick={() => navigate("/pwsearch")}>
+          </SearchLink>
+          <SearchLink id="pw" onClick={() => navigate("/pwsearch")}>
             비밀번호 찾기
-          </Styled.SearchLink>
-        </Styled.LoginWrapper>
-      </Styled.Container>
-    </Styled.Wrapper>
+          </SearchLink>
+        </LoginWrapper>
+      </Container>
+    </Wrapper>
   );
 };
 
 export default Login;
+
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const Container = styled.div`
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  border: 1px solid rgb(224, 224, 224);
+  border-radius: 15px;
+  width: 360px;
+`;
+
+const LoginButton = styled.button`
+  border: none;
+  border-radius: 10px;
+  background-color: #00a0e9;
+  color: white;
+  font-weight: bold;
+  font-size: 15px;
+  padding: 10px 20px;
+  margin-top: 10px;
+  margin-bottom: 30px;
+  width: 100%;
+  &:hover {
+    background-color: #5d8bf4;
+    cursor: pointer;
+  }
+`;
+
+const LoginWrapper = styled.div`
+  width: 300px;
+  &#search {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+`;
+
+const SearchLink = styled.div`
+  color: rgb(190, 190, 190);
+  font-weight: bold;
+  padding-bottom: 20px;
+  &:hover {
+    color: #00a0e9;
+    cursor: pointer;
+  }
+  &#id {
+    padding-left: 30px;
+  }
+  &#pw {
+    padding-right: 30px;
+  }
+`;
+
+const LoginText = styled.div`
+  width: 100%;
+  text-align: left;
+  padding-top: 30px;
+  padding-bottom: 20px;
+  font-weight: bold;
+  font-size: 1.3rem;
+`;

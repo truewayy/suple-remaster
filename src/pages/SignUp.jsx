@@ -1,12 +1,12 @@
+import styled from "styled-components";
 import { React, useState, useCallback } from "react";
-import * as Styled from "./styled";
 import { TextField } from "@material-ui/core";
 import {
   checkEmailApi,
   checkIdApi,
   signUpApi,
   submitCodeApi,
-} from "../../API/api";
+} from "../API/api";
 import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
@@ -152,29 +152,29 @@ const SignUp = () => {
   };
 
   return (
-    <Styled.Wrapper>
-      <Styled.Container>
-        <Styled.LoginWrapper>
-          <Styled.SignupText>회원가입</Styled.SignupText>
+    <Wrapper>
+      <Container>
+        <LoginWrapper>
+          <SignupText>회원가입</SignupText>
 
           <TextField
             label="아이디"
             style={{ paddingBottom: "10px", width: "80%" }}
             onChange={onChangeName}
           />
-          <Styled.OverlapButton
+          <OverlapButton
             onClick={IDcheck}
             disabled={isName === false ? true : false}
           >
             중복확인
-          </Styled.OverlapButton>
+          </OverlapButton>
           {username.length > 0 && (
-            <Styled.CheckText
+            <CheckText
               id="check"
               className={`message ${isName ? "success" : "error"}`}
             >
               {nameMessage}
-            </Styled.CheckText>
+            </CheckText>
           )}
           <TextField
             fullWidth
@@ -184,12 +184,12 @@ const SignUp = () => {
             onChange={onChangePassword}
           />
           {password.length > 0 && (
-            <Styled.CheckText
+            <CheckText
               id="check"
               className={`message ${isPassword ? "success" : "error"}`}
             >
               {passwordMessage}
-            </Styled.CheckText>
+            </CheckText>
           )}
           <TextField
             fullWidth
@@ -199,31 +199,31 @@ const SignUp = () => {
             onChange={onChangePasswordConfirm}
           />
           {passwordConfirm.length > 0 && (
-            <Styled.CheckText
+            <CheckText
               id="check"
               className={`message ${isPasswordConfirm ? "success" : "error"}`}
             >
               {passwordConfirmMessage}
-            </Styled.CheckText>
+            </CheckText>
           )}
           <TextField
             label="학교 이메일 (@suwon.ac.kr)"
             style={{ paddingBottom: "10px", width: "80%" }}
             onChange={onChangeEmail}
           />
-          <Styled.OverlapButton
+          <OverlapButton
             onClick={EmailCheck}
             disabled={isEmail === false ? true : false}
           >
             중복확인
-          </Styled.OverlapButton>
+          </OverlapButton>
           {email.length > 0 && (
-            <Styled.CheckText
+            <CheckText
               id="email"
               className={`message ${isEmail ? "success" : "error"}`}
             >
               {emailMessage}
-            </Styled.CheckText>
+            </CheckText>
           )}
           {checkEmail === true ? (
             <div style={{ width: "100%", marginTop: "20px" }}>
@@ -232,26 +232,24 @@ const SignUp = () => {
                 style={{ paddingBottom: "10px", width: "60%" }}
                 onChange={(e) => setInputCode(e.target.value)}
               />
-              <Styled.OverlapButton
+              <OverlapButton
                 id="code"
                 disabled={checkEmail === false ? true : false}
                 onClick={SubmitCode}
               >
                 코드전송
-              </Styled.OverlapButton>
-              <Styled.OverlapButton
+              </OverlapButton>
+              <OverlapButton
                 id="code"
                 disabled={isCode === false ? true : false}
                 onClick={CheckCode}
               >
                 코드확인
-              </Styled.OverlapButton>
+              </OverlapButton>
             </div>
           ) : null}
-          <Styled.CheckText>
-            * 수원대 메일 인증 후 서비스 이용 가능합니다
-          </Styled.CheckText>
-          <Styled.LoginButton
+          <CheckText>* 수원대 메일 인증 후 서비스 이용 가능합니다</CheckText>
+          <LoginButton
             disabled={
               checkID === false ||
               checkEmail === false ||
@@ -264,11 +262,105 @@ const SignUp = () => {
             onClick={signUp}
           >
             회원가입
-          </Styled.LoginButton>
-        </Styled.LoginWrapper>
-      </Styled.Container>
-    </Styled.Wrapper>
+          </LoginButton>
+        </LoginWrapper>
+      </Container>
+    </Wrapper>
   );
 };
 
 export default SignUp;
+
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const Container = styled.div`
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 15px;
+  border: 1px solid rgb(224, 224, 224);
+  border-radius: 15px;
+  width: 400px;
+`;
+
+const LoginButton = styled.button`
+  border: none;
+  border-radius: 10px;
+  background-color: #00a0e9;
+  color: white;
+  font-weight: bold;
+  font-size: 15px;
+  padding: 10px 20px;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  width: 100%;
+  &:hover {
+    background-color: #5d8bf4;
+    cursor: pointer;
+  }
+  &:disabled {
+    background-color: #bbb;
+    cursor: default;
+  }
+`;
+
+const OverlapButton = styled.button`
+  border: none;
+  border-radius: 20px;
+  background-color: #00a0e9;
+  color: white;
+  font-size: 13px;
+  font-weight: bold;
+  padding: 5px 5px;
+  width: 20%;
+  margin-top: 15px;
+  &:hover {
+    background-color: #5d8bf4;
+    cursor: pointer;
+  }
+  &:disabled {
+    background-color: #bbb;
+    cursor: default;
+  }
+  &#code {
+    width: 18%;
+    margin-right: 5px;
+  }
+`;
+
+const CheckText = styled.div`
+  padding-top: 20px;
+  font-size: 0.7rem;
+  float: left;
+  &#check {
+    padding-top: 0px;
+    padding-bottom: 10px;
+  }
+  &#email {
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
+`;
+
+const LoginWrapper = styled.div`
+  width: 330px;
+  &#search {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+`;
+
+const SignupText = styled.div`
+  width: 100%;
+  text-align: left;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  font-weight: bold;
+  font-size: 1.3rem;
+`;
