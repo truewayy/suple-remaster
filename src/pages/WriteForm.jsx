@@ -1,19 +1,10 @@
 import styled from "styled-components";
 import { React, useState } from "react";
 import User from "../api/User";
-import { AppSelect, BackSelect, FrontSelect } from "../components/StackSelect";
+import StackSelect from "components/StackSelect";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "react-query";
 import { queryClient } from "..";
-export const StackSelect = (props) => {
-  return props.field === "0" ? (
-    <FrontSelect setStack={props.setStack} stack={props.stack} />
-  ) : props.field === "1" ? (
-    <BackSelect setStack={props.setStack} stack={props.stack} />
-  ) : props.field === "2" ? (
-    <AppSelect setStack={props.setStack} stack={props.stack} />
-  ) : null;
-};
 
 const WriteForm = () => {
   const { writePost } = User();
@@ -76,33 +67,27 @@ const WriteForm = () => {
             onChange={fieldChange}
             style={{ float: "left" }}
           >
-            <FormLabel>
-              <FormCheckLeft
-                name="field"
-                id="frontend"
-                value="0"
-                defaultChecked={field === "0"}
-              />
-              <FormCheckText>프론트엔드</FormCheckText>
-            </FormLabel>
-            <FormLabel>
-              <FormCheckLeft
-                name="field"
-                id="backend"
-                value="1"
-                defaultChecked={field === "1"}
-              />
-              <FormCheckText>백엔드</FormCheckText>
-            </FormLabel>
-            <FormLabel>
-              <FormCheckLeft
-                name="field"
-                id="app"
-                value="2"
-                defaultChecked={field === "2"}
-              />
-              <FormCheckText>앱</FormCheckText>
-            </FormLabel>
+            <FormCheckLeft
+              name="field"
+              id="frontend"
+              value="0"
+              defaultChecked={field === "0"}
+            />
+            <FormCheckText htmlFor="frontend">프론트엔드</FormCheckText>
+            <FormCheckLeft
+              name="field"
+              id="backend"
+              value="1"
+              defaultChecked={field === "1"}
+            />
+            <FormCheckText htmlFor="backend">백엔드</FormCheckText>
+            <FormCheckLeft
+              name="field"
+              id="app"
+              value="2"
+              defaultChecked={field === "2"}
+            />
+            <FormCheckText htmlFor="app">앱</FormCheckText>
           </Content>
         </FlexRow>
         <FlexRow id="stack">
@@ -112,13 +97,7 @@ const WriteForm = () => {
               <br />
             </FormText>
           ) : null}
-          {field === "0" ? (
-            <StackSelect field={field} stack={stack} setStack={setStack} />
-          ) : field === "1" ? (
-            <StackSelect field={field} stack={stack} setStack={setStack} />
-          ) : (
-            <StackSelect field={field} stack={stack} setStack={setStack} />
-          )}
+          <StackSelect stack={stack} setStack={setStack} field={field} />
         </FlexRow>
         <FlexRow>
           <FormText id="title">내용</FormText>
@@ -269,8 +248,7 @@ const Content = styled.form`
 `;
 
 // 라디오버튼 스타일
-const FormLabel = styled.label``;
-const FormCheckText = styled.span`
+const FormCheckText = styled.label`
   font-size: 16px;
   padding: 4px 15px;
   background: none;
@@ -288,16 +266,6 @@ const FormCheckText = styled.span`
 `;
 
 const FormCheckLeft = styled.input.attrs({ type: "radio" })`
-  &:checked {
-    display: inline-block;
-    background: none;
-    padding: 0px 10px;
-    text-align: center;
-    height: 35px;
-    line-height: 33px;
-    font-weight: 500;
-    display: none;
-  }
   &#app {
     &:checked + ${FormCheckText} {
       color: #7800ff;

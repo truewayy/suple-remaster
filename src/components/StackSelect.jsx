@@ -1,13 +1,19 @@
 import { React } from "react";
 import styled from "styled-components";
 
-export const FrontSelect = (props) => {
+const stacks = {
+  0: ["React.js", "Vue.js", "Anguler.js", "JQuery"],
+  1: ["Node.js", "Spring", "Django", "Ruby"],
+  2: ["RN", "Flutter", "Kotlin", "Swift"],
+};
+
+const StackSelect = ({ field, stack, setStack }) => {
+  const techStack = stacks[field];
   const handleFront = (checked, value) => {
     if (checked) {
-      props.setStack([...props.stack, value]);
+      setStack([...stack, value]);
     } else {
-      // 체크 해제
-      props.setStack(props.stack.filter((front) => front !== value));
+      setStack(stack.filter((item) => item !== value));
     }
   };
 
@@ -16,155 +22,22 @@ export const FrontSelect = (props) => {
       id="content"
       onChange={(e) => handleFront(e.target.checked, e.target.value)}
     >
-      <FormLabel>
-        <FormCheckMulti
-          name="front"
-          id="normal"
-          value="React.js"
-          defaultChecked={props.stack.includes("React.js") === true}
-        />
-        <FormCheckText>React.js</FormCheckText>
-      </FormLabel>
-      <FormLabel>
-        <FormCheckMulti
-          name="front"
-          id="normal"
-          value="Vue.js"
-          defaultChecked={props.stack.includes("Vue.js") === true}
-        />
-        <FormCheckText>Vue.js</FormCheckText>
-      </FormLabel>
-      <FormLabel>
-        <FormCheckMulti
-          name="front"
-          id="normal"
-          value="Anguler.js"
-          defaultChecked={props.stack.includes("Anguler.js") === true}
-        />
-        <FormCheckText>Anguler.js</FormCheckText>
-      </FormLabel>
-      <FormLabel>
-        <FormCheckMulti
-          name="front"
-          id="normal"
-          value="JQuery"
-          defaultChecked={props.stack.includes("JQuery") === true}
-        />
-        <FormCheckText>JQuery</FormCheckText>
-      </FormLabel>
+      {techStack?.map((tech) => (
+        <FormLabel key={tech}>
+          <FormCheckMulti
+            name={field}
+            id="normal"
+            value={tech}
+            defaultChecked={stack.includes(tech)}
+          />
+          <FormCheckText>{tech}</FormCheckText>
+        </FormLabel>
+      ))}
     </Content>
   );
 };
 
-export const BackSelect = (props) => {
-  const handleBack = (checked, value) => {
-    if (checked) {
-      props.setStack([...props.stack, value]);
-    } else {
-      // 체크 해제
-      props.setStack(props.stack.filter((back) => back !== value));
-    }
-  };
-
-  return (
-    <Content
-      id="content"
-      onChange={(e) => handleBack(e.target.checked, e.target.value)}
-    >
-      <FormLabel>
-        <FormCheckMulti
-          name="back"
-          id="normal"
-          value="Node.js"
-          defaultChecked={props.stack.includes("Node.js") === true}
-        />
-        <FormCheckText>Node.js</FormCheckText>
-      </FormLabel>
-      <FormLabel>
-        <FormCheckMulti
-          name="back"
-          id="normal"
-          value="Spring"
-          defaultChecked={props.stack.includes("Spring") === true}
-        />
-        <FormCheckText>Spring</FormCheckText>
-      </FormLabel>
-      <FormLabel>
-        <FormCheckMulti
-          name="back"
-          id="normal"
-          value="Django"
-          defaultChecked={props.stack.includes("Django") === true}
-        />
-        <FormCheckText>Django</FormCheckText>
-      </FormLabel>
-      <FormLabel>
-        <FormCheckMulti
-          name="back"
-          id="normal"
-          value="Ruby"
-          defaultChecked={props.stack.includes("Ruby") === true}
-        />
-        <FormCheckText>Ruby</FormCheckText>
-      </FormLabel>
-    </Content>
-  );
-};
-
-export const AppSelect = (props) => {
-  const handleApp = (checked, value) => {
-    if (checked) {
-      props.setStack([...props.stack, value]);
-    } else {
-      // 체크 해제
-      props.setStack(props.stack.filter((app) => app !== value));
-    }
-  };
-
-  return (
-    <Content
-      id="content"
-      onChange={(e) => handleApp(e.target.checked, e.target.value)}
-    >
-      <FormLabel>
-        <FormCheckMulti
-          name="app"
-          id="normal"
-          value="RN"
-          defaultChecked={props.stack.includes("RN") === true}
-        />
-        <FormCheckText>RN</FormCheckText>
-      </FormLabel>
-      <FormLabel>
-        <FormCheckMulti
-          name="app"
-          id="normal"
-          value="Flutter"
-          defaultChecked={props.stack.includes("Flutter") === true}
-        />
-        <FormCheckText>Flutter</FormCheckText>
-      </FormLabel>
-      <FormLabel>
-        <FormCheckMulti
-          name="app"
-          id="normal"
-          value="Kotlin"
-          defaultChecked={props.stack.includes("Kotlin") === true}
-        />
-        <FormCheckText>Kotlin</FormCheckText>
-      </FormLabel>
-      <FormLabel>
-        <FormCheckMulti
-          name="app"
-          id="normal"
-          value="Swift"
-          defaultChecked={props.stack.includes("Swift") === true}
-        />
-        <FormCheckText>Swift</FormCheckText>
-      </FormLabel>
-    </Content>
-  );
-};
+export default StackSelect;
 
 const Content = styled.form`
   display: flex;

@@ -4,18 +4,8 @@ import { useMutation } from "react-query";
 import { useSetRecoilState } from "recoil";
 import { queryClient } from "..";
 import User from "../api/User";
-import { AppSelect, BackSelect, FrontSelect } from "./StackSelect";
+import StackSelect from "./StackSelect";
 import { modalState } from "../store/state";
-
-export const StackSelect = ({ stack, setStack, field }) => {
-  return field === "0" ? (
-    <FrontSelect setStack={setStack} stack={stack} />
-  ) : field === "1" ? (
-    <BackSelect setStack={setStack} stack={stack} />
-  ) : field === "2" ? (
-    <AppSelect setStack={setStack} stack={stack} />
-  ) : null;
-};
 
 const EditPosting = ({ row }) => {
   const { updatePost } = User();
@@ -117,13 +107,7 @@ const EditPosting = ({ row }) => {
               <CustomBr />
             </FormText>
           ) : null}
-          {field === "0" ? (
-            <StackSelect field={field} stack={stack} setStack={setStack} />
-          ) : field === "1" ? (
-            <StackSelect field={field} stack={stack} setStack={setStack} />
-          ) : (
-            <StackSelect field={field} stack={stack} setStack={setStack} />
-          )}
+          <StackSelect stack={stack} setStack={setStack} field={field} />
         </FlexRow>
         <FlexRow>
           <FormText id="title">내용</FormText>
