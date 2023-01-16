@@ -1,4 +1,3 @@
-import axios from "axios";
 import instance, { getToken } from "./apiController";
 const rootUrl = "http://suple.cafe24app.com/api";
 
@@ -28,21 +27,15 @@ const Auth = () => {
   };
 
   // 회원가입 - 아이디중복확인 API
-  const checkId = (setCheckID, username) => {
-    const url = `${rootUrl}/signup/checkid`;
-    const data = {
-      user_id: username,
-    };
-    const options = {
+  const checkId = async (setCheckID, username) => {
+    return instance({
       method: "post",
-      headers: {
-        "Content-type": "application/json",
+      url: `${rootUrl}/signup/checkid`,
+      data: {
+        user_id: username,
       },
-      url,
-      data: data,
-    };
-    axios(options).then(
-      (r) => {
+    })
+      .then((r) => {
         if (r.data.tf === true) {
           alert("사용가능한 ID입니다");
           setCheckID(true);
@@ -50,29 +43,22 @@ const Auth = () => {
           alert("다른 아이디를 입력해주세요");
           setCheckID(false);
         }
-      },
-      (error) => {
+      })
+      .catch((error) => {
         console.log(error.response);
-      }
-    );
+      });
   };
 
   // 회원가입 - 이메일중복확인 API
-  const checkEmail = (setCheckEmail, email) => {
-    const url = `${rootUrl}/signup/checkemail`;
-    const data = {
-      user_email: email,
-    };
-    const options = {
+  const checkEmail = async (setCheckEmail, email) => {
+    return instance({
       method: "post",
-      headers: {
-        "Content-type": "application/json",
+      url: `${rootUrl}/signup/checkemail`,
+      data: {
+        user_email: email,
       },
-      url,
-      data: data,
-    };
-    axios(options).then(
-      (r) => {
+    })
+      .then((r) => {
         if (r.data.tf === true) {
           alert("사용가능한 이메일입니다");
           setCheckEmail(true);
@@ -80,149 +66,116 @@ const Auth = () => {
           alert("다른 이메일을 입력해주세요");
           setCheckEmail(false);
         }
-      },
-      (error) => {
+      })
+      .catch((error) => {
         console.log(error.response);
-      }
-    );
+      });
   };
 
   // 회원가입 - 이메일 인증코드전송 API
-  const sendCode = (setIsCode, setCode, email) => {
-    const url = `${rootUrl}/signup/mail`;
-    const data = {
-      mail: email,
-    };
-    const options = {
+  const sendCode = async (setIsCode, setCode, email) => {
+    return instance({
       method: "post",
-      headers: {
-        "Content-type": "application/json",
+      url: `${rootUrl}/signup/mail`,
+      data: {
+        mail: email,
       },
-      url,
-      data: data,
-    };
-    axios(options).then(
-      (r) => {
+    })
+      .then((r) => {
         setIsCode(true);
         setCode(r.data);
         alert("이메일로 인증코드가 발급되었습니다");
-      },
-      (error) => {
+      })
+      .catch((error) => {
         console.log(error.response);
-      }
-    );
+      });
   };
 
   // 아이디찾기 API
-  const findId = (email) => {
-    const url = `${rootUrl}/findIdx`;
-    const data = {
-      email: email,
-    };
-    const options = {
+  const findId = async (email) => {
+    return instance({
       method: "post",
-      headers: {
-        "Content-type": "application/json",
+      url: `${rootUrl}/findIdx`,
+      data: {
+        email: email,
       },
-      data: data,
-      url,
-    };
-    axios(options).then(
-      (r) => {
+    })
+      .then((r) => {
         if (r.data.tf === true) {
           alert("이메일로 아이디를 전송하였습니다");
           window.location.reload();
         } else {
           alert("전송 실패");
         }
-      },
-      (error) => {
+      })
+      .catch((error) => {
         alert(error.response.data.message);
-      }
-    );
+      });
   };
 
   // 비밀번호 찾기 API
-  const findPw = (username, email) => {
-    const url = `${rootUrl}/findPw`;
-    const data = {
-      user_id: username,
-      user_email: email,
-    };
-    const options = {
+  const findPw = async (username, email) => {
+    return instance({
       method: "post",
-      headers: {
-        "Content-type": "application/json",
+      url: `${rootUrl}/findPw`,
+      data: {
+        user_id: username,
+        user_email: email,
       },
-      data: data,
-      url,
-    };
-    axios(options).then(
-      (r) => {
+    })
+      .then((r) => {
         if (r.data.tf === true) {
           alert("이메일로 임시 비밀번호를 전송하였습니다");
           window.location.reload();
         } else {
           alert("전송 실패");
         }
-      },
-      (error) => {
+      })
+      .catch((error) => {
         alert(error.response);
-      }
-    );
+      });
   };
 
   // 비밀번호 변경 API
-  const changePw = (setData, setLoading, currentPassword, newPassword) => {
-    const url = `${rootUrl}/updatePassword`;
-    const data = {
-      currentPassword: currentPassword,
-      newPassword: newPassword,
-    };
-    const options = {
+  const changePw = async (
+    setData,
+    setLoading,
+    currentPassword,
+    newPassword
+  ) => {
+    return instance({
       method: "post",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: getToken("accessToken"),
+      url: `${rootUrl}/updatePassword`,
+      data: {
+        currentPassword: currentPassword,
+        newPassword: newPassword,
       },
-      data: data,
-      url,
-    };
-    axios(options).then(
-      (r) => {
+    })
+      .then((r) => {
         setData(r.data);
         setLoading(true);
-      },
-      (error) => {
+      })
+      .catch((error) => {
         alert(error.response.data.message);
-      }
-    );
+      });
   };
 
   // 회원탈퇴 API
-  const exit = (setData, setLoading, password) => {
-    const url = `${rootUrl}/quit`;
-    const data = {
-      password: password,
-    };
-    const options = {
+  const exit = async (setData, setLoading, password) => {
+    return instance({
       method: "delete",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: getToken("accessToken"),
+      url: `${rootUrl}/quit`,
+      data: {
+        password: password,
       },
-      data: data,
-      url,
-    };
-    axios(options).then(
-      (r) => {
+    })
+      .then((r) => {
         setData(r.data);
         setLoading(true);
-      },
-      (error) => {
+      })
+      .catch((error) => {
         alert(error.response.data.message);
-      }
-    );
+      });
   };
 
   // 토큰 리프레시 API

@@ -7,13 +7,13 @@ import User from "../api/User";
 import { AppSelect, BackSelect, FrontSelect } from "./StackSelect";
 import { modalState } from "../store/state";
 
-export const StackSelect = (props) => {
-  return props.field === "0" ? (
-    <FrontSelect setStack={props.setStack} stack={props.stack} />
-  ) : props.field === "1" ? (
-    <BackSelect setStack={props.setStack} stack={props.stack} />
-  ) : props.field === "2" ? (
-    <AppSelect setStack={props.setStack} stack={props.stack} />
+export const StackSelect = ({ stack, setStack, field }) => {
+  return field === "0" ? (
+    <FrontSelect setStack={setStack} stack={stack} />
+  ) : field === "1" ? (
+    <BackSelect setStack={setStack} stack={stack} />
+  ) : field === "2" ? (
+    <AppSelect setStack={setStack} stack={stack} />
   ) : null;
 };
 
