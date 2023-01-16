@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { React, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { TextField } from "@material-ui/core";
-import Auth from "../apis/Auth";
+import Auth from "../api/Auth";
 import { Cookies } from "react-cookie";
 
 const Exit = () => {

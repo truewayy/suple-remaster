@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { React } from "react";
-import User from "../apis/User";
+import User from "../api/User";
 import EditPosting from "../components/EditPosting";
 import PostingDetail from "../components/PostingDetail";
 import { useNavigate } from "react-router-dom";

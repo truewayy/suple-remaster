@@ -3,7 +3,7 @@ import { React, useState } from "react";
 import { useMutation } from "react-query";
 import { useSetRecoilState } from "recoil";
 import { queryClient } from "..";
-import User from "../apis/User";
+import User from "../api/User";
 import { AppSelect, BackSelect, FrontSelect } from "./StackSelect";
 import { modalState } from "../store/state";
 

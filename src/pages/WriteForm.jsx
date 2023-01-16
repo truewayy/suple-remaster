@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { React, useState } from "react";
-import User from "../apis/User";
+import User from "../api/User";
 import { AppSelect, BackSelect, FrontSelect } from "../components/StackSelect";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "react-query";

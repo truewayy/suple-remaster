@@ -4,7 +4,7 @@ import NoticeDetail from "./NoticeDetail";
 import { useQuery } from "react-query";
 import { useRecoilState } from "recoil";
 import { modalState } from "../store/state";
-import Etc from "../apis/Etc";
+import Etc from "../api/Etc";
 import Modal from "./Modal";
 
 export const NoticeContent = ({ notice }) => {

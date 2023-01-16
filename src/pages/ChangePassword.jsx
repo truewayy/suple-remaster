@@ -2,7 +2,7 @@ import { React, useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { TextField } from "@material-ui/core";
-import Auth from "../apis/Auth";
+import Auth from "../api/Auth";
 import { Cookies } from "react-cookie";
 
 const PwChange = () => {

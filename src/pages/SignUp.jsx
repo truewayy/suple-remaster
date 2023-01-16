@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { React, useState, useCallback } from "react";
 import { TextField } from "@material-ui/core";
-import Auth from "../apis/Auth";
+import Auth from "../api/Auth";
 import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {

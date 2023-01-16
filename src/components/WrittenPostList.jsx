@@ -1,7 +1,7 @@
 import { React } from "react";
 import styled from "styled-components";
 import PostingDetail from "./PostingDetail";
-import Post from "../apis/Post";
+import Post from "../api/Post";
 import { useQuery } from "react-query";
 import Modal from "./Modal";
 import { useRecoilState } from "recoil";

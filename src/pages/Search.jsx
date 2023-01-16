@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import Post from "../apis/Post";
+import Post from "../api/Post";
 import { PostContent } from "../components/WrittenPostList";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useQuery } from "react-query";

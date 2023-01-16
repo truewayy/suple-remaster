@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { React, useState } from "react";
 import { TextField } from "@material-ui/core";
-import Auth from "../apis/Auth";
+import Auth from "../api/Auth";
 
 const IdSearch = () => {
   const { findId } = Auth();

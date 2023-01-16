@@ -2,7 +2,7 @@ import { React, useEffect, useState } from "react";
 import styled from "styled-components";
 import PostingDetail from "./PostingDetail";
 import { useQuery } from "react-query";
-import Post from "../apis/Post";
+import Post from "../api/Post";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { modalState, partState } from "../store/state";
 import Modal from "./Modal";

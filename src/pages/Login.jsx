@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { React, useState } from "react";
 import { TextField, FormControlLabel, Checkbox } from "@material-ui/core";
-import Auth from "../apis/Auth";
+import Auth from "../api/Auth";
 import { useNavigate } from "react-router-dom";
-import { setToken } from "../apis/apiController";
+import { setToken } from "../api/apiController";
 
 const Login = () => {
   const { login } = Auth();
