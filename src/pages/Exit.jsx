@@ -2,10 +2,11 @@ import styled from "styled-components";
 import { React, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { TextField } from "@material-ui/core";
-import { quitApi } from "../API/api";
+import Auth from "../apis/Auth";
 import { Cookies } from "react-cookie";
 
 const Exit = () => {
+  const { exit } = Auth();
   const navigate = useNavigate();
   const cookies = new Cookies();
 
@@ -18,7 +19,7 @@ const Exit = () => {
     if (
       window.confirm("회원 탈퇴하시겠습니까?\n(복구가 불가능합니다)") === true
     ) {
-      quitApi(setData, setLoading, password);
+      exit(setData, setLoading, password);
     }
   };
   useEffect(() => {

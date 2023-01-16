@@ -7,7 +7,7 @@ import { Cookies } from "react-cookie";
 import { useSetRecoilState } from "recoil";
 import { userInfoState } from "../store/state";
 import { queryClient } from "..";
-import { getToken } from "../API/apiController";
+import { getToken } from "../apis/apiController";
 
 const Nav = () => {
   let navigate = useNavigate();

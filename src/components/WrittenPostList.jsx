@@ -1,7 +1,7 @@
 import { React } from "react";
 import styled from "styled-components";
 import PostingDetail from "./PostingDetail";
-import { WrittenPostApi } from "../API/api";
+import Post from "../apis/Post";
 import { useQuery } from "react-query";
 import Modal from "./Modal";
 import { useRecoilState } from "recoil";
@@ -26,7 +26,8 @@ export const PostContent = ({ row }) => {
 };
 
 const PostList = () => {
-  const { data } = useQuery("total", WrittenPostApi, {
+  const { total } = Post();
+  const { data } = useQuery("total", total, {
     refetchOnWindowFocus: false,
     cacheTime: 1000 * 60 * 5,
     staleTime: 1000 * 60 * 5,

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { React, useState } from "react";
-import { postingApi } from "../API/api";
+import User from "../apis/User";
 import { AppSelect, BackSelect, FrontSelect } from "../components/StackSelect";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "react-query";
@@ -16,9 +16,10 @@ export const StackSelect = (props) => {
 };
 
 const WriteForm = () => {
+  const { writePost } = User();
   const navigate = useNavigate();
   const addPost = useMutation(
-    () => postingApi(title, stack.join(", "), content, contact),
+    () => writePost(title, stack.join(", "), content, contact),
     {
       onSuccess: () => {
         queryClient.invalidateQueries("main");

@@ -2,7 +2,7 @@ import { React, useEffect, useState } from "react";
 import styled from "styled-components";
 import PostingDetail from "./PostingDetail";
 import { useQuery } from "react-query";
-import { mainApi } from "../API/api";
+import Post from "../apis/Post";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { modalState, partState } from "../store/state";
 import Modal from "./Modal";
@@ -46,8 +46,9 @@ export const Team = ({ row }) => {
 };
 
 const TeamList = () => {
+  const { main } = Post();
   const part = useRecoilValue(partState);
-  const { data } = useQuery("main", mainApi, {
+  const { data } = useQuery("main", main, {
     cacheTime: 1000 * 60 * 5,
     staleTime: 1000 * 60 * 5,
   });

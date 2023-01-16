@@ -1,24 +1,21 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import { SearchApi } from "../API/api";
+import Post from "../apis/Post";
 import { PostContent } from "../components/WrittenPostList";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useQuery } from "react-query";
 
 const Search = () => {
+  const { search: get } = Post();
   let navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [searchParams] = useSearchParams();
   const searchValue = searchParams.get("q");
-  const { data } = useQuery(
-    ["search", searchValue],
-    () => SearchApi(searchValue),
-    {
-      enabled: !!searchValue,
-      cacheTime: 1000 * 60 * 5,
-      staleTime: 1000 * 60 * 5,
-    }
-  );
+  const { data } = useQuery(["search", searchValue], () => get(searchValue), {
+    enabled: !!searchValue,
+    cacheTime: 1000 * 60 * 5,
+    staleTime: 1000 * 60 * 5,
+  });
 
   const onKeypress = (e) => {
     if (e.key === "Enter") {

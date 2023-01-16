@@ -2,10 +2,11 @@ import { React, useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { TextField } from "@material-ui/core";
-import { changePasswordApi } from "../API/api";
+import Auth from "../apis/Auth";
 import { Cookies } from "react-cookie";
 
 const PwChange = () => {
+  const { changePw } = Auth();
   const navigate = useNavigate();
   const cookies = new Cookies();
   const [db, setData] = useState({
@@ -55,7 +56,7 @@ const PwChange = () => {
     [password]
   );
   const onSubmit = () => {
-    changePasswordApi(setData, setLoading, currentPassword, password);
+    changePw(setData, setLoading, currentPassword, password);
   };
   useEffect(() => {
     if (db.tf === true) {

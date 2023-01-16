@@ -1,12 +1,13 @@
 import styled from "styled-components";
 import { React, useState } from "react";
 import { TextField } from "@material-ui/core";
-import { findIdApi } from "../API/api";
+import Auth from "../apis/Auth";
 
 const IdSearch = () => {
+  const { findId } = Auth();
   const [email, setEmail] = useState();
   const onSubmit = () => {
-    findIdApi(email);
+    findId(email);
   };
 
   return (

@@ -16,7 +16,7 @@ import "moment/locale/ko";
 import { useRecoilState } from "recoil";
 import { partState, userInfoState } from "../store/state";
 import jwt_decode from "jwt-decode";
-import { getToken } from "../API/apiController";
+import { getToken } from "../apis/apiController";
 // designed by soo kyung
 
 export const options = [

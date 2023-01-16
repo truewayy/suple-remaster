@@ -1,15 +1,11 @@
 import styled from "styled-components";
 import { React, useState, useCallback } from "react";
 import { TextField } from "@material-ui/core";
-import {
-  checkEmailApi,
-  checkIdApi,
-  signUpApi,
-  submitCodeApi,
-} from "../API/api";
+import Auth from "../apis/Auth";
 import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
+  const { register, checkId, checkEmail: checkE, sendCode } = Auth();
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [nameMessage, setNameMessage] = useState("");
@@ -110,7 +106,7 @@ const SignUp = () => {
     } else if (isPasswordConfirm === false || isPassword === false) {
       alert("비밀번호를 확인해주세요");
     } else {
-      signUpApi(username, password, email)
+      register(username, password, email)
         .then((res) => {
           if (res.data.tf === true) {
             alert("회원가입이 완료되었습니다.");
@@ -126,19 +122,19 @@ const SignUp = () => {
     }
   };
   const IDcheck = () => {
-    checkIdApi(setCheckID, username);
+    checkId(setCheckID, username);
   };
 
   const EmailCheck = () => {
     if (email.includes("@suwon.ac.kr") === false) {
       alert("수원대학교 이메일을 입력해주세요");
     } else {
-      checkEmailApi(setCheckEmail, email);
+      checkE(setCheckEmail, email);
     }
   };
 
   const SubmitCode = () => {
-    submitCodeApi(setIsCode, setCode, email);
+    sendCode(setIsCode, setCode, email);
   };
 
   const CheckCode = () => {

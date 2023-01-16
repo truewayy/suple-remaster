@@ -1,17 +1,18 @@
 import styled from "styled-components";
 import { React, useState } from "react";
 import { TextField, FormControlLabel, Checkbox } from "@material-ui/core";
-import { loginApi } from "../API/api";
+import Auth from "../apis/Auth";
 import { useNavigate } from "react-router-dom";
-import { setToken } from "../API/apiController";
+import { setToken } from "../apis/apiController";
 
 const Login = () => {
+  const { login } = Auth();
   const navigate = useNavigate();
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   const [check, setCheck] = useState(false);
   const onLogin = () => {
-    loginApi(username, password)
+    login(username, password)
       .then((r) => {
         if (r.data.success === true) {
           setToken("accessToken", r.data.Authorization["accessToken"]);
@@ -25,7 +26,7 @@ const Login = () => {
   };
   const onKeypress = (e) => {
     if (e.key === "Enter") {
-      loginApi(username, password)
+      login(username, password)
         .then((r) => {
           if (r.data.success === true) {
             setToken("accessToken", r.data.Authorization["accessToken"]);

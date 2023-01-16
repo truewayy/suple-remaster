@@ -1,7 +1,8 @@
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 import { Cookies } from "react-cookie";
-import { refreshTokenApi } from "./api";
+import Auth from "./Auth";
+
 const cookies = new Cookies();
 const instance = axios.create({
   timeout: 2000,
@@ -34,6 +35,7 @@ const isAccessTokenValid = () => {
 };
 
 const refreshingToken = async () => {
+  const { refresh } = Auth();
   try {
     const accessToken = getToken("accessToken");
     const refreshToken = getToken("refreshToken");
@@ -42,7 +44,7 @@ const refreshingToken = async () => {
     }
     const payload = jwtDecode(accessToken);
     const id = payload.id;
-    const res = await refreshTokenApi(id);
+    const res = await refresh(id);
     if (res.status !== 200) {
       throw new Error(`Response status is ${res.status}`);
     } else {

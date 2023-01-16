@@ -3,7 +3,7 @@ import { React, useState } from "react";
 import { useMutation } from "react-query";
 import { useSetRecoilState } from "recoil";
 import { queryClient } from "..";
-import { updatePostApi } from "../API/api";
+import User from "../apis/User";
 import { AppSelect, BackSelect, FrontSelect } from "./StackSelect";
 import { modalState } from "../store/state";
 
@@ -18,6 +18,7 @@ export const StackSelect = (props) => {
 };
 
 const EditPosting = ({ row }) => {
+  const { updatePost } = User();
   const onModal = useSetRecoilState(modalState);
   const [title, setTitle] = useState(`${row.title}`);
   const [content, setContent] = useState(`${row.content}`);
@@ -25,8 +26,7 @@ const EditPosting = ({ row }) => {
   const [contact, setContact] = useState(`${row.contact}`);
   const [stack, setStack] = useState(() => row.stack.split(", "));
   const editPost = useMutation(
-    () =>
-      updatePostApi(title, stack.join(", "), content, contact, row.post_key),
+    () => updatePost(title, stack.join(", "), content, contact, row.post_key),
     {
       onSuccess: (res) => {
         if (res.data.tf === true) {

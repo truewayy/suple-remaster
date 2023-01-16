@@ -1,14 +1,15 @@
 import styled from "styled-components";
 import { React, useState } from "react";
 import { TextField } from "@material-ui/core";
-import { findPasswordApi } from "../API/api";
+import Auth from "../apis/Auth";
 
 const PwSearch = () => {
+  const { findPw } = Auth();
   const [username, setUsername] = useState();
   const [email, setEmail] = useState();
 
   const onSubmit = () => {
-    findPasswordApi(username, email);
+    findPw(username, email);
   };
 
   return (

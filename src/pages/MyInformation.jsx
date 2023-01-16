@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { React } from "react";
-import { deletePostApi, myInfoApi } from "../API/api";
+import User from "../apis/User";
 import EditPosting from "../components/EditPosting";
 import PostingDetail from "../components/PostingDetail";
 import { useNavigate } from "react-router-dom";
@@ -11,8 +11,9 @@ import { useRecoilState } from "recoil";
 import Modal from "../components/Modal";
 
 export const MyPosting = ({ row }) => {
+  const { removePost } = User();
   const [modalID, setModalID] = useRecoilState(modalState);
-  const deletePost = useMutation(() => deletePostApi(row.post_key), {
+  const deletePost = useMutation(() => removePost(row.post_key), {
     onSuccess: (res) => {
       if (res.data.tf === true) {
         queryClient.invalidateQueries("main");
@@ -75,8 +76,9 @@ export const MyPostingList = ({ post }) => {
 };
 
 const MyInformation = () => {
+  const { info } = User();
   let navigate = useNavigate();
-  const { data, isLoading } = useQuery("myInfo", myInfoApi, {
+  const { data, isLoading } = useQuery("myInfo", info, {
     refetchOnWindowFocus: false,
     cacheTime: 1000 * 60 * 5,
     staleTime: 1000 * 60 * 5,

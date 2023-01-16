@@ -2,9 +2,9 @@ import styled from "styled-components";
 import { React } from "react";
 import NoticeDetail from "./NoticeDetail";
 import { useQuery } from "react-query";
-import { noticeApi } from "../API/api";
 import { useRecoilState } from "recoil";
 import { modalState } from "../store/state";
+import Etc from "../apis/Etc";
 import Modal from "./Modal";
 
 export const NoticeContent = ({ notice }) => {
@@ -26,7 +26,8 @@ export const NoticeContent = ({ notice }) => {
 };
 
 const NoticeList = () => {
-  const { data } = useQuery("notice", noticeApi, {
+  const { notice } = Etc();
+  const { data } = useQuery("notice", notice, {
     refetchOnWindowFocus: false,
     cacheTime: 1000 * 60 * 20,
     staleTime: 1000 * 60 * 20,
