@@ -9,7 +9,7 @@ export const PostContent = ({ row }) => {
   const [modal, setModal] = useState(false);
 
   return (
-    <div>
+    <div onClick={() => setModal(true)}>
       <ContentWrapper onClick={() => setModal(false)}>
         <NoticeTitle>{row.title}</NoticeTitle>
         <NoticeDate>{row.posting_date}</NoticeDate>
@@ -20,7 +20,7 @@ export const PostContent = ({ row }) => {
         id={row.post_key}
         width={500}
       >
-        <PostingDetail row={row} />
+        <PostingDetail setModal={setModal} row={row} />
       </Modal>
     </div>
   );

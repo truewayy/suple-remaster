@@ -34,7 +34,6 @@ const NoticeList = () => {
     staleTime: 1000 * 60 * 20,
   });
   return data?.data.map((v, i) => {
-    console.log(v);
     return <NoticeContent notice={v} key={v.notice_id} />;
   });
 };

@@ -9,7 +9,13 @@ const Modal = ({ id, width, height, children, isOpen, onRequestClose }) => {
 
   return (
     isOpen && (
-      <ModalContainer id={id} onClick={onRequestClose}>
+      <ModalContainer
+        id={id}
+        onClick={(e) => {
+          e.stopPropagation();
+          onRequestClose();
+        }}
+      >
         <ModalBody
           className="modalBody"
           id={id}
