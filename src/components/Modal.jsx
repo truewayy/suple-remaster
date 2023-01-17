@@ -1,35 +1,26 @@
-import React from "react";
-import { useRecoilState } from "recoil";
-import { modalState } from "../store/state";
+import React, { useEffect } from "react";
 import styled, { keyframes } from "styled-components";
-const Modal = ({ id, width, height, children }) => {
-  const [, onModal] = useRecoilState(modalState);
+const Modal = ({ id, width, height, children, isOpen, onRequestClose }) => {
+  useEffect(() => {
+    const onKeyPress = (e) => e.key === "Escape" && onRequestClose();
+    window.addEventListener("keydown", onKeyPress);
+    return () => window.removeEventListener("keydown", onKeyPress);
+  }, [onRequestClose]);
 
-  const closeModal = () => {
-    onModal("");
-  };
-  const onKeyPress = (e) => {
-    if (e.key === "Escape") {
-      onModal("");
-    }
-  };
   return (
-    <ModalContainer
-      id={id}
-      tabIndex={0}
-      onClick={closeModal}
-      onKeyDown={onKeyPress}
-    >
-      <ModalBody
-        className="modalBody"
-        id={id}
-        width={width}
-        height={height}
-        onClick={(e) => e.stopPropagation()}
-      >
-        {children}
-      </ModalBody>
-    </ModalContainer>
+    isOpen && (
+      <ModalContainer id={id} onClick={onRequestClose}>
+        <ModalBody
+          className="modalBody"
+          id={id}
+          width={width}
+          height={height}
+          onClick={(e) => e.stopPropagation()}
+        >
+          {children}
+        </ModalBody>
+      </ModalContainer>
+    )
   );
 };
 

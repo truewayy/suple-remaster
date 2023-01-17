@@ -1,17 +1,14 @@
 import styled from "styled-components";
 import { React } from "react";
 import { Cookies } from "react-cookie";
-import { useSetRecoilState } from "recoil";
-import { modalState } from "../store/state";
-const PostingDetail = ({ row }) => {
+const PostingDetail = ({ row, setModal }) => {
   let cookies = new Cookies();
   let cookie = cookies.get("accessToken");
-  const onModal = useSetRecoilState(modalState);
   return (
     <Wrapper>
       <TitleBox>
         <Title>{row.title}</Title>
-        <CloseButton onClick={() => onModal("")}>X</CloseButton>
+        <CloseButton onClick={() => setModal(false)}>X</CloseButton>
       </TitleBox>
       <StackWrapper>
         <SubTitle>모집 기술</SubTitle>

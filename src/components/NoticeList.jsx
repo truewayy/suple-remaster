@@ -1,26 +1,27 @@
 import styled from "styled-components";
-import { React } from "react";
+import { React, useState } from "react";
 import NoticeDetail from "./NoticeDetail";
 import { useQuery } from "react-query";
-import { useRecoilState } from "recoil";
-import { modalState } from "../store/state";
 import Etc from "../api/Etc";
 import Modal from "./Modal";
 
 export const NoticeContent = ({ notice }) => {
-  const [modalID, setModalID] = useRecoilState(modalState);
+  const [modal, setModal] = useState(false);
 
   return (
-    <div>
-      <ContentWrapper onClick={() => setModalID(notice.notice_id)}>
+    <div onClick={() => setModal(true)}>
+      <ContentWrapper>
         <NoticeTitle>{notice.title}</NoticeTitle>
         <NoticeDate>{notice.date}</NoticeDate>
       </ContentWrapper>
-      {modalID === notice.notice_id ? (
-        <Modal id={notice.notice_id} width={500} height={500}>
-          <NoticeDetail notice={notice} />
-        </Modal>
-      ) : null}
+      <Modal
+        isOpen={modal}
+        onRequestClose={() => setModal(false)}
+        width={500}
+        height={500}
+      >
+        <NoticeDetail setModal={setModal} notice={notice} />
+      </Modal>
     </div>
   );
 };

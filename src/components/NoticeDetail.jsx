@@ -1,15 +1,12 @@
 import { React } from "react";
-import { useSetRecoilState } from "recoil";
-import { modalState } from "../store/state";
 import styled from "styled-components";
 
-const NoticeDetail = ({ notice }) => {
-  const setModalID = useSetRecoilState(modalState);
+const NoticeDetail = ({ notice, setModal }) => {
   return (
     <Wrapper>
       <TitleBox>
         <Title>{notice.title}</Title>
-        <CloseButton onClick={() => setModalID("")}>X</CloseButton>
+        <CloseButton onClick={() => setModal(false)}>X</CloseButton>
       </TitleBox>
       <ContentBox>
         <Content>{notice.content}</Content>

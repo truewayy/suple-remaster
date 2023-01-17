@@ -1,26 +1,27 @@
-import { React } from "react";
+import { React, useState } from "react";
 import styled from "styled-components";
 import PostingDetail from "./PostingDetail";
 import Post from "../api/Post";
 import { useQuery } from "react-query";
 import Modal from "./Modal";
-import { useRecoilState } from "recoil";
-import { modalState } from "../store/state";
 
 export const PostContent = ({ row }) => {
-  const [modalID, setModalID] = useRecoilState(modalState);
+  const [modal, setModal] = useState(false);
 
   return (
     <div>
-      <ContentWrapper onClick={() => setModalID(row.post_key)}>
+      <ContentWrapper onClick={() => setModal(false)}>
         <NoticeTitle>{row.title}</NoticeTitle>
         <NoticeDate>{row.posting_date}</NoticeDate>
       </ContentWrapper>
-      {modalID === row.post_key ? (
-        <Modal id={row.post_key} width={500}>
-          <PostingDetail row={row} />
-        </Modal>
-      ) : null}
+      <Modal
+        isOpen={modal}
+        onRequestClose={() => setModal(false)}
+        id={row.post_key}
+        width={500}
+      >
+        <PostingDetail row={row} />
+      </Modal>
     </div>
   );
 };

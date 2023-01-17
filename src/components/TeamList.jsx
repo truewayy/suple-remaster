@@ -3,12 +3,12 @@ import styled from "styled-components";
 import PostingDetail from "./PostingDetail";
 import { useQuery } from "react-query";
 import Post from "../api/Post";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { modalState, partState } from "../store/state";
+import { useRecoilValue } from "recoil";
+import { partState } from "../store/state";
 import Modal from "./Modal";
 
 export const Team = ({ row }) => {
-  const [modalID, setModalID] = useRecoilState(modalState);
+  const [modal, setModal] = useState(false);
   const stack = row.stack.split(", ");
   let title = row.title;
   if (title.length >= 25) {
@@ -16,7 +16,7 @@ export const Team = ({ row }) => {
   }
   return (
     <>
-      <Wrapper onClick={() => setModalID(row.post_key)}>
+      <Wrapper onClick={() => setModal(true)}>
         <TagWrapper>
           <TagBox>
             {stack
@@ -36,11 +36,14 @@ export const Team = ({ row }) => {
         <ContentTitle>{title}</ContentTitle>
         <ContentDate>{row.date_format}</ContentDate>
       </Wrapper>
-      {modalID === row.post_key ? (
-        <Modal id={row.post_key} width={500} height={500}>
-          <PostingDetail row={row} />
-        </Modal>
-      ) : null}
+      <Modal
+        isOpen={modal}
+        onRequestClose={() => setModal(false)}
+        width={500}
+        height={500}
+      >
+        <PostingDetail setModal={setModal} row={row} />
+      </Modal>
     </>
   );
 };

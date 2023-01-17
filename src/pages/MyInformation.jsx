@@ -1,18 +1,17 @@
 import styled from "styled-components";
-import { React } from "react";
+import { React, useState } from "react";
 import User from "../api/User";
 import EditPosting from "../components/EditPosting";
 import PostingDetail from "../components/PostingDetail";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery } from "react-query";
 import { queryClient } from "..";
-import { modalState } from "../store/state";
-import { useRecoilState } from "recoil";
 import Modal from "../components/Modal";
 
 export const MyPosting = ({ row }) => {
   const { removePost } = User();
-  const [modalID, setModalID] = useRecoilState(modalState);
+  const [viewModal, setViewModal] = useState(false);
+  const [editModal, setEditModal] = useState(false);
   const deletePost = useMutation(() => removePost(row.post_key), {
     onSuccess: (res) => {
       if (res.data.tf === true) {
@@ -43,28 +42,31 @@ export const MyPosting = ({ row }) => {
   return (
     <div>
       <MyPostingWrapper>
-        <PostingTitle onClick={() => setModalID(row.post_key + "View")}>
+        <PostingTitle onClick={() => setViewModal(true)}>
           {Substr(row.title, 11)}
         </PostingTitle>
         <PostingContent>{Substr(row.content, 30)}</PostingContent>
         <ButtonGroup>
-          <EditButton onClick={() => setModalID(row.post_key + "Edit")}>
-            수정
-          </EditButton>
+          <EditButton onClick={() => setEditModal(true)}>수정</EditButton>
           <DeleteButton onClick={onDelete}>삭제</DeleteButton>
         </ButtonGroup>
       </MyPostingWrapper>
 
-      {modalID === row.post_key + "View" ? (
-        <Modal width={500}>
-          <PostingDetail row={row} />
-        </Modal>
-      ) : null}
-      {modalID === row.post_key + "Edit" ? (
-        <Modal id="edit" width={600}>
-          <EditPosting row={row} />
-        </Modal>
-      ) : null}
+      <Modal
+        isOpen={viewModal}
+        onRequestClose={() => setViewModal(false)}
+        width={500}
+      >
+        <PostingDetail setModal={setViewModal} row={row} />
+      </Modal>
+      <Modal
+        isOpen={editModal}
+        onRequestClose={() => setEditModal(false)}
+        id="edit"
+        width={600}
+      >
+        <EditPosting setModal={setViewModal} row={row} />
+      </Modal>
     </div>
   );
 };
