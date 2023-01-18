@@ -16,7 +16,7 @@ const EditPosting = ({ row, setModal }) => {
     () => updatePost(title, stack.join(", "), content, contact, row.post_key),
     {
       onSuccess: (res) => {
-        if (res.data.tf === true) {
+        if (res.data.tf) {
           queryClient.invalidateQueries("main");
           queryClient.invalidateQueries("myInfo");
         } else {

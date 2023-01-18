@@ -14,7 +14,7 @@ const Login = () => {
   const onLogin = () => {
     login(username, password)
       .then((r) => {
-        if (r.data.success === true) {
+        if (r.data.success) {
           setToken("accessToken", r.data.Authorization["accessToken"]);
           setToken("refreshToken", r.data.Authorization["refreshToken"]);
           navigate("/");
@@ -28,7 +28,7 @@ const Login = () => {
     if (e.key === "Enter") {
       login(username, password)
         .then((r) => {
-          if (r.data.success === true) {
+          if (r.data.success) {
             setToken("accessToken", r.data.Authorization["accessToken"]);
             setToken("refreshToken", r.data.Authorization["refreshToken"]);
             navigate("/");

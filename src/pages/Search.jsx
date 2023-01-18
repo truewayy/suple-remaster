@@ -18,9 +18,7 @@ const Search = () => {
   });
 
   const onKeypress = (e) => {
-    if (e.key === "Enter") {
-      navigate(`/search?q=${search}`);
-    }
+    e.key === "Enter" && navigate(`/search?q=${search}`);
   };
 
   useEffect(() => {

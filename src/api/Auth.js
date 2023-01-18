@@ -36,7 +36,7 @@ const Auth = () => {
       },
     })
       .then((r) => {
-        if (r.data.tf === true) {
+        if (r.data.tf) {
           alert("사용가능한 ID입니다");
           setCheckID(true);
         } else {
@@ -59,7 +59,7 @@ const Auth = () => {
       },
     })
       .then((r) => {
-        if (r.data.tf === true) {
+        if (r.data.tf) {
           alert("사용가능한 이메일입니다");
           setCheckEmail(true);
         } else {
@@ -101,7 +101,7 @@ const Auth = () => {
       },
     })
       .then((r) => {
-        if (r.data.tf === true) {
+        if (r.data.tf) {
           alert("이메일로 아이디를 전송하였습니다");
           window.location.reload();
         } else {
@@ -124,7 +124,7 @@ const Auth = () => {
       },
     })
       .then((r) => {
-        if (r.data.tf === true) {
+        if (r.data.tf) {
           alert("이메일로 임시 비밀번호를 전송하였습니다");
           window.location.reload();
         } else {

@@ -14,7 +14,7 @@ export const MyPosting = ({ row }) => {
   const [editModal, setEditModal] = useState(false);
   const deletePost = useMutation(() => removePost(row.post_key), {
     onSuccess: (res) => {
-      if (res.data.tf === true) {
+      if (res.data.tf) {
         queryClient.invalidateQueries("main");
         queryClient.refetchQueries("myInfo");
       } else {
@@ -32,7 +32,7 @@ export const MyPosting = ({ row }) => {
   };
 
   const onDelete = () => {
-    if (window.confirm("게시글을 삭제하시겠습니까?") === true) {
+    if (window.confirm("게시글을 삭제하시겠습니까?")) {
       deletePost.mutate();
     } else {
       return;

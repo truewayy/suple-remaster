@@ -108,7 +108,7 @@ const SignUp = () => {
     } else {
       register(username, password, email)
         .then((res) => {
-          if (res.data.tf === true) {
+          if (res.data.tf) {
             alert("회원가입이 완료되었습니다.");
             navigate("/login");
           } else {
@@ -221,7 +221,7 @@ const SignUp = () => {
               {emailMessage}
             </CheckText>
           )}
-          {checkEmail === true ? (
+          {checkEmail ? (
             <div style={{ width: "100%", marginTop: "20px" }}>
               <TextField
                 label="인증코드 6자리 입력"

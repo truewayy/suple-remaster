@@ -59,7 +59,7 @@ const PwChange = () => {
     changePw(setData, setLoading, currentPassword, password);
   };
   useEffect(() => {
-    if (db.tf === true) {
+    if (db.tf) {
       alert("비밀번호 변경 성공하였습니다\n(다시 로그인 해주세요)");
       cookies.remove("accessToken");
       cookies.remove("refreshToken");

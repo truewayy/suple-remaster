@@ -16,14 +16,12 @@ const Exit = () => {
   });
   const [loading, setLoading] = useState(false);
   const onSubmit = () => {
-    if (
-      window.confirm("회원 탈퇴하시겠습니까?\n(복구가 불가능합니다)") === true
-    ) {
+    if (window.confirm("회원 탈퇴하시겠습니까?\n(복구가 불가능합니다)")) {
       exit(setData, setLoading, password);
     }
   };
   useEffect(() => {
-    if (db.tf === true) {
+    if (db.tf) {
       alert("회원탈퇴 성공하였습니다\n(안녕히 가세요 ^^))");
       cookies.remove("accessToken");
       cookies.remove("refreshToken");
