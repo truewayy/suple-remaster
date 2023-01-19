@@ -1,27 +1,31 @@
 import styled from "styled-components";
-import { React, useState } from "react";
 import { TextField } from "@material-ui/core";
 import Auth from "../api/Auth";
 import {
+  CheckText,
   Container,
   DetailText,
   FindText,
   FindWrapper,
   Wrapper,
 } from "styles/common";
+import { useForm } from "react-hook-form";
+import { validateEmail } from "utils/validate";
 
 const PwSearch = () => {
   const { findPw } = Auth();
-  const [username, setUsername] = useState();
-  const [email, setEmail] = useState();
-
-  const onSubmit = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { isValid, errors },
+  } = useForm({ mode: "onChange" });
+  const onSubmit = ({ username, email }) => {
     findPw(username, email);
   };
 
   return (
     <Wrapper>
-      <Container>
+      <Container onSubmit={handleSubmit(onSubmit)}>
         <FindWrapper>
           <FindText>비밀번호 찾기</FindText>
           <DetailText>
@@ -30,25 +34,22 @@ const PwSearch = () => {
 
           <TextField
             type="id"
-            id="id"
             fullWidth
             label="SUPLE 아이디"
-            required
-            autoComplete="id"
             style={{ paddingBottom: "20px" }}
-            onChange={(e) => setUsername(e.target.value)}
+            {...register("username", { required: true })}
           />
           <TextField
             type="email"
-            id="email"
             fullWidth
             label="학교 이메일 (example@suwon.ac.kr)"
-            required
-            autoComplete="current-email"
             style={{ paddingBottom: "10px" }}
-            onChange={(e) => setEmail(e.target.value)}
+            {...register("email", validateEmail)}
           />
-          <SubmitButton onClick={onSubmit}>전송</SubmitButton>
+          {errors.email && (
+            <CheckText id="check">{errors.email.message}</CheckText>
+          )}
+          <SubmitButton disabled={!isValid}>전송</SubmitButton>
         </FindWrapper>
       </Container>
     </Wrapper>
