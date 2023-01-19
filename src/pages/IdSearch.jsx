@@ -1,34 +1,47 @@
 import styled from "styled-components";
-import { React, useState } from "react";
+import { React } from "react";
 import { TextField } from "@material-ui/core";
 import Auth from "../api/Auth";
-import { Container, FindText, FindWrapper, Wrapper } from "styles/common";
+import {
+  CheckText,
+  Container,
+  DetailText,
+  FindText,
+  FindWrapper,
+  Wrapper,
+} from "styles/common";
+import { useForm } from "react-hook-form";
+import { validateEmail } from "utils/validate";
 
 const IdSearch = () => {
   const { findId } = Auth();
-  const [email, setEmail] = useState();
-  const onSubmit = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm({ mode: "onChange" });
+  const onSubmit = ({ email }) => {
     findId(email);
   };
 
   return (
     <Wrapper>
-      <Container>
+      <Container onSubmit={handleSubmit(onSubmit)}>
         <FindWrapper>
           <FindText>아이디 찾기</FindText>
           <DetailText>학교 계정을 입력하세요</DetailText>
 
           <TextField
             type="email"
-            id="email"
             fullWidth
             label="학교 이메일 (example@suwon.ac.kr)"
-            required
-            autoComplete="current-email"
             style={{ paddingBottom: "10px" }}
-            onChange={(e) => setEmail(e.target.value)}
+            {...register("email", validateEmail)}
           />
-          <SubmitButton onClick={onSubmit}>전송</SubmitButton>
+          {errors.email && (
+            <CheckText id="check">{errors.email.message}</CheckText>
+          )}
+          <SubmitButton disabled={!isValid}>전송</SubmitButton>
         </FindWrapper>
       </Container>
     </Wrapper>
@@ -52,11 +65,8 @@ const SubmitButton = styled.button`
     background-color: #5d8bf4;
     cursor: pointer;
   }
-`;
-
-const DetailText = styled.div`
-  font-weight: 500;
-  font-size: 12px;
-  padding-bottom: 20px;
-  float: left;
+  &:disabled {
+    background-color: #b3b3b3;
+    cursor: default;
+  }
 `;
