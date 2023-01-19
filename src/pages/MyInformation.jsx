@@ -1,51 +1,28 @@
 import styled from "styled-components";
 import { React, useState } from "react";
-import User from "../api/User";
 import EditPosting from "../components/EditPosting";
 import PostingDetail from "../components/PostingDetail";
-import { useNavigate } from "react-router-dom";
-import { useMutation, useQuery } from "react-query";
-import { queryClient } from "..";
 import Modal from "../components/Modal";
+import { subStr } from "utils/subStr";
+import Navigate from "hooks/navigate";
+import useUserQuery from "hooks/useUserQuery";
 
 export const MyPosting = ({ row }) => {
-  const { removePost } = User();
+  const { RemovePost } = useUserQuery();
+  const { remove } = RemovePost(row.post_key);
   const [viewModal, setViewModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
-  const deletePost = useMutation(() => removePost(row.post_key), {
-    onSuccess: (res) => {
-      if (res.data.tf) {
-        queryClient.invalidateQueries("main");
-        queryClient.refetchQueries("myInfo");
-      } else {
-        alert("삭제 실패");
-      }
-    },
-    onError: (err) => alert(err.response.data.message),
-  });
-
-  const Substr = (str, size) => {
-    if (str.length >= size) {
-      str = str.substr(0, size) + "...";
-    }
-    return str;
-  };
-
   const onDelete = () => {
-    if (window.confirm("게시글을 삭제하시겠습니까?")) {
-      deletePost.mutate();
-    } else {
-      return;
-    }
+    window.confirm("게시글을 삭제하시겠습니까?") && remove();
   };
 
   return (
     <div>
       <MyPostingWrapper>
         <PostingTitle onClick={() => setViewModal(true)}>
-          {Substr(row.title, 11)}
+          {subStr(row.title, 11)}
         </PostingTitle>
-        <PostingContent>{Substr(row.content, 30)}</PostingContent>
+        <PostingContent>{subStr(row.content, 30)}</PostingContent>
         <ButtonGroup>
           <EditButton onClick={() => setEditModal(true)}>수정</EditButton>
           <DeleteButton onClick={onDelete}>삭제</DeleteButton>
@@ -73,18 +50,14 @@ export const MyPosting = ({ row }) => {
 
 export const MyPostingList = ({ post }) => {
   return post.map((v) => {
-    return <MyPosting key={Math.random()} row={v} />;
+    return <MyPosting key={v.post_key} row={v} />;
   });
 };
 
 const MyInformation = () => {
-  const { info } = User();
-  let navigate = useNavigate();
-  const { data, isLoading } = useQuery("myInfo", info, {
-    refetchOnWindowFocus: false,
-    cacheTime: 1000 * 60 * 5,
-    staleTime: 1000 * 60 * 5,
-  });
+  const { go } = Navigate();
+  const { MyInfo } = useUserQuery();
+  const { data, isLoading } = MyInfo();
   if (isLoading) return <Wrapper id="loading">로딩 중...</Wrapper>;
   const user = data.data;
 
@@ -113,15 +86,12 @@ const MyInformation = () => {
           <ContentTitle>부가 기능</ContentTitle>
           <RowWrapper>
             <DetailWrapper>
-              <ContentDetail
-                id="extra"
-                onClick={() => navigate("changePassword")}
-              >
+              <ContentDetail id="extra" onClick={() => go("changePassword")}>
                 비밀번호 변경
               </ContentDetail>
               <ContentDetail
                 id="extra"
-                onClick={() => navigate("quit")}
+                onClick={() => go("quit")}
                 style={{ marginBottom: "0px" }}
               >
                 회원 탈퇴
