@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { React } from "react";
 import PostList from "../components/WrittenPostList";
+import { Wrapper } from "styles/common";
 
 const WrittenPost = () => {
   return (
@@ -14,11 +15,6 @@ const WrittenPost = () => {
 };
 
 export default WrittenPost;
-
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-`;
 
 const NoticeText = styled.div`
   font-size: 20px;

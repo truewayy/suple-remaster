@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { React, useState } from "react";
 import { TextField } from "@material-ui/core";
 import Auth from "../api/Auth";
+import { Container, FindText, FindWrapper, Wrapper } from "styles/common";
 
 const IdSearch = () => {
   const { findId } = Auth();
@@ -36,22 +37,6 @@ const IdSearch = () => {
 
 export default IdSearch;
 
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
-const Container = styled.div`
-  margin: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  border: 1px solid rgb(224, 224, 224);
-  border-radius: 15px;
-  width: 350px;
-`;
-
 const SubmitButton = styled.button`
   border: none;
   border-radius: 10px;
@@ -67,24 +52,6 @@ const SubmitButton = styled.button`
     background-color: #5d8bf4;
     cursor: pointer;
   }
-`;
-
-const FindWrapper = styled.div`
-  width: 300px;
-  &#search {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-  }
-`;
-
-const FindText = styled.div`
-  width: 100%;
-  text-align: left;
-  padding-top: 30px;
-  padding-bottom: 10px;
-  font-weight: bold;
-  font-size: 1.3rem;
 `;
 
 const DetailText = styled.div`

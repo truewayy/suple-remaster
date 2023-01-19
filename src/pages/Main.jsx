@@ -17,6 +17,7 @@ import { useRecoilState } from "recoil";
 import { partState, userInfoState } from "../store/state";
 import jwt_decode from "jwt-decode";
 import { getToken } from "../api/apiController";
+import { Wrapper } from "styles/common";
 // designed by soo kyung
 
 export const options = [
@@ -117,11 +118,6 @@ const Main = () => {
 };
 
 export default Main;
-
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-`;
 
 const Container = styled.div`
   display: flex;

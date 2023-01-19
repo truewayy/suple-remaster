@@ -4,6 +4,7 @@ import { TextField, FormControlLabel, Checkbox } from "@material-ui/core";
 import Auth from "../api/Auth";
 import { useNavigate } from "react-router-dom";
 import { setToken } from "../api/apiController";
+import { Wrapper } from "styles/common";
 
 const Login = () => {
   const { login } = Auth();
@@ -96,11 +97,6 @@ const Login = () => {
 };
 
 export default Login;
-
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-`;
 
 const Container = styled.div`
   margin: 20px;

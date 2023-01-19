@@ -3,6 +3,7 @@ import { React, useState, useCallback } from "react";
 import { TextField } from "@material-ui/core";
 import Auth from "../api/Auth";
 import { useNavigate } from "react-router-dom";
+import { Wrapper } from "styles/common";
 
 const SignUp = () => {
   const { register, checkId, checkEmail: checkE, sendCode } = Auth();
@@ -266,11 +267,6 @@ const SignUp = () => {
 };
 
 export default SignUp;
-
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-`;
 
 const Container = styled.div`
   margin: 20px;

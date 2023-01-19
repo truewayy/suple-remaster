@@ -1,4 +1,4 @@
-import instance, { getToken } from "./apiController";
+import instance, { getToken, removeToken } from "./apiController";
 const rootUrl = "http://suple.cafe24app.com/api";
 
 const Auth = () => {
@@ -147,8 +147,12 @@ const Auth = () => {
       },
     })
       .then((response) => {
-        response.data.tf &&
+        if (response.data.tf) {
           alert("비밀번호 변경 성공하였습니다\n(다시 로그인 해주세요)");
+          removeToken("accessToken");
+          removeToken("refreshToken");
+          window.location.href = "/";
+        }
       })
       .catch((error) => {
         alert(error.response.data.message);
@@ -156,7 +160,7 @@ const Auth = () => {
   };
 
   // 회원탈퇴 API
-  const exit = async (setData, setLoading, password) => {
+  const exit = async (password) => {
     return instance({
       method: "delete",
       url: `${rootUrl}/quit`,
@@ -165,8 +169,12 @@ const Auth = () => {
       },
     })
       .then((r) => {
-        setData(r.data);
-        setLoading(true);
+        if (r.data.tf) {
+          alert("회원탈퇴 성공하였습니다\n(안녕히 가세요 ^^))");
+          removeToken("accessToken");
+          removeToken("refreshToken");
+          window.location.href = "/";
+        }
       })
       .catch((error) => {
         alert(error.response.data.message);

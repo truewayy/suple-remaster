@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { React } from "react";
 import NoticeList from "../components/NoticeList";
+import { Wrapper } from "styles/common";
 
 const Notice = () => {
   return (
@@ -14,11 +15,6 @@ const Notice = () => {
 };
 
 export default Notice;
-
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-`;
 
 const NoticeText = styled.div`
   font-size: 20px;

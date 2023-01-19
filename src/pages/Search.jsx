@@ -4,6 +4,7 @@ import Post from "../api/Post";
 import { PostContent } from "../components/WrittenPostList";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useQuery } from "react-query";
+import { Wrapper } from "styles/common";
 
 const Search = () => {
   const { search: get } = Post();
@@ -53,16 +54,13 @@ const Search = () => {
 
 export default Search;
 
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-`;
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   margin: 20px;
   width: 700px;
 `;
+
 const SearchWrapper = styled.div`
   display: flex;
   width: 100%;
