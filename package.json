@@ -2,7 +2,6 @@
   "name": "suwon_project",
   "version": "1.0.0",
   "homepage": "http://suple.cafe24app.com",
-  "proxy": "http://suple.cafe24app.com/api",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.5",
