@@ -1,74 +1,32 @@
-import { React, useState, useEffect, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { React } from "react";
 import styled from "styled-components";
 import { TextField } from "@material-ui/core";
+import { validatePassword, validatePasswordConfirm } from "utils/validate";
 import Auth from "../api/Auth";
-import { Cookies } from "react-cookie";
+import { useForm } from "react-hook-form";
+import {
+  CheckText,
+  Container,
+  DetailText,
+  FindText,
+  FindWrapper,
+  Wrapper,
+} from "styles/common";
 
 const PwChange = () => {
   const { changePw } = Auth();
-  const navigate = useNavigate();
-  const cookies = new Cookies();
-  const [db, setData] = useState({
-    tf: false,
-  });
-  const [loading, setLoading] = useState(false);
-  const [currentPassword, setCurrentPassword] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordConfirm, setPasswordConfirm] = useState("");
-  const [passwordMessage, setPasswordMessage] = useState("");
-  const [passwordConfirmMessage, setPasswordConfirmMessage] = useState("");
-  const [isPassword, setIsPassword] = useState(false);
-  const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
-
-  //비밀번호
-  const onChangePassword = useCallback((e) => {
-    const passwordRegex =
-      /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
-    const passwordCurrent = e.target.value;
-    setPassword(passwordCurrent);
-
-    if (!passwordRegex.test(passwordCurrent)) {
-      setPasswordMessage(
-        "숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!"
-      );
-      setIsPassword(false);
-    } else {
-      setPasswordMessage("사용 가능한 비밀번호입니다.");
-      setIsPassword(true);
-    }
-  }, []);
-
-  // 비밀번호 확인
-  const onChangePasswordConfirm = useCallback(
-    (e) => {
-      const passwordConfirmCurrent = e.target.value;
-      setPasswordConfirm(passwordConfirmCurrent);
-
-      if (password === passwordConfirmCurrent) {
-        setPasswordConfirmMessage("비밀번호가 일치합니다.");
-        setIsPasswordConfirm(true);
-      } else {
-        setPasswordConfirmMessage("비밀번호가 일치하지 않습니다.");
-        setIsPasswordConfirm(false);
-      }
-    },
-    [password]
-  );
-  const onSubmit = () => {
-    changePw(setData, setLoading, currentPassword, password);
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors, isValid },
+  } = useForm({ mode: "onChange" });
+  const onSubmit = ({ currentPassword, newPassword }) => {
+    changePw(currentPassword, newPassword);
   };
-  useEffect(() => {
-    if (db.tf) {
-      alert("비밀번호 변경 성공하였습니다\n(다시 로그인 해주세요)");
-      cookies.remove("accessToken");
-      cookies.remove("refreshToken");
-      navigate("/");
-    }
-  }, [loading, db]);
   return (
     <Wrapper>
-      <Container>
+      <Container onSubmit={handleSubmit(onSubmit)}>
         <FindWrapper>
           <FindText>비밀번호 변경</FindText>
           <DetailText>
@@ -77,52 +35,35 @@ const PwChange = () => {
 
           <TextField
             type="password"
-            id="password"
             fullWidth
             label="현재 비밀번호"
             style={{ paddingBottom: "10px" }}
-            onChange={(e) => setCurrentPassword(e.target.value)}
+            {...register("currentPassword", { required: true })}
           />
           <TextField
-            fullWidth
             type="password"
+            fullWidth
             label="새로운 비밀번호"
             style={{ paddingBottom: "10px" }}
-            onChange={onChangePassword}
+            {...register("newPassword", validatePassword)}
           />
-          {password.length > 0 && (
-            <CheckText
-              id="check"
-              className={`message ${isPassword ? "success" : "error"}`}
-            >
-              {passwordMessage}
-            </CheckText>
+          {errors.newPassword && (
+            <CheckText id="check">{errors.newPassword.message}</CheckText>
           )}
           <TextField
             fullWidth
             type="password"
             label="새로운 비밀번호 확인"
             style={{ paddingBottom: "10px" }}
-            onChange={onChangePasswordConfirm}
+            {...register(
+              "passwordConfirm",
+              validatePasswordConfirm(watch("newPassword"))
+            )}
           />
-          {passwordConfirm.length > 0 && (
-            <CheckText
-              id="check"
-              className={`message ${isPasswordConfirm ? "success" : "error"}`}
-            >
-              {passwordConfirmMessage}
-            </CheckText>
+          {errors.passwordConfirm && (
+            <CheckText id="check">{errors.passwordConfirm.message}</CheckText>
           )}
-          <SubmitButton
-            disabled={
-              isPasswordConfirm === false ||
-              isPassword === false ||
-              currentPassword === ""
-                ? true
-                : false
-            }
-            onClick={onSubmit}
-          >
+          <SubmitButton disabled={!isValid} type="submit">
             변경
           </SubmitButton>
         </FindWrapper>
@@ -132,22 +73,6 @@ const PwChange = () => {
 };
 
 export default PwChange;
-
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
-const Container = styled.div`
-  margin: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  border: 1px solid rgb(224, 224, 224);
-  border-radius: 15px;
-  width: 350px;
-`;
 
 const SubmitButton = styled.button`
   border: none;
@@ -167,45 +92,5 @@ const SubmitButton = styled.button`
   &:disabled {
     background-color: #eee;
     cursor: default;
-  }
-`;
-
-const FindWrapper = styled.div`
-  width: 300px;
-  &#search {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-  }
-`;
-
-const FindText = styled.div`
-  width: 100%;
-  text-align: left;
-  padding-top: 30px;
-  padding-bottom: 10px;
-  font-weight: bold;
-  font-size: 1.3rem;
-`;
-
-const DetailText = styled.div`
-  width: 100%;
-  font-weight: 500;
-  font-size: 12px;
-  padding-bottom: 20px;
-  text-align: left;
-`;
-
-const CheckText = styled.div`
-  padding-top: 20px;
-  font-size: 0.7rem;
-  float: left;
-  &#check {
-    padding-top: 0px;
-    padding-bottom: 10px;
-  }
-  &#email {
-    padding-top: 0px;
-    padding-bottom: 0px;
   }
 `;

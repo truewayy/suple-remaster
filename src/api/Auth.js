@@ -137,12 +137,7 @@ const Auth = () => {
   };
 
   // 비밀번호 변경 API
-  const changePw = async (
-    setData,
-    setLoading,
-    currentPassword,
-    newPassword
-  ) => {
+  const changePw = async (currentPassword, newPassword) => {
     return instance({
       method: "post",
       url: `${rootUrl}/updatePassword`,
@@ -151,9 +146,9 @@ const Auth = () => {
         newPassword: newPassword,
       },
     })
-      .then((r) => {
-        setData(r.data);
-        setLoading(true);
+      .then((response) => {
+        response.data.tf &&
+          alert("비밀번호 변경 성공하였습니다\n(다시 로그인 해주세요)");
       })
       .catch((error) => {
         alert(error.response.data.message);
