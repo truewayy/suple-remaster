@@ -10,7 +10,6 @@ import PopperUnstyled from "@mui/base/PopperUnstyled";
 import { styled as styled_mui } from "@mui/system";
 import PropTypes from "prop-types";
 import TeamList from "../components/TeamList";
-import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import "moment/locale/ko";
 import { useRecoilState } from "recoil";
@@ -18,41 +17,25 @@ import { partState, userInfoState } from "../store/state";
 import jwt_decode from "jwt-decode";
 import { getToken } from "../api/apiController";
 import { Wrapper } from "styles/common";
+import Navigate from "hooks/navigate";
+import { options } from "store/options";
 // designed by soo kyung
 
-export const options = [
-  {
-    name: "전체",
-    lec: "all",
-  },
-  {
-    name: "프론트엔드",
-    lec: "frontEnd",
-  },
-  {
-    name: "백엔드",
-    lec: "backEnd",
-  },
-  {
-    name: "앱",
-    lec: "app",
-  },
-];
-
 const Main = () => {
-  let navigate = useNavigate();
+  const { go } = Navigate();
   const nowTime = moment().format("YYYY년 M월 D일");
   const [search, setSearch] = useState("");
   const [part, setPart] = useRecoilState(partState);
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+
   const handler = (e) => {
     setPart(e);
   };
+
   const onKeypress = (e) => {
-    if (e.key === "Enter") {
-      navigate(`/search?q=${search}`);
-    }
+    e.key === "Enter" && go(`/search?q=${search}`);
   };
+
   useEffect(() => {
     const token = getToken("accessToken");
     if (token === "undefined" || !token) return;
@@ -76,10 +59,8 @@ const Main = () => {
             <MainText>분야별로</MainText>
             <MainText>
               나의 팀원들을 찾아보세요!{" "}
-              <GrayText onClick={() => navigate("/total")}>
-                {"글 목록 >"}
-              </GrayText>
-              <MobileGrayText onClick={() => navigate("/total")}>
+              <GrayText onClick={() => go("/total")}>{"글 목록 >"}</GrayText>
+              <MobileGrayText onClick={() => go("/total")}>
                 {"글 목록 >"}
               </MobileGrayText>
             </MainText>
@@ -95,7 +76,7 @@ const Main = () => {
         <ContentWrapper>
           <NoticeWrapper
             onClick={() => {
-              navigate("notice");
+              go("notice");
             }}
           >
             <NoticeContainer>
