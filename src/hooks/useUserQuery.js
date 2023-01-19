@@ -1,8 +1,6 @@
-import { getToken } from "api/apiController";
+import { User } from "api";
 import { queryClient } from "index";
-
-const { User } = require("api");
-const { useQuery, useMutation } = require("react-query");
+import { useMutation, useQuery } from "react-query";
 
 const useUserQuery = () => {
   const user = User();
@@ -11,7 +9,6 @@ const useUserQuery = () => {
       refetchOnWindowFocus: false,
       cacheTime: 1000 * 60 * 5,
       staleTime: 1000 * 60 * 5,
-      enabled: !!getToken("accessToken"),
     });
     return { data, isLoading };
   };

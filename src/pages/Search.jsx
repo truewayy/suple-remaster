@@ -1,25 +1,21 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import Post from "../api/Post";
 import { PostContent } from "../components/WrittenPostList";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { useQuery } from "react-query";
+import { useSearchParams } from "react-router-dom";
 import { Wrapper } from "styles/common";
+import usePostQuery from "hooks/usePostQuery";
+import Navigate from "hooks/navigate";
 
 const Search = () => {
-  const { search: get } = Post();
-  let navigate = useNavigate();
+  const { go } = Navigate();
+  const { GetSearch } = usePostQuery();
+  const { data } = GetSearch();
   const [search, setSearch] = useState("");
   const [searchParams] = useSearchParams();
   const searchValue = searchParams.get("q");
-  const { data } = useQuery(["search", searchValue], () => get(searchValue), {
-    enabled: !!searchValue,
-    cacheTime: 1000 * 60 * 5,
-    staleTime: 1000 * 60 * 5,
-  });
 
   const onKeypress = (e) => {
-    e.key === "Enter" && navigate(`/search?q=${search}`);
+    e.key === "Enter" && go(`/search?q=${search}`);
   };
 
   useEffect(() => {
@@ -44,7 +40,7 @@ const Search = () => {
           <NoticeText id="value">{`'${searchValue}'`}</NoticeText>
           <NoticeText>검색결과</NoticeText>
         </TitleWrapper>
-        {data?.data.map((v, i) => {
+        {data?.data.map((v) => {
           return <PostContent key={v.post_key} row={v} />;
         })}
       </Container>

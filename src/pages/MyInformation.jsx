@@ -7,7 +7,7 @@ import { subStr } from "utils/subStr";
 import Navigate from "hooks/navigate";
 import useUserQuery from "hooks/useUserQuery";
 
-export const MyPosting = ({ row }) => {
+const MyPosting = ({ row }) => {
   const { RemovePost } = useUserQuery();
   const { remove } = RemovePost(row.post_key);
   const [viewModal, setViewModal] = useState(false);
@@ -48,8 +48,8 @@ export const MyPosting = ({ row }) => {
   );
 };
 
-export const MyPostingList = ({ post }) => {
-  return post.map((v) => {
+const MyPostingList = ({ post }) => {
+  return post?.map((v) => {
     return <MyPosting key={v.post_key} row={v} />;
   });
 };
@@ -73,14 +73,14 @@ const MyInformation = () => {
               <ContentDetail id="bottom">학교 인증 메일</ContentDetail>
             </DetailWrapper>
             <DetailWrapper>
-              <DetailData>{user.id}</DetailData>
-              <DetailData id="bottom">{user.email}</DetailData>
+              <DetailData>{user?.id}</DetailData>
+              <DetailData id="bottom">{user?.email}</DetailData>
             </DetailWrapper>
           </RowWrapper>
         </ContentWrapper>
         <ContentWrapper>
           <ContentTitle id="posting">내가 쓴 글</ContentTitle>
-          <MyPostingList post={user.post} />
+          <MyPostingList post={user?.post} />
         </ContentWrapper>
         <ContentWrapper>
           <ContentTitle>부가 기능</ContentTitle>
