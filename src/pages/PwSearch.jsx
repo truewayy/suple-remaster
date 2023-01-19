@@ -49,7 +49,9 @@ const PwSearch = () => {
           {errors.email && (
             <CheckText id="check">{errors.email.message}</CheckText>
           )}
-          <SubmitButton disabled={!isValid}>전송</SubmitButton>
+          <SubmitButton type="submit" disabled={!isValid}>
+            전송
+          </SubmitButton>
         </FindWrapper>
       </Container>
     </Wrapper>

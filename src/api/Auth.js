@@ -51,13 +51,11 @@ const Auth = () => {
         if (r.data.tf) {
           alert("사용가능한 ID입니다");
           setCheckID(true);
-        } else {
-          alert("다른 아이디를 입력해주세요");
-          setCheckID(false);
         }
       })
       .catch((error) => {
-        console.log(error.response);
+        alert(error.response.data.message);
+        setCheckID(false);
       });
   };
 
@@ -74,13 +72,11 @@ const Auth = () => {
         if (r.data.tf) {
           alert("사용가능한 이메일입니다");
           setCheckEmail(true);
-        } else {
-          alert("다른 이메일을 입력해주세요");
-          setCheckEmail(false);
         }
       })
       .catch((error) => {
-        console.log(error.response);
+        alert(error.response.data.message);
+        setCheckEmail(false);
       });
   };
 
@@ -99,13 +95,13 @@ const Auth = () => {
         alert("이메일로 인증코드가 발급되었습니다");
       })
       .catch((error) => {
-        console.log(error.response);
+        alert(error.response.data.message);
       });
   };
 
   // 아이디찾기 API
-  const findId = async (email) => {
-    return instance({
+  const findId = (email) => {
+    instance({
       method: "post",
       url: `${rootUrl}/findIdx`,
       data: {
@@ -113,11 +109,8 @@ const Auth = () => {
       },
     })
       .then((r) => {
-        if (r.data.tf) {
-          alert("이메일로 아이디를 전송하였습니다");
-          window.location.reload();
-        } else {
-          alert("전송 실패");
+        if (r.data) {
+          alert(r.data.message);
         }
       })
       .catch((error) => {
@@ -139,12 +132,10 @@ const Auth = () => {
         if (r.data.tf) {
           alert("이메일로 임시 비밀번호를 전송하였습니다");
           window.location.reload();
-        } else {
-          alert("전송 실패");
         }
       })
       .catch((error) => {
-        alert(error.response);
+        alert(error.response.data.message);
       });
   };
 

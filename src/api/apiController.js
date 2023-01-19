@@ -94,8 +94,8 @@ instance.interceptors.response.use(
   (response) => {
     return response;
   },
-  (error) => {
-    return error;
+  async (error) => {
+    return Promise.reject(error);
   }
 );
 
