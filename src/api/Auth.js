@@ -1,9 +1,11 @@
-import instance, { getToken, removeToken } from "./apiController";
+import Navigate from "hooks/navigate";
+import instance, { getToken, removeToken, setToken } from "./apiController";
 const rootUrl = "http://suple.cafe24app.com/api";
 
 const Auth = () => {
+  const { go } = Navigate();
   // 로그인 API
-  const login = (id, pw) => {
+  const login = async (id, pw) => {
     return instance({
       method: "post",
       url: `${rootUrl}/login`,
@@ -11,7 +13,17 @@ const Auth = () => {
         user_id: id,
         user_password: pw,
       },
-    });
+    })
+      .then((r) => {
+        if (r.data.success) {
+          setToken("accessToken", r.data.Authorization["accessToken"]);
+          setToken("refreshToken", r.data.Authorization["refreshToken"]);
+          go("/");
+        }
+      })
+      .catch((error) => {
+        alert(error.response.data.message);
+      });
   };
   // 회원가입 API
   const register = async (username, password, email) => {
@@ -151,7 +163,7 @@ const Auth = () => {
           alert("비밀번호 변경 성공하였습니다\n(다시 로그인 해주세요)");
           removeToken("accessToken");
           removeToken("refreshToken");
-          window.location.href = "/";
+          go("/login");
         }
       })
       .catch((error) => {

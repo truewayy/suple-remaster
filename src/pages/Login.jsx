@@ -1,86 +1,43 @@
 import styled from "styled-components";
-import { React, useState } from "react";
-import { TextField, FormControlLabel, Checkbox } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import Auth from "../api/Auth";
 import { useNavigate } from "react-router-dom";
-import { setToken } from "../api/apiController";
-import { Wrapper } from "styles/common";
+import { Container, Wrapper } from "styles/common";
+import { useForm } from "react-hook-form";
 
 const Login = () => {
   const { login } = Auth();
+  const {
+    register,
+    handleSubmit,
+    formState: { isValid },
+  } = useForm();
   const navigate = useNavigate();
-  const [username, setUsername] = useState();
-  const [password, setPassword] = useState();
-  const [check, setCheck] = useState(false);
-  const onLogin = () => {
-    login(username, password)
-      .then((r) => {
-        if (r.data.success) {
-          setToken("accessToken", r.data.Authorization["accessToken"]);
-          setToken("refreshToken", r.data.Authorization["refreshToken"]);
-          navigate("/");
-        }
-      })
-      .catch((error) => {
-        alert(error.response.data.message);
-      });
-  };
-  const onKeypress = (e) => {
-    if (e.key === "Enter") {
-      login(username, password)
-        .then((r) => {
-          if (r.data.success) {
-            setToken("accessToken", r.data.Authorization["accessToken"]);
-            setToken("refreshToken", r.data.Authorization["refreshToken"]);
-            navigate("/");
-          }
-        })
-        .catch((error) => {
-          alert(error.response.data.message);
-        });
-    }
+  const onLogin = ({ username, password }) => {
+    login(username, password);
   };
 
   return (
     <Wrapper>
-      <Container>
+      <Container onSubmit={handleSubmit(onLogin)}>
         <LoginWrapper>
           <LoginText>로그인</LoginText>
 
           <TextField
             type="id"
-            id="email"
             fullWidth
             label="아이디 입력"
-            required
-            autoComplete="email"
             style={{ paddingBottom: "20px" }}
-            onChange={(e) => setUsername(e.target.value)}
+            {...register("username", { required: true })}
           />
           <TextField
             type="password"
-            id="password"
             fullWidth
             label="비밀번호 입력"
-            required
-            autoComplete="current-password"
             style={{ paddingBottom: "10px" }}
-            onChange={(e) => setPassword(e.target.value)}
-            onKeyPress={onKeypress}
+            {...register("password", { required: true })}
           />
-          <LoginWrapper id="search">
-            <FormControlLabel
-              control={
-                <Checkbox
-                  color="default"
-                  checked={check}
-                  onChange={(e) => setCheck(e.target.checked)}
-                />
-              }
-              label="로그인 유지"
-            />
-          </LoginWrapper>
-          <LoginButton onClick={onLogin}>로그인</LoginButton>
+          <LoginButton disabled={!isValid}>로그인</LoginButton>
         </LoginWrapper>
 
         <LoginWrapper id="search">
@@ -97,17 +54,6 @@ const Login = () => {
 };
 
 export default Login;
-
-const Container = styled.div`
-  margin: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  border: 1px solid rgb(224, 224, 224);
-  border-radius: 15px;
-  width: 360px;
-`;
 
 const LoginButton = styled.button`
   border: none;
