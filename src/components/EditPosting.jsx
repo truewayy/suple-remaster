@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "@emotion/styled/macro";
 import { React, useState } from "react";
 import { useMutation } from "react-query";
 import { queryClient } from "..";
@@ -70,6 +70,7 @@ const EditPosting = ({ row, setModal }) => {
           >
             <FormLabel>
               <FormCheckLeft
+                type="radio"
                 name="field"
                 id="frontend"
                 value="0"
@@ -281,7 +282,7 @@ const FormCheckText = styled.span`
   }
 `;
 
-const FormCheckLeft = styled.input.attrs({ type: "radio" })`
+const FormCheckLeft = styled.input`
   &:checked {
     display: inline-block;
     background: none;

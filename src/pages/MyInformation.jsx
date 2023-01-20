@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "@emotion/styled";
 import { React, useState } from "react";
 import EditPosting from "../components/EditPosting";
 import PostingDetail from "../components/PostingDetail";

@@ -1,5 +1,5 @@
 import { React } from "react";
-import styled from "styled-components";
+import styled from "@emotion/styled/macro";
 
 const stacks = {
   0: ["React.js", "Vue.js", "Anguler.js", "JQuery"],
@@ -25,6 +25,7 @@ const StackSelect = ({ field, stack, setStack }) => {
       {techStack?.map((tech) => (
         <FormLabel key={tech}>
           <FormCheckMulti
+            type="checkbox"
             name={field}
             id="normal"
             value={tech}
@@ -66,7 +67,7 @@ const FormCheckText = styled.span`
   }
 `;
 
-const FormCheckMulti = styled.input.attrs({ type: "checkbox" })`
+const FormCheckMulti = styled.input`
   &:checked {
     display: inline-block;
     background: none;

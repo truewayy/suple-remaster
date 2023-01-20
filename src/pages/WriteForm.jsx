@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "@emotion/styled/macro";
 import { React, useState } from "react";
 import User from "../api/User";
 import StackSelect from "components/StackSelect";
@@ -68,6 +68,7 @@ const WriteForm = () => {
             style={{ float: "left" }}
           >
             <FormCheckLeft
+              type="radio"
               name="field"
               id="frontend"
               value="0"
@@ -75,6 +76,7 @@ const WriteForm = () => {
             />
             <FormCheckText htmlFor="frontend">프론트엔드</FormCheckText>
             <FormCheckLeft
+              type="radio"
               name="field"
               id="backend"
               value="1"
@@ -82,6 +84,7 @@ const WriteForm = () => {
             />
             <FormCheckText htmlFor="backend">백엔드</FormCheckText>
             <FormCheckLeft
+              type="radio"
               name="field"
               id="app"
               value="2"
@@ -265,7 +268,7 @@ const FormCheckText = styled.label`
   }
 `;
 
-const FormCheckLeft = styled.input.attrs({ type: "radio" })`
+const FormCheckLeft = styled.input`
   &#app {
     &:checked + ${FormCheckText} {
       color: #7800ff;

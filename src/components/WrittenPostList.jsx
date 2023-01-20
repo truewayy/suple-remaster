@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 import PostingDetail from "./PostingDetail";
 import Post from "../api/Post";
 import { useQuery } from "react-query";

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "@emotion/styled";
 import { React } from "react";
 import { Cookies } from "react-cookie";
 const PostingDetail = ({ row, setModal }) => {

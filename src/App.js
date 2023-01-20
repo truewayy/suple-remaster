@@ -7,18 +7,18 @@ import SignUp from "./pages/SignUp";
 import Notice from "./pages/Notice";
 import MyInformation from "./pages/MyInformation";
 import Nav from "./components/Nav";
-import GlobalStyle from "./globalStyles";
 import WriteButton from "./components/WriteButton";
 import WriteForm from "./pages/WriteForm";
 import WrittenPost from "./pages/WrittenPost";
 import Search from "./pages/Search";
 import PwChange from "./pages/ChangePassword";
 import Exit from "./pages/Exit";
+import { global } from "globalStyles";
 
 function App() {
   return (
     <BrowserRouter>
-      <GlobalStyle />
+      {global}
       <Nav />
       <Routes>
         <Route path="/" element={<Main />} />

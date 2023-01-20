@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "@emotion/styled";
 import { PostContent } from "../components/WrittenPostList";
 import { useSearchParams } from "react-router-dom";
 import { Wrapper } from "styles/common";

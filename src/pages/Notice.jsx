@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "@emotion/styled";
 import { React } from "react";
 import NoticeList from "../components/NoticeList";
 import { Wrapper } from "styles/common";
