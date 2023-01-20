@@ -165,7 +165,7 @@ const FormText = styled.div`
   &#title {
     font-size: 18px;
     margin: 0px;
-    @media screen and (max-width: 960px) {
+    screen and (max-width: 960px) {
       font-size: 15px;
     }
   }

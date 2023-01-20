@@ -16,6 +16,7 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     margin: 0;
     font-family: 'Pretendard', sans-serif;
+    transition: all 0.3s ease-in-out;
 }
 `;
 

@@ -1,18 +1,18 @@
 export const options = [
   {
     name: "전체",
-    lec: "all",
+    option: "all",
   },
   {
     name: "프론트엔드",
-    lec: "frontEnd",
+    option: "frontEnd",
   },
   {
     name: "백엔드",
-    lec: "backEnd",
+    option: "backEnd",
   },
   {
     name: "앱",
-    lec: "app",
+    option: "app",
   },
 ];

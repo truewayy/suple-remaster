@@ -1,14 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import SelectUnstyled, {
-  selectUnstyledClasses,
-} from "@mui/base/SelectUnstyled";
-import OptionUnstyled, {
-  optionUnstyledClasses,
-} from "@mui/base/OptionUnstyled";
-import PopperUnstyled from "@mui/base/PopperUnstyled";
-import { styled as styled_mui } from "@mui/system";
-import PropTypes from "prop-types";
 import TeamList from "../components/TeamList";
 import moment from "moment";
 import "moment/locale/ko";
@@ -19,19 +10,16 @@ import { getToken } from "../api/apiController";
 import { Wrapper } from "styles/common";
 import Navigate from "hooks/navigate";
 import { options } from "store/options";
+import OptionSelect from "components/OptionSelect";
 // designed by soo kyung
 
 const Main = () => {
   const { go } = Navigate();
   const nowTime = moment().format("YYYY년 M월 D일");
   const [search, setSearch] = useState("");
+  const [select, setSelect] = useState(false);
   const [part, setPart] = useRecoilState(partState);
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
-
-  const handler = (e) => {
-    setPart(e);
-  };
-
   const onKeypress = (e) => {
     e.key === "Enter" && go(`/search?q=${search}`);
   };
@@ -65,13 +53,14 @@ const Main = () => {
               </MobileGrayText>
             </MainText>
           </MainTextBox>
-          <CustomSelect value={part} onChange={handler}>
-            {options.map((index) => (
-              <StyledOption key={index.name} value={index.lec}>
-                {index.name}
-              </StyledOption>
-            ))}
-          </CustomSelect>
+          <OptionSelect
+            state={select}
+            controller={setSelect}
+            list={options}
+            part={part}
+            setPart={setPart}
+            itemTitle="name"
+          />
         </SelectWrapper>
         <ContentWrapper>
           <NoticeWrapper
@@ -246,162 +235,3 @@ const NoticeImg = styled.img`
     width: 60px;
     height: 60px; 
 `;
-
-const blue = {
-  100: "#DAECFF",
-  200: "#99CCF3",
-  400: "#3399FF",
-  500: "#007FFF",
-  600: "#0072E5",
-  900: "#003A75",
-};
-
-const grey = {
-  100: "#E7EBF0",
-  200: "#E0E3E7",
-  300: "#CDD2D7",
-  400: "#B2BAC2",
-  500: "#A0AAB4",
-  600: "#6F7E8C",
-  700: "#3E5060",
-  800: "#2D3843",
-  900: "#1A2027",
-};
-
-const StyledButton = styled_mui("button")(
-  ({ theme }) => `
-    font-family: Pretendard, sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    box-sizing: border-box;
-    max-height: 40px;
-    min-width: 180px;
-    @media screen and (max-width: 767px) {
-      min-width: 150px;
-  }
-    background: ${theme.palette.mode === "dark" ? grey[900] : "#fff"};
-    border: 2px solid ${theme.palette.mode === "dark" ? grey[800] : "#00a0e9"};
-    border-radius: 0.75em;
-    margin-top: 15px;
-    padding: 10px;
-    padding-left: 20px;
-    text-align: left;
-    line-height: 1.5;
-    color: ${theme.palette.mode === "dark" ? grey[300] : grey[900]};
-  
-    &:hover {
-      background: ${theme.palette.mode === "dark" ? "" : grey[100]};
-      border-color: ${theme.palette.mode === "dark" ? grey[700] : grey[400]};
-    }
-  
-    &.${selectUnstyledClasses.focusVisible} {
-      outline: 3px solid ${
-        theme.palette.mode === "dark" ? blue[600] : blue[100]
-      };
-    }
-  
-    &.${selectUnstyledClasses.expanded} {
-      &::after {
-        content: '▴';
-      }
-    }
-  
-    &::after {
-      content: '▾';
-      float: right;
-    }
-    `
-);
-
-const StyledListbox = styled_mui("ul")(
-  ({ theme }) => `
-    font-family: Pretendard, sans-serif;
-    font-size: 14px;
-    box-sizing: border-box;
-    padding: 5px;
-    margin: 10px 0;
-    min-width: 180px;
-    @media screen and (max-width: 767px) {
-      min-width: 150px;
-  }
-    background: ${theme.palette.mode === "dark" ? grey[900] : "#fff"};
-    border: 1px solid ${theme.palette.mode === "dark" ? grey[800] : grey[300]};
-    border-radius: 0.75em;
-    color: ${theme.palette.mode === "dark" ? grey[300] : grey[900]};
-    overflow: auto;
-    outline: 0px;
-    `
-);
-
-const StyledOption = styled_mui(OptionUnstyled)(
-  ({ theme }) => `
-    list-style: none;
-    padding: 8px;
-    border-radius: 0.45em;
-    cursor: default;
-  
-    &:last-of-type {
-      border-bottom: none;
-    }
-  
-    &.${optionUnstyledClasses.selected} {
-      background-color: ${
-        theme.palette.mode === "dark" ? blue[900] : blue[100]
-      };
-      color: ${theme.palette.mode === "dark" ? blue[100] : blue[900]};
-    }
-  
-    &.${optionUnstyledClasses.highlighted} {
-      background-color: ${
-        theme.palette.mode === "dark" ? grey[800] : grey[100]
-      };
-      color: ${theme.palette.mode === "dark" ? grey[300] : grey[900]};
-    }
-  
-    &.${optionUnstyledClasses.highlighted}.${optionUnstyledClasses.selected} {
-      background-color: ${
-        theme.palette.mode === "dark" ? blue[900] : blue[100]
-      };
-      color: ${theme.palette.mode === "dark" ? blue[100] : blue[900]};
-    }
-  
-    &.${optionUnstyledClasses.disabled} {
-      color: ${theme.palette.mode === "dark" ? grey[700] : grey[400]};
-    }
-  
-    &:hover:not(.${optionUnstyledClasses.disabled}) {
-      background-color: ${
-        theme.palette.mode === "dark" ? grey[800] : grey[100]
-      };
-      color: ${theme.palette.mode === "dark" ? grey[300] : grey[900]};
-    }
-    `
-);
-
-const StyledPopper = styled_mui(PopperUnstyled)`
-    z-index: 1;
-  `;
-
-const CustomSelect = React.forwardRef(function CustomSelect(props, ref) {
-  const components = {
-    Root: StyledButton,
-    Listbox: StyledListbox,
-    Popper: StyledPopper,
-    ...props.components,
-  };
-
-  return <SelectUnstyled {...props} ref={ref} components={components} />;
-});
-
-CustomSelect.propTypes = {
-  /**
-   * The components used for each slot inside the Select.
-   * Either a string to use a HTML element or a component.
-   * @default {}
-   */
-  components: PropTypes.shape({
-    Listbox: PropTypes.elementType,
-    Popper: PropTypes.func,
-    Root: PropTypes.elementType,
-  }),
-};
