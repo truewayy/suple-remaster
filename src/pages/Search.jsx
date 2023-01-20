@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { PostContent } from "../components/WrittenPostList";
+import { PostContent } from "../components/TotalPosting";
 import { useSearchParams } from "react-router-dom";
 import { Wrapper } from "styles/common";
 import usePostQuery from "hooks/usePostQuery";

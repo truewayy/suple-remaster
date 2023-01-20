@@ -1,15 +1,14 @@
-import styled from "@emotion/styled";
-import { React } from "react";
 import { TextField } from "@material-ui/core";
+import { useForm } from "react-hook-form";
 import Auth from "../api/Auth";
 import {
   Container,
   DetailText,
   FindText,
-  FindWrapper,
+  InputWrapper,
+  SubmitButton,
   Wrapper,
 } from "styles/common";
-import { useForm } from "react-hook-form";
 
 const Exit = () => {
   const { exit } = Auth();
@@ -25,7 +24,7 @@ const Exit = () => {
   return (
     <Wrapper>
       <Container onSubmit={handleSubmit(onSubmit)}>
-        <FindWrapper>
+        <InputWrapper>
           <FindText>회원 탈퇴</FindText>
           <DetailText>
             회원님의 계정과 개인정보가 보호 기간 없이 바로 삭제 됩니다
@@ -39,31 +38,10 @@ const Exit = () => {
             {...register("password", { required: true })}
           />
           <SubmitButton disabled={!isValid}>탈퇴</SubmitButton>
-        </FindWrapper>
+        </InputWrapper>
       </Container>
     </Wrapper>
   );
 };
 
 export default Exit;
-
-const SubmitButton = styled.button`
-  border: none;
-  border-radius: 10px;
-  background-color: #00a0e9;
-  color: white;
-  font-weight: bold;
-  font-size: 15px;
-  padding: 10px 20px;
-  margin-top: 10px;
-  margin-bottom: 30px;
-  width: 100%;
-  &:hover {
-    background-color: #d82148;
-    cursor: pointer;
-  }
-  &:disabled {
-    background-color: #eee;
-    cursor: default;
-  }
-`;

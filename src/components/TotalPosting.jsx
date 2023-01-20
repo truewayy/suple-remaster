@@ -34,7 +34,7 @@ const PostList = () => {
     staleTime: 1000 * 60 * 5,
   });
 
-  return data?.data.map((v, i) => {
+  return data?.data.map((v) => {
     return <PostContent key={v.post_key} row={v} />;
   });
 };

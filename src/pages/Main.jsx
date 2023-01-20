@@ -7,7 +7,7 @@ import jwt_decode from "jwt-decode";
 import { getToken } from "../api/apiController";
 import { Wrapper } from "styles/common";
 import Navigate from "hooks/navigate";
-import { options } from "store/options";
+import { filters } from "store/options";
 import OptionSelect from "components/OptionSelect";
 import PostSearch from "components/PostSearch";
 import { nowTime } from "utils/nowTime";
@@ -45,7 +45,7 @@ const Main = () => {
           <OptionSelect
             state={select}
             controller={setSelect}
-            list={options}
+            list={filters}
             part={part}
             setPart={setPart}
             itemTitle="name"

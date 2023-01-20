@@ -1,4 +1,4 @@
-export const options = [
+export const filters = [
   {
     name: "전체",
     option: "all",
@@ -16,3 +16,23 @@ export const options = [
     option: "app",
   },
 ];
+
+export const stacks = {
+  all: [
+    "React.js",
+    "Vue.js",
+    "Anguler.js",
+    "JQuery",
+    "Node.js",
+    "Spring",
+    "Django",
+    "Ruby",
+    "RN",
+    "Flutter",
+    "Kotlin",
+    "Swift",
+  ],
+  frontEnd: ["React.js", "Vue.js", "Anguler.js", "JQuery"],
+  backEnd: ["Node.js", "Spring", "Django", "Ruby"],
+  app: ["RN", "Flutter", "Kotlin", "Swift"],
+};

@@ -6,7 +6,7 @@ import {
   Container,
   DetailText,
   FindText,
-  FindWrapper,
+  InputWrapper,
   Wrapper,
 } from "styles/common";
 import { useForm } from "react-hook-form";
@@ -26,7 +26,7 @@ const PwSearch = () => {
   return (
     <Wrapper>
       <Container onSubmit={handleSubmit(onSubmit)}>
-        <FindWrapper>
+        <InputWrapper>
           <FindText>비밀번호 찾기</FindText>
           <DetailText>
             아이디에 해당하는 학교 이메일로 임시 비밀번호를 전송합니다
@@ -52,7 +52,7 @@ const PwSearch = () => {
           <SubmitButton type="submit" disabled={!isValid}>
             전송
           </SubmitButton>
-        </FindWrapper>
+        </InputWrapper>
       </Container>
     </Wrapper>
   );

@@ -8,7 +8,7 @@ import {
   Container,
   DetailText,
   FindText,
-  FindWrapper,
+  InputWrapper,
   SubmitButton,
   Wrapper,
 } from "styles/common";
@@ -27,7 +27,7 @@ const PwChange = () => {
   return (
     <Wrapper>
       <Container onSubmit={handleSubmit(onSubmit)}>
-        <FindWrapper>
+        <InputWrapper>
           <FindText>비밀번호 변경</FindText>
           <DetailText>
             현재 비밀번호와 새로 사용할 비밀번호를 입력해주세요
@@ -66,7 +66,7 @@ const PwChange = () => {
           <SubmitButton disabled={!isValid} type="submit">
             변경
           </SubmitButton>
-        </FindWrapper>
+        </InputWrapper>
       </Container>
     </Wrapper>
   );

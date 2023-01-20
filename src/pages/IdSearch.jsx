@@ -1,5 +1,3 @@
-import styled from "@emotion/styled";
-import { React } from "react";
 import { TextField } from "@material-ui/core";
 import Auth from "../api/Auth";
 import {
@@ -7,7 +5,8 @@ import {
   Container,
   DetailText,
   FindText,
-  FindWrapper,
+  InputWrapper,
+  SubmitButton,
   Wrapper,
 } from "styles/common";
 import { useForm } from "react-hook-form";
@@ -27,7 +26,7 @@ const IdSearch = () => {
   return (
     <Wrapper>
       <Container onSubmit={handleSubmit(onSubmit)}>
-        <FindWrapper>
+        <InputWrapper>
           <FindText>아이디 찾기</FindText>
           <DetailText>학교 계정을 입력하세요</DetailText>
 
@@ -44,31 +43,10 @@ const IdSearch = () => {
           <SubmitButton type="submit" disabled={!isValid}>
             전송
           </SubmitButton>
-        </FindWrapper>
+        </InputWrapper>
       </Container>
     </Wrapper>
   );
 };
 
 export default IdSearch;
-
-const SubmitButton = styled.button`
-  border: none;
-  border-radius: 10px;
-  background-color: #00a0e9;
-  color: white;
-  font-weight: bold;
-  font-size: 15px;
-  padding: 10px 20px;
-  margin-top: 10px;
-  margin-bottom: 30px;
-  width: 100%;
-  &:hover {
-    background-color: #5d8bf4;
-    cursor: pointer;
-  }
-  &:disabled {
-    background-color: #b3b3b3;
-    cursor: default;
-  }
-`;

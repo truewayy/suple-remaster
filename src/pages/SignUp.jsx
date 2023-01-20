@@ -340,7 +340,7 @@ const CheckText = styled.div`
 `;
 
 const LoginWrapper = styled.div`
-  width: 330px;
+  width: 300px;
   &#search {
     width: 100%;
     display: flex;

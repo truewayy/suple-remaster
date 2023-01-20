@@ -1,34 +1,32 @@
 import styled from "@emotion/styled";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Cookies } from "react-cookie";
 import { useSetRecoilState } from "recoil";
 import { userInfoState } from "../store/state";
 import { queryClient } from "..";
-import { getToken } from "../api/apiController";
+import { getToken, removeToken } from "../api/apiController";
+import Navigate from "hooks/navigate";
 
 const Nav = () => {
-  let navigate = useNavigate();
-  let cookies = new Cookies();
-  const setUserInfo = useSetRecoilState(userInfoState);
+  const { go } = Navigate();
   const [click, setClick] = useState(false);
+  const setUserInfo = useSetRecoilState(userInfoState);
   const handleClick = () => {
     setClick(!click);
   };
   const Logout = () => {
-    cookies.remove("accessToken");
-    cookies.remove("refreshToken");
+    removeToken("accessToken");
+    removeToken("refreshToken");
     setUserInfo(undefined);
-    navigate("/");
+    go("/");
     queryClient.invalidateQueries("myInfo");
   };
-  let cookie = getToken("accessToken");
+  const cookie = getToken("accessToken");
 
   return (
     <Navbar>
-      <NavLogo onClick={() => navigate("/")}>SUPLE</NavLogo>
+      <NavLogo onClick={() => go("/")}>SUPLE</NavLogo>
       <MobileIcon onClick={handleClick}>
         <FontAwesomeIcon icon={faBars} />
       </MobileIcon>
@@ -37,26 +35,26 @@ const Nav = () => {
           <NavLinks
             onClick={() => {
               alert("로그인 후 이용해주세요");
-              navigate("/login");
+              go("/login");
             }}
           >
             글 쓰기
           </NavLinks>
         ) : (
-          <NavLinks onClick={() => navigate("/write")}>글 쓰기</NavLinks>
+          <NavLinks onClick={() => go("/write")}>글 쓰기</NavLinks>
         )}
-        <NavLinks onClick={() => navigate("/notice")}>공지사항</NavLinks>
+        <NavLinks onClick={() => go("/notice")}>공지사항</NavLinks>
         {!cookie ? (
-          <NavLinks onClick={() => navigate("/login")}>로그인</NavLinks>
+          <NavLinks onClick={() => go("/login")}>로그인</NavLinks>
         ) : (
           <NavLinks onClick={() => Logout()}>로그아웃</NavLinks>
         )}
         {!cookie ? (
-          <NavLinks id="signup" onClick={() => navigate("/signup")}>
+          <NavLinks id="signup" onClick={() => go("/signup")}>
             회원가입
           </NavLinks>
         ) : (
-          <NavLinks id="signup" onClick={() => navigate("/myinformation")}>
+          <NavLinks id="signup" onClick={() => go("/myinformation")}>
             내 정보
           </NavLinks>
         )}
@@ -118,7 +116,7 @@ const NavMenu = styled.nav`
     height: 90vh;
     position: absolute;
     top: 80px;
-    left: ${(props) => (props.click ? 0 : "-100%")};
+    left: ${({ click }) => (click ? 0 : "-100%")};
     opacity: 1;
     transition: all 0.5s ease;
     background: #fff;

@@ -6,31 +6,29 @@ import Post from "../api/Post";
 import { useRecoilValue } from "recoil";
 import { partState } from "../store/state";
 import Modal from "./Modal";
+import { subStr } from "utils/subStr";
+import { stacks } from "store/options";
 
 export const Team = ({ row }) => {
   const [modal, setModal] = useState(false);
   const stack = row.stack.split(", ");
-  let title = row.title;
-  if (title.length >= 25) {
-    title = row.title.substr(0, 25) + "...";
-  }
+  const OddStack = stack.filter((v, i) => !(i % 2) && v);
+  const EvenStack = stack.filter((v, i) => i % 2 && v);
+  const title = subStr(row.title, 25);
+
   return (
     <>
       <Wrapper onClick={() => setModal(true)}>
         <TagWrapper>
           <TagBox>
-            {stack
-              .filter((v, i) => !(i % 2))
-              .map((v, i) => (
-                <ContentTag key={i}>#{v}</ContentTag>
-              ))}
+            {OddStack.map((v, i) => (
+              <ContentTag key={i}>#{v}</ContentTag>
+            ))}
           </TagBox>
           <TagBox id="bottom">
-            {stack
-              .filter((v, i) => i % 2)
-              .map((v, i) => (
-                <ContentTag key={i}>#{v}</ContentTag>
-              ))}
+            {EvenStack.map((v, i) => (
+              <ContentTag key={i}>#{v}</ContentTag>
+            ))}
           </TagBox>
         </TagWrapper>
         <ContentTitle>{title}</ContentTitle>
@@ -55,73 +53,14 @@ const TeamList = () => {
     cacheTime: 1000 * 60 * 5,
     staleTime: 1000 * 60 * 5,
   });
-  const [stack, setStack] = useState([
-    "React.js",
-    "Vue.js",
-    "Anguler.js",
-    "jQuery",
-    "Node.js",
-    "Spring",
-    "Django",
-    "Ruby",
-    "RN",
-    "Flutter",
-    "Kotlin",
-    "Swift",
-  ]);
+  const [stack, setStack] = useState(stacks.all);
   useEffect(() => {
-    switch (part) {
-      case "all":
-        setStack([
-          "React.js",
-          "Vue.js",
-          "Anguler.js",
-          "JQuery",
-          "Node.js",
-          "Spring",
-          "Django",
-          "Ruby",
-          "RN",
-          "Flutter",
-          "Kotlin",
-          "Swift",
-        ]);
-        break;
-      case "frontEnd":
-        setStack(["React.js", "Vue.js", "Anguler.js", "jQuery"]);
-        break;
-      case "backEnd":
-        setStack(["Node.js", "Spring", "Django", "Ruby"]);
-        break;
-      case "app":
-        setStack(["RN", "Flutter", "Kotlin", "Swift"]);
-        break;
-      default:
-        setStack([
-          "React.js",
-          "Vue.js",
-          "Anguler.js",
-          "JQuery",
-          "Node.js",
-          "Spring",
-          "Django",
-          "Ruby",
-          "RN",
-          "Flutter",
-          "Kotlin",
-          "Swift",
-        ]);
-        break;
-    }
+    setStack(stacks[part]);
   }, [part]);
+
   return data?.data
-    .filter(
-      (v) =>
-        v.stack.split(", ").filter((v, i) => stack.includes(v)).length !== 0
-    )
-    .map((v, i) => {
-      return <Team row={v} key={v.post_key} />;
-    });
+    .filter((v) => v.stack.split(", ").filter((v) => stack.includes(v)).length)
+    .map((v) => <Team row={v} key={v.post_key} />);
 };
 
 export default TeamList;

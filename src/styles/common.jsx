@@ -16,10 +16,9 @@ export const Container = styled.form`
   width: 350px;
 `;
 
-export const FindWrapper = styled.div`
+export const InputWrapper = styled.div`
   width: 300px;
   &#search {
-    width: 100%;
     display: flex;
     justify-content: space-between;
   }

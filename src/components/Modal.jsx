@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
-import styled, { keyframes } from "styled-components";
+import styled from "@emotion/styled/macro";
+import { keyframes } from "@emotion/react";
+
 const Modal = ({ id, width, height, children, isOpen, onRequestClose }) => {
   useEffect(() => {
     const onKeyPress = (e) => e.key === "Escape" && onRequestClose();
