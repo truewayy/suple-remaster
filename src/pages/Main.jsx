@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import TeamList from "../components/TeamList";
-import moment from "moment";
-import "moment/locale/ko";
 import { useRecoilState } from "recoil";
 import { partState, userInfoState } from "../store/state";
 import jwt_decode from "jwt-decode";
@@ -11,18 +9,15 @@ import { Wrapper } from "styles/common";
 import Navigate from "hooks/navigate";
 import { options } from "store/options";
 import OptionSelect from "components/OptionSelect";
+import PostSearch from "components/PostSearch";
+import { nowTime } from "utils/nowTime";
 // designed by soo kyung
 
 const Main = () => {
   const { go } = Navigate();
-  const nowTime = moment().format("YYYY년 M월 D일");
-  const [search, setSearch] = useState("");
   const [select, setSelect] = useState(false);
   const [part, setPart] = useRecoilState(partState);
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
-  const onKeypress = (e) => {
-    e.key === "Enter" && go(`/search?q=${search}`);
-  };
 
   useEffect(() => {
     const token = getToken("accessToken");
@@ -35,13 +30,7 @@ const Main = () => {
   return (
     <Wrapper>
       <Container>
-        <SearchInput
-          placeholder="원하는 기술스택, 제목으로 프로젝트를 검색해보세요!"
-          onChange={(e) => {
-            setSearch(e.target.value);
-          }}
-          onKeyPress={onKeypress}
-        />
+        <PostSearch />
         <SelectWrapper>
           <MainTextBox>
             <MainText>분야별로</MainText>
@@ -95,32 +84,6 @@ const Container = styled.div`
   align-items: center;
   width: 900px;
   margin: 20px;
-`;
-
-const SearchInput = styled.input`
-  width: 70%;
-  font-size: 16px;
-  border: 2px solid #00a0e9;
-  border-radius: 15px;
-  padding: 10px 20px;
-  margin: 10px;
-  background-repeat: no-repeat;
-  background-position: 98%;
-
-  &:focus {
-    outline: none;
-    border-color: #5d8bf4;
-  }
-  &:hover {
-    border-color: #5d8bf4;
-  }
-  @media screen and (max-width: 767px) {
-    width: 90%;
-    transform: scale(0.92);
-    ::placeholder {
-      font-size: 13px;
-    }
-  }
 `;
 
 const SelectWrapper = styled.div`

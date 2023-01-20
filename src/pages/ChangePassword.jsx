@@ -1,5 +1,4 @@
 import { React } from "react";
-import styled from "styled-components";
 import { TextField } from "@material-ui/core";
 import { validatePassword, validatePasswordConfirm } from "utils/validate";
 import Auth from "../api/Auth";
@@ -10,6 +9,7 @@ import {
   DetailText,
   FindText,
   FindWrapper,
+  SubmitButton,
   Wrapper,
 } from "styles/common";
 
@@ -73,24 +73,3 @@ const PwChange = () => {
 };
 
 export default PwChange;
-
-const SubmitButton = styled.button`
-  border: none;
-  border-radius: 10px;
-  background-color: #00a0e9;
-  color: white;
-  font-weight: bold;
-  font-size: 15px;
-  padding: 10px 20px;
-  margin-top: 10px;
-  margin-bottom: 30px;
-  width: 100%;
-  &:hover {
-    background-color: #5d8bf4;
-    cursor: pointer;
-  }
-  &:disabled {
-    background-color: #eee;
-    cursor: default;
-  }
-`;

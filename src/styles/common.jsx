@@ -55,3 +55,24 @@ export const CheckText = styled.div`
     padding-bottom: 0px;
   }
 `;
+
+export const SubmitButton = styled.button`
+  border: none;
+  border-radius: 10px;
+  background-color: #00a0e9;
+  color: white;
+  font-weight: bold;
+  font-size: 15px;
+  padding: 10px 20px;
+  margin-top: 10px;
+  margin-bottom: 30px;
+  width: 100%;
+  &:hover {
+    background-color: #5d8bf4;
+    cursor: pointer;
+  }
+  &:disabled {
+    background-color: #eee;
+    cursor: default;
+  }
+`;
