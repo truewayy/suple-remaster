@@ -1,8 +1,8 @@
-import instance from "./apiController";
-
+import JwtInterceptor from "./apiController";
 const rootUrl = "http://suple.cafe24app.com/api";
 
 const User = () => {
+  const { instance } = JwtInterceptor();
   // 내 정보 API
   const info = async () => {
     return instance({

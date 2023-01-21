@@ -1,9 +1,11 @@
 import Navigate from "hooks/navigate";
-import instance, { getToken, removeToken, setToken } from "./apiController";
+import { removeToken, setToken } from "./apiController";
+import JwtInterceptor from "./apiController";
 const rootUrl = "http://suple.cafe24app.com/api";
 
 const Auth = () => {
   const { go } = Navigate();
+  const { instance } = JwtInterceptor();
   // 로그인 API
   const login = async (id, pw) => {
     return instance({
@@ -184,18 +186,6 @@ const Auth = () => {
       });
   };
 
-  // 토큰 리프레시 API
-  const refresh = async (id) => {
-    const token = getToken("refreshToken");
-    return instance({
-      method: "get",
-      url: `${rootUrl}/refresh/${id}`,
-      headers: {
-        Authorization: token,
-      },
-    });
-  };
-
   return {
     login,
     register,
@@ -206,7 +196,6 @@ const Auth = () => {
     changePw,
     findId,
     exit,
-    refresh,
   };
 };
 export default Auth;
