@@ -3,10 +3,10 @@ import styled from "@emotion/styled";
 export const Wrapper = styled.div`
   display: flex;
   justify-content: center;
+  margin-top: 100px;
 `;
 
 export const Container = styled.form`
-  margin: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;

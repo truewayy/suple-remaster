@@ -60,6 +60,7 @@ export default MyInformation;
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
+  margin-top: 80px;
   &#loading {
     height: 60vh;
     align-items: center;

@@ -67,15 +67,17 @@ export default Nav;
 
 const Navbar = styled.nav`
   background: #ffffff;
-  margin: 0 auto;
-  height: 110px;
+  height: 80px;
   display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
   justify-content: center;
   align-items: center;
   font-size: 1.2rem;
   font-weight: 500;
-  top: 0;
-  z-index: 999;
   justify-content: space-around;
   border-bottom: 1.5px solid #e0e0e0;
 `;
@@ -113,7 +115,7 @@ const NavMenu = styled.nav`
   @media screen and (max-width: 960px) {
     flex-direction: column;
     width: 100%;
-    height: 90vh;
+    height: 100vh;
     position: absolute;
     top: 80px;
     left: ${({ click }) => (click ? 0 : "-100%")};
@@ -137,12 +139,8 @@ const NavLinks = styled.div`
   }
 
   @media screen and (max-width: 960px) {
+    display: table;
     text-align: center;
     padding: 2rem;
-    display: table;
-    &:hover {
-      color: #00a0e9;
-      transition: all 0.3s ease;
-    }
   }
 `;

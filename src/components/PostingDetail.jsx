@@ -16,14 +16,12 @@ const PostingDetail = ({ row, setModal }) => {
       </StackWrapper>
       <ContentBox>
         <Content>
-          {row.content.split("\n").map((value, index) => {
-            return (
-              <div key={index}>
-                {value}
-                <br />
-              </div>
-            );
-          })}
+          {row.content.split("\n").map((value, index) => (
+            <div key={index}>
+              {value}
+              <br />
+            </div>
+          ))}
         </Content>
       </ContentBox>
       <StackWrapper>
