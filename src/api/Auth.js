@@ -1,21 +1,18 @@
 import Navigate from "hooks/navigate";
 import { removeToken, setToken } from "./apiController";
 import JwtInterceptor from "./apiController";
-const rootUrl = "http://suple.cafe24app.com/api";
+import { API_URLS } from "constants/apiUrl";
 
 const Auth = () => {
   const { go } = Navigate();
   const { instance } = JwtInterceptor();
   // 로그인 API
   const login = async (id, pw) => {
-    return instance({
-      method: "post",
-      url: `${rootUrl}/login`,
-      data: {
+    return instance
+      .post(API_URLS.AUTH.LOGIN, {
         user_id: id,
         user_password: pw,
-      },
-    })
+      })
       .then((r) => {
         if (r.data.success) {
           setToken("accessToken", r.data.Authorization["accessToken"]);
@@ -29,26 +26,19 @@ const Auth = () => {
   };
   // 회원가입 API
   const register = async (username, password, email) => {
-    return instance({
-      method: "post",
-      url: `${rootUrl}/signup`,
-      data: {
-        user_id: username,
-        user_password: password,
-        user_email: email,
-      },
+    return instance.post(API_URLS.AUTH.REGISTER, {
+      user_id: username,
+      user_password: password,
+      user_email: email,
     });
   };
 
   // 회원가입 - 아이디중복확인 API
   const checkId = async (setCheckID, username) => {
-    return instance({
-      method: "post",
-      url: `${rootUrl}/signup/checkid`,
-      data: {
+    return instance
+      .post(API_URLS.AUTH.CHECK_ID, {
         user_id: username,
-      },
-    })
+      })
       .then((r) => {
         if (r.data.tf) {
           alert("사용가능한 ID입니다");
@@ -63,13 +53,10 @@ const Auth = () => {
 
   // 회원가입 - 이메일중복확인 API
   const checkEmail = async (setCheckEmail, email) => {
-    return instance({
-      method: "post",
-      url: `${rootUrl}/signup/checkemail`,
-      data: {
+    return instance
+      .post(API_URLS.AUTH.CHECK_EMAIL, {
         user_email: email,
-      },
-    })
+      })
       .then((r) => {
         if (r.data.tf) {
           alert("사용가능한 이메일입니다");
@@ -84,13 +71,10 @@ const Auth = () => {
 
   // 회원가입 - 이메일 인증코드전송 API
   const sendCode = async (setIsCode, setCode, email) => {
-    return instance({
-      method: "post",
-      url: `${rootUrl}/signup/mail`,
-      data: {
+    return instance
+      .post(API_URLS.AUTH.SEND_MAIL, {
         mail: email,
-      },
-    })
+      })
       .then((r) => {
         setIsCode(true);
         setCode(r.data);
@@ -103,13 +87,10 @@ const Auth = () => {
 
   // 아이디찾기 API
   const findId = (email) => {
-    instance({
-      method: "post",
-      url: `${rootUrl}/findIdx`,
-      data: {
+    instance
+      .post(API_URLS.AUTH.FIND_ID, {
         email: email,
-      },
-    })
+      })
       .then((r) => {
         if (r.data) {
           alert(r.data.message);
@@ -122,14 +103,11 @@ const Auth = () => {
 
   // 비밀번호 찾기 API
   const findPw = async (username, email) => {
-    return instance({
-      method: "post",
-      url: `${rootUrl}/findPw`,
-      data: {
+    return instance
+      .post(API_URLS.AUTH.FIND_PW, {
         user_id: username,
         user_email: email,
-      },
-    })
+      })
       .then((r) => {
         if (r.data.tf) {
           alert("이메일로 임시 비밀번호를 전송하였습니다");
@@ -143,14 +121,11 @@ const Auth = () => {
 
   // 비밀번호 변경 API
   const changePw = async (currentPassword, newPassword) => {
-    return instance({
-      method: "post",
-      url: `${rootUrl}/updatePassword`,
-      data: {
+    return instance
+      .post(API_URLS.AUTH.CHANGE_PW, {
         currentPassword: currentPassword,
         newPassword: newPassword,
-      },
-    })
+      })
       .then((response) => {
         if (response.data.tf) {
           alert("비밀번호 변경 성공하였습니다\n(다시 로그인 해주세요)");
@@ -166,13 +141,12 @@ const Auth = () => {
 
   // 회원탈퇴 API
   const exit = async (password) => {
-    return instance({
-      method: "delete",
-      url: `${rootUrl}/quit`,
-      data: {
-        password: password,
-      },
-    })
+    return instance
+      .delete(API_URLS.AUTH.EXIT, {
+        data: {
+          password: password,
+        },
+      })
       .then((r) => {
         if (r.data.tf) {
           alert("회원탈퇴 성공하였습니다\n(안녕히 가세요 ^^))");

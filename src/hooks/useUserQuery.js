@@ -13,7 +13,7 @@ const useUserQuery = () => {
     return { data, isLoading };
   };
 
-  const RemovePost = ({ key }) => {
+  const RemovePost = (key) => {
     const { mutate: remove } = useMutation(() => user.removePost(key), {
       onSuccess: (res) => {
         if (res.data.tf) {

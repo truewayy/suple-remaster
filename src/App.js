@@ -14,6 +14,7 @@ import Search from "./pages/Search";
 import PwChange from "./pages/ChangePassword";
 import Exit from "./pages/Exit";
 import { global } from "globalStyles";
+import { ROUTES } from "constants/routes";
 
 function App() {
   return (
@@ -21,18 +22,18 @@ function App() {
       {global}
       <Nav />
       <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/idsearch" element={<IdSearch />} />
-        <Route path="/pwsearch" element={<PwSearch />} />
-        <Route path="/notice" element={<Notice />} />
-        <Route path="/myinformation" element={<MyInformation />} />
-        <Route path="/myinformation/changePassword" element={<PwChange />} />
-        <Route path="/myinformation/quit" element={<Exit />} />
-        <Route path="/write" element={<WriteForm />} />
-        <Route path="/total" element={<WrittenPost />} />
-        <Route path="/search" element={<Search />} />
+        <Route path={ROUTES.HOME} element={<Main />} />
+        <Route path={ROUTES.SIGNUP} element={<SignUp />} />
+        <Route path={ROUTES.LOGIN} element={<Login />} />
+        <Route path={ROUTES.ID_SEARCH} element={<IdSearch />} />
+        <Route path={ROUTES.PW_SEARCH} element={<PwSearch />} />
+        <Route path={ROUTES.NOTICE} element={<Notice />} />
+        <Route path={ROUTES.MY_INFORMATION} element={<MyInformation />} />
+        <Route path={ROUTES.CHANGE_PASSWORD} element={<PwChange />} />
+        <Route path={ROUTES.EXIT} element={<Exit />} />
+        <Route path={ROUTES.WRITE} element={<WriteForm />} />
+        <Route path={ROUTES.TOTAL} element={<WrittenPost />} />
+        <Route path={ROUTES.SEARCH} element={<Search />} />
       </Routes>
       <WriteButton />
     </BrowserRouter>

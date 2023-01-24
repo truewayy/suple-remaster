@@ -1,50 +1,37 @@
+import { API_URLS } from "constants/apiUrl";
 import JwtInterceptor from "./apiController";
-const rootUrl = "http://suple.cafe24app.com/api";
 
 const User = () => {
   const { instance } = JwtInterceptor();
   // 내 정보 API
   const info = async () => {
-    return instance({
-      method: "get",
-      url: `${rootUrl}/myinformation`,
-    });
+    return instance.get(API_URLS.USER.INFO);
   };
 
   // 글쓰기 API
   const writePost = (title, stack, content, contact) => {
-    return instance({
-      method: "post",
-      url: `${rootUrl}/write`,
-      data: {
-        title: title,
-        stack: stack,
-        content: content,
-        contact: contact,
-      },
+    return instance.post(API_URLS.USER.WRITE_POST, {
+      title: title,
+      stack: stack,
+      content: content,
+      contact: contact,
     });
   };
 
   // 글수정 API
   const updatePost = (title, stack, content, contact, post_key) => {
-    return instance({
-      method: "post",
-      url: `${rootUrl}/update`,
-      data: {
-        title: title,
-        stack: stack,
-        content: content,
-        contact: contact,
-        post_key: post_key,
-      },
+    return instance.post(API_URLS.USER.UPDATE_POST, {
+      title: title,
+      stack: stack,
+      content: content,
+      contact: contact,
+      post_key: post_key,
     });
   };
 
   // 글삭제 API
   const removePost = (post_key) => {
-    return instance({
-      method: "delete",
-      url: `${rootUrl}/delete`,
+    return instance.delete(API_URLS.USER.REMOVE_POST, {
       data: {
         post_key: post_key,
       },

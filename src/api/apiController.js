@@ -30,6 +30,7 @@ export const refresh = async (id) => {
 const JwtInterceptor = () => {
   const instance = axios.create({
     timeout: 2000,
+    baseURL: "http://suple.cafe24app.com/api",
   });
 
   const redirecting = () => {
