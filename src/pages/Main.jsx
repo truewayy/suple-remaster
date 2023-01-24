@@ -7,7 +7,7 @@ import jwt_decode from "jwt-decode";
 import { getToken } from "../api/apiController";
 import { Wrapper } from "styles/common";
 import Navigate from "hooks/navigate";
-import { filters } from "store/options";
+import { filters } from "constants/options";
 import OptionSelect from "components/OptionSelect";
 import PostSearch from "components/PostSearch";
 import { nowTime } from "utils/nowTime";

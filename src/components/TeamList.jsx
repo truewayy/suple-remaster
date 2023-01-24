@@ -7,7 +7,7 @@ import { useRecoilValue } from "recoil";
 import { partState } from "../store/state";
 import Modal from "./Modal";
 import { subStr } from "utils/subStr";
-import { stacks } from "store/options";
+import { stacks } from "constants/options";
 
 export const Team = ({ row }) => {
   const [modal, setModal] = useState(false);
