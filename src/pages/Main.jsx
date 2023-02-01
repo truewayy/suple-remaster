@@ -6,7 +6,7 @@ import { partState, userInfoState } from "../store/state";
 import jwt_decode from "jwt-decode";
 import { getToken } from "../api/apiController";
 import { Wrapper } from "styles/common";
-import Navigate from "hooks/navigate";
+import { useNavigate } from "react-router-dom";
 import { filters } from "constants/options";
 import OptionSelect from "components/OptionSelect";
 import PostSearch from "components/PostSearch";
@@ -14,7 +14,7 @@ import { nowTime } from "utils/nowTime";
 // designed by soo kyung
 
 const Main = () => {
-  const { go } = Navigate();
+  const navigate = useNavigate();
   const [select, setSelect] = useState(false);
   const [part, setPart] = useRecoilState(partState);
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
@@ -36,8 +36,10 @@ const Main = () => {
             <MainText>분야별로</MainText>
             <MainText>
               나의 팀원들을 찾아보세요!{" "}
-              <GrayText onClick={() => go("/total")}>{"글 목록 >"}</GrayText>
-              <MobileGrayText onClick={() => go("/total")}>
+              <GrayText onClick={() => navigate("/total")}>
+                {"글 목록 >"}
+              </GrayText>
+              <MobileGrayText onClick={() => navigate("/total")}>
                 {"글 목록 >"}
               </MobileGrayText>
             </MainText>
@@ -54,7 +56,7 @@ const Main = () => {
         <ContentWrapper>
           <NoticeWrapper
             onClick={() => {
-              go("notice");
+              navigate("notice");
             }}
           >
             <NoticeContainer>

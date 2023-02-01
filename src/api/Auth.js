@@ -1,10 +1,10 @@
-import Navigate from "hooks/navigate";
 import { removeToken, setToken } from "./apiController";
 import JwtInterceptor from "./apiController";
 import { API_URLS } from "constants/apiUrl";
+import { useNavigate } from "react-router-dom";
 
 const Auth = () => {
-  const { go } = Navigate();
+  const navigate = useNavigate();
   const { instance } = JwtInterceptor();
   // 로그인 API
   const login = async (id, pw) => {
@@ -17,7 +17,7 @@ const Auth = () => {
         if (r.data.success) {
           setToken("accessToken", r.data.Authorization["accessToken"]);
           setToken("refreshToken", r.data.Authorization["refreshToken"]);
-          go("/");
+          navigate("/");
         }
       })
       .catch((error) => {
@@ -131,7 +131,7 @@ const Auth = () => {
           alert("비밀번호 변경 성공하였습니다\n(다시 로그인 해주세요)");
           removeToken("accessToken");
           removeToken("refreshToken");
-          go("/login");
+          navigate("/login");
         }
       })
       .catch((error) => {

@@ -1,9 +1,8 @@
 import { useRef } from "react";
-import Navigate from "./navigate";
-
+import { useNavigate } from "react-router-dom";
 const useSearch = () => {
   const input = useRef(null);
-  const { go } = Navigate();
+  const navigate = useNavigate();
 
   const onKeypress = (e) => {
     if (e.key !== "Enter") return;
@@ -12,7 +11,7 @@ const useSearch = () => {
       return;
     }
 
-    go(`/search?q=${input.current.value}`);
+    navigate(`/search?q=${input.current.value}`);
   };
 
   return [input, onKeypress];

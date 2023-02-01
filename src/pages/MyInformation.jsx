@@ -1,11 +1,11 @@
 import styled from "@emotion/styled";
 import { React } from "react";
-import Navigate from "hooks/navigate";
+import { useNavigate } from "react-router-dom";
 import useUserQuery from "hooks/useUserQuery";
 import MyPosting from "components/MyPosting";
 
 const MyInformation = () => {
-  const { go } = Navigate();
+  const navigate = useNavigate();
   const { MyInfo } = useUserQuery();
   const { data, isLoading } = MyInfo();
   if (isLoading) return <Wrapper id="loading">로딩 중...</Wrapper>;
@@ -38,12 +38,15 @@ const MyInformation = () => {
           <ContentTitle>부가 기능</ContentTitle>
           <RowWrapper>
             <DetailWrapper>
-              <ContentDetail id="extra" onClick={() => go("changePassword")}>
+              <ContentDetail
+                id="extra"
+                onClick={() => navigate("changePassword")}
+              >
                 비밀번호 변경
               </ContentDetail>
               <ContentDetail
                 id="extra"
-                onClick={() => go("quit")}
+                onClick={() => navigate("quit")}
                 style={{ marginBottom: "0px" }}
               >
                 회원 탈퇴

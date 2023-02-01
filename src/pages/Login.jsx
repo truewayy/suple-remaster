@@ -3,11 +3,11 @@ import Auth from "../api/Auth";
 import { TextField } from "@material-ui/core";
 import { Container, SubmitButton, Wrapper, InputWrapper } from "styles/common";
 import { useForm } from "react-hook-form";
-import Navigate from "hooks/navigate";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const { login } = Auth();
-  const { go } = Navigate();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -41,10 +41,10 @@ const Login = () => {
         </InputWrapper>
 
         <InputWrapper id="search">
-          <SearchLink id="id" onClick={() => go("/idsearch")}>
+          <SearchLink id="id" onClick={() => navigate("/idsearch")}>
             아이디 찾기
           </SearchLink>
-          <SearchLink id="pw" onClick={() => go("/pwsearch")}>
+          <SearchLink id="pw" onClick={() => navigate("/pwsearch")}>
             비밀번호 찾기
           </SearchLink>
         </InputWrapper>

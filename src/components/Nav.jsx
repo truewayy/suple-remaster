@@ -6,10 +6,10 @@ import { useSetRecoilState } from "recoil";
 import { userInfoState } from "../store/state";
 import { queryClient } from "..";
 import { getToken, removeToken } from "../api/apiController";
-import Navigate from "hooks/navigate";
+import { useNavigate } from "react-router-dom";
 
 const Nav = () => {
-  const { go } = Navigate();
+  const navigate = useNavigate();
   const [click, setClick] = useState(false);
   const setUserInfo = useSetRecoilState(userInfoState);
   const handleClick = () => {
@@ -19,14 +19,14 @@ const Nav = () => {
     removeToken("accessToken");
     removeToken("refreshToken");
     setUserInfo(undefined);
-    go("/");
+    navigate("/");
     queryClient.invalidateQueries("myInfo");
   };
   const cookie = getToken("accessToken");
 
   return (
     <Navbar>
-      <NavLogo onClick={() => go("/")}>SUPLE</NavLogo>
+      <NavLogo onClick={() => navigate("/")}>SUPLE</NavLogo>
       <MobileIcon onClick={handleClick}>
         <FontAwesomeIcon icon={faBars} />
       </MobileIcon>
@@ -35,26 +35,26 @@ const Nav = () => {
           <NavLinks
             onClick={() => {
               alert("로그인 후 이용해주세요");
-              go("/login");
+              navigate("/login");
             }}
           >
             글 쓰기
           </NavLinks>
         ) : (
-          <NavLinks onClick={() => go("/write")}>글 쓰기</NavLinks>
+          <NavLinks onClick={() => navigate("/write")}>글 쓰기</NavLinks>
         )}
-        <NavLinks onClick={() => go("/notice")}>공지사항</NavLinks>
+        <NavLinks onClick={() => navigate("/notice")}>공지사항</NavLinks>
         {!cookie ? (
-          <NavLinks onClick={() => go("/login")}>로그인</NavLinks>
+          <NavLinks onClick={() => navigate("/login")}>로그인</NavLinks>
         ) : (
           <NavLinks onClick={() => Logout()}>로그아웃</NavLinks>
         )}
         {!cookie ? (
-          <NavLinks id="signup" onClick={() => go("/signup")}>
+          <NavLinks id="signup" onClick={() => navigate("/signup")}>
             회원가입
           </NavLinks>
         ) : (
-          <NavLinks id="signup" onClick={() => go("/myinformation")}>
+          <NavLinks id="signup" onClick={() => navigate("/myinformation")}>
             내 정보
           </NavLinks>
         )}

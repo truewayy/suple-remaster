@@ -2,18 +2,18 @@ import React from "react";
 import styled from "@emotion/styled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import Navigate from "hooks/navigate";
+import { useNavigate } from "react-router-dom";
 import { getToken } from "api/apiController";
 
 const WriteButton = () => {
   const cookie = getToken("accessToken");
-  const { go } = Navigate();
+  const navigate = useNavigate();
   const handleClick = () => {
     if (cookie) {
-      go("/write");
+      navigate("/write");
     } else {
       alert("로그인 후 이용해주세요");
-      go("/login");
+      navigate("/login");
     }
   };
   return (
