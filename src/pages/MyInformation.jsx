@@ -9,7 +9,7 @@ const MyInformation = () => {
   const { MyInfo } = useUserQuery();
   const { data, isLoading } = MyInfo();
   if (isLoading) return <Wrapper id="loading">로딩 중...</Wrapper>;
-  const user = data.data;
+  const { data: user } = data;
 
   return (
     <Wrapper>
@@ -23,16 +23,16 @@ const MyInformation = () => {
               <ContentDetail id="bottom">학교 인증 메일</ContentDetail>
             </DetailWrapper>
             <DetailWrapper>
-              <DetailData>{user?.id}</DetailData>
-              <DetailData id="bottom">{user?.email}</DetailData>
+              <DetailData>{user.id}</DetailData>
+              <DetailData id="bottom">{user.email}</DetailData>
             </DetailWrapper>
           </RowWrapper>
         </ContentWrapper>
         <ContentWrapper>
           <ContentTitle id="posting">내가 쓴 글</ContentTitle>
-          {user.post.map((v) => {
-            return <MyPosting key={v.post_key} row={v} />;
-          })}
+          {user.post.map((v) => (
+            <MyPosting key={v.post_key} row={v} />
+          ))}
         </ContentWrapper>
         <ContentWrapper>
           <ContentTitle>부가 기능</ContentTitle>

@@ -4,13 +4,13 @@ import TeamList from "../components/TeamList";
 import { useRecoilState } from "recoil";
 import { partState, userInfoState } from "../store/state";
 import jwt_decode from "jwt-decode";
-import { getToken } from "../api/apiController";
 import { Wrapper } from "styles/common";
 import { useNavigate } from "react-router-dom";
 import { filters } from "constants/options";
 import OptionSelect from "components/OptionSelect";
 import PostSearch from "components/PostSearch";
 import { nowTime } from "utils/nowTime";
+import { getCookie } from "utils/Cookie";
 // designed by soo kyung
 
 const Main = () => {
@@ -20,7 +20,7 @@ const Main = () => {
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
 
   useEffect(() => {
-    const token = getToken("accessToken");
+    const token = getCookie("accessToken");
     if (token === "undefined" || !token) return;
     else {
       let parsed = jwt_decode(token);

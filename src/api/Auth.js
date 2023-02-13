@@ -1,7 +1,7 @@
-import { removeToken, setToken } from "./apiController";
 import JwtInterceptor from "./apiController";
 import { API_URLS } from "constants/apiUrl";
 import { useNavigate } from "react-router-dom";
+import { removeCookie, setCookie } from "utils/Cookie";
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -15,8 +15,8 @@ const Auth = () => {
       })
       .then((r) => {
         if (r.data.success) {
-          setToken("accessToken", r.data.Authorization["accessToken"]);
-          setToken("refreshToken", r.data.Authorization["refreshToken"]);
+          setCookie("accessToken", r.data.Authorization["accessToken"]);
+          setCookie("refreshToken", r.data.Authorization["refreshToken"]);
           navigate("/");
         }
       })
@@ -129,8 +129,8 @@ const Auth = () => {
       .then((response) => {
         if (response.data.tf) {
           alert("비밀번호 변경 성공하였습니다\n(다시 로그인 해주세요)");
-          removeToken("accessToken");
-          removeToken("refreshToken");
+          removeCookie("accessToken");
+          removeCookie("refreshToken");
           navigate("/login");
         }
       })
@@ -150,8 +150,8 @@ const Auth = () => {
       .then((r) => {
         if (r.data.tf) {
           alert("회원탈퇴 성공하였습니다\n(안녕히 가세요 ^^))");
-          removeToken("accessToken");
-          removeToken("refreshToken");
+          removeCookie("accessToken");
+          removeCookie("refreshToken");
           window.location.href = "/";
         }
       })

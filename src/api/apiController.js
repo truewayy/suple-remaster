@@ -1,23 +1,10 @@
 import axios from "axios";
 import jwtDecode from "jwt-decode";
-import { Cookies } from "react-cookie";
+import { getCookie, removeCookie, setCookie } from "utils/Cookie";
 
-const cookies = new Cookies();
-
-export const setToken = (name, token) => {
-  return cookies.set(name, token, { path: "/" });
-};
-
-export const removeToken = (token) => {
-  return cookies.remove(token);
-};
-
-export const getToken = (token) => {
-  return cookies.get(token);
-};
 // 토큰 리프레시 API
 export const refresh = async (id) => {
-  const token = getToken("refreshToken");
+  const token = getCookie("refreshToken");
   return axios({
     method: "get",
     url: `http://suple.cafe24app.com/api/refresh/${id}`,
@@ -34,13 +21,13 @@ const JwtInterceptor = () => {
   });
 
   const redirecting = () => {
-    removeToken("accessToken");
-    removeToken("refreshToken");
+    removeCookie("accessToken");
+    removeCookie("refreshToken");
     window.location.href = "/login";
   };
 
   const isAccessTokenValid = () => {
-    const token = getToken("accessToken");
+    const token = getCookie("accessToken");
     if (!token || token === "undefined") return false;
     const tokenInfo = jwtDecode(token);
     if (tokenInfo.exp <= Date.now() / 1000) return false;
@@ -49,8 +36,8 @@ const JwtInterceptor = () => {
 
   const refreshingToken = async () => {
     try {
-      const accessToken = getToken("accessToken");
-      const refreshToken = getToken("refreshToken");
+      const accessToken = getCookie("accessToken");
+      const refreshToken = getCookie("refreshToken");
       if (!accessToken || !refreshToken) {
         return false;
       }
@@ -60,7 +47,7 @@ const JwtInterceptor = () => {
       if (res.status !== 200) {
         throw new Error(`Response status is ${res.status}`);
       } else {
-        setToken("accessToken", res.data.accessToken);
+        setCookie("accessToken", res.data.accessToken);
       }
     } catch (error) {
       console.error("refreshToken ERROR", error);
@@ -82,8 +69,8 @@ const JwtInterceptor = () => {
       request.url.includes("/notice")
     ) {
     } else if (!isAccessTokenValid()) {
-      const accessToken = getToken("accessToken");
-      const refreshToken = getToken("refreshToken");
+      const accessToken = getCookie("accessToken");
+      const refreshToken = getCookie("refreshToken");
       if (!accessToken || !refreshToken) {
         redirecting();
         alert("로그인 후 이용해주세요.");
@@ -95,9 +82,9 @@ const JwtInterceptor = () => {
         alert("로그인 시간이 만료되었습니다. \n다시 로그인 해주세요.");
         return Promise.reject(new Error("Token expired"));
       }
-      request.headers.Authorization = getToken("accessToken");
+      request.headers.Authorization = getCookie("accessToken");
     } else {
-      request.headers.Authorization = getToken("accessToken");
+      request.headers.Authorization = getCookie("accessToken");
     }
     return request;
   });

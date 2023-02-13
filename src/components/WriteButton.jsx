@@ -3,10 +3,10 @@ import styled from "@emotion/styled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-import { getToken } from "api/apiController";
+import { getCookie } from "utils/Cookie";
 
 const WriteButton = () => {
-  const cookie = getToken("accessToken");
+  const cookie = getCookie("accessToken");
   const navigate = useNavigate();
   const handleClick = () => {
     if (cookie) {

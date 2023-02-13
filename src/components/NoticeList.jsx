@@ -33,9 +33,7 @@ const NoticeList = () => {
     cacheTime: 1000 * 60 * 20,
     staleTime: 1000 * 60 * 20,
   });
-  return data?.data.map((v, i) => {
-    return <NoticeContent notice={v} key={v.notice_id} />;
-  });
+  return data?.data.map((v) => <NoticeContent notice={v} key={v.notice_id} />);
 };
 
 export default NoticeList;
