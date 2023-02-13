@@ -1,11 +1,6 @@
 import { React } from "react";
 import styled from "@emotion/styled/macro";
-
-const stacks = {
-  0: ["React.js", "Vue.js", "Anguler.js", "JQuery"],
-  1: ["Node.js", "Spring", "Django", "Ruby"],
-  2: ["RN", "Flutter", "Kotlin", "Swift"],
-};
+import { stacks } from "constants/options";
 
 const StackSelect = ({ field, stack, setStack }) => {
   const techStack = stacks[field];

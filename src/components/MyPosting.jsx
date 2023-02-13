@@ -41,7 +41,7 @@ const MyPosting = ({ row }) => {
         id="edit"
         width={600}
       >
-        <EditPosting setModal={setViewModal} row={row} />
+        <EditPosting setModal={setEditModal} row={row} />
       </Modal>
     </div>
   );

@@ -36,3 +36,21 @@ export const stacks = {
   backEnd: ["Node.js", "Spring", "Django", "Ruby"],
   app: ["RN", "Flutter", "Kotlin", "Swift"],
 };
+
+export const fields = [
+  {
+    id: "frontEnd",
+    name: "프론트엔드",
+    value: "frontEnd",
+  },
+  {
+    id: "backEnd",
+    name: "백엔드",
+    value: "backEnd",
+  },
+  {
+    id: "app",
+    name: "앱",
+    value: "app",
+  },
+];
