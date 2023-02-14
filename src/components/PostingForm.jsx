@@ -1,10 +1,10 @@
 import styled from "@emotion/styled/macro";
-import { fields } from "constants/options";
-import useEditPosting from "hooks/useEditPosting";
+import { fields, postingData } from "constants/options";
+import usePosting from "hooks/usePosting";
 import { React } from "react";
 import StackSelect from "./StackSelect";
 
-const EditPosting = ({ row, setModal }) => {
+const PostingForm = ({ row = postingData, setModal, type = "add" }) => {
   const {
     formData,
     setStack,
@@ -13,17 +13,24 @@ const EditPosting = ({ row, setModal }) => {
     handleChangeField,
     handleChangeTitle,
     onSubmit,
-  } = useEditPosting(row, setModal);
+    edited,
+  } = usePosting({ row, type });
   const { title, field, stack, content, contact } = formData;
+  const page = {
+    add: { title: "글 쓰기", button: "작성하기" },
+    edit: { title: "글 수정", button: "수정하기" },
+  };
+  if (edited) setModal(false);
   return (
-    <FlexForm>
-      <FormContainer>
-        <FormText>글 수정</FormText>
+    <FlexForm id={type}>
+      <FormContainer id={type}>
+        <FormText>{page[type].title}</FormText>
         <FlexRow>
           <FormText id="title">제목</FormText>
           <TextArea
             rows={1}
             defaultValue={title}
+            placeholder="제목을 입력하세요"
             onChange={handleChangeTitle}
           />
         </FlexRow>
@@ -41,6 +48,7 @@ const EditPosting = ({ row, setModal }) => {
                   name="field"
                   id={id}
                   value={value}
+                  placeholder="프로젝트 소개 및 원하는 팀원을 적어주세요"
                   defaultChecked={field === value}
                 />
                 <FormCheckText>{name}</FormCheckText>
@@ -73,17 +81,18 @@ const EditPosting = ({ row, setModal }) => {
           </FormText>
           <TextArea
             rows={1}
+            placeholder="카카오톡 오픈채팅 URL (https:// ....)"
             defaultValue={contact}
             onChange={handleChangeContact}
           />
         </FlexRow>
       </FormContainer>
-      <SubmitButton onClick={onSubmit}>수정하기</SubmitButton>
+      <SubmitButton onClick={onSubmit}>{page[type].button}</SubmitButton>
     </FlexForm>
   );
 };
 
-export default EditPosting;
+export default PostingForm;
 
 const FlexForm = styled.div`
   display: flex;
@@ -91,6 +100,10 @@ const FlexForm = styled.div`
   padding: 0px 30px;
   flex-direction: column;
   align-items: center;
+  &#add {
+    padding: 0;
+    margin: 100px auto;
+  }
 `;
 
 const FormContainer = styled.div`
@@ -99,8 +112,11 @@ const FormContainer = styled.div`
   width: 100%;
   margin: 20px;
   flex-direction: column;
-  @media screen and (max-width: 960px) {
-    width: 100%;
+  &#add {
+    width: 45%;
+    @media screen and (max-width: 960px) {
+      width: 80%;
+    }
   }
 `;
 
@@ -151,6 +167,7 @@ const FlexRow = styled.div`
   &#field {
     align-items: center;
     margin-bottom: 10px;
+    gap: 10px;
     @media only screen and (max-width: 960px) {
       flex-direction: column;
       align-items: flex-start;

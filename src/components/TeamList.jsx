@@ -1,13 +1,10 @@
-import { React, useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "@emotion/styled";
 import PostingDetail from "./PostingDetail";
-import { useQuery } from "react-query";
-import Post from "../api/Post";
-import { useRecoilValue } from "recoil";
-import { partState } from "../store/state";
 import Modal from "./Modal";
 import { subStr } from "utils/subStr";
-import { stacks } from "constants/options";
+import useGetPost from "hooks/useGetPost";
+import useSetField from "hooks/useSetField";
 
 export const Team = ({ row }) => {
   const [modal, setModal] = useState(false);
@@ -21,13 +18,13 @@ export const Team = ({ row }) => {
       <Wrapper onClick={() => setModal(true)}>
         <TagWrapper>
           <TagBox>
-            {OddStack.map((v, i) => (
-              <ContentTag key={i}>#{v}</ContentTag>
+            {OddStack.map((tag) => (
+              <ContentTag key={tag}>#{tag}</ContentTag>
             ))}
           </TagBox>
           <TagBox id="bottom">
-            {EvenStack.map((v, i) => (
-              <ContentTag key={i}>#{v}</ContentTag>
+            {EvenStack.map((tag) => (
+              <ContentTag key={tag}>#{tag}</ContentTag>
             ))}
           </TagBox>
         </TagWrapper>
@@ -47,19 +44,11 @@ export const Team = ({ row }) => {
 };
 
 const TeamList = () => {
-  const { main } = Post();
-  const part = useRecoilValue(partState);
-  const { data } = useQuery("main", main, {
-    cacheTime: 1000 * 60 * 5,
-    staleTime: 1000 * 60 * 5,
-  });
-  const [stack, setStack] = useState(stacks.all);
-  useEffect(() => {
-    setStack(stacks[part]);
-  }, [part]);
-
-  return data?.data
-    .filter((v) => v.stack.split(", ").filter((v) => stack.includes(v)).length)
+  const { list, isLoading } = useGetPost("main");
+  const field = useSetField();
+  if (isLoading) return <div>로딩중</div>;
+  return list.data
+    .filter((v) => v.stack.split(", ").filter((v) => field.includes(v)).length)
     .map((v) => <Team row={v} key={v.post_key} />);
 };
 

@@ -1,9 +1,8 @@
 import { React, useState } from "react";
 import styled from "@emotion/styled";
 import PostingDetail from "./PostingDetail";
-import Post from "../api/Post";
-import { useQuery } from "react-query";
 import Modal from "./Modal";
+import useGetPost from "hooks/useGetPost";
 
 export const PostContent = ({ row }) => {
   const [modal, setModal] = useState(false);
@@ -27,15 +26,10 @@ export const PostContent = ({ row }) => {
 };
 
 const PostList = () => {
-  const { total } = Post();
-  const { data } = useQuery("total", total, {
-    refetchOnWindowFocus: false,
-    cacheTime: 1000 * 60 * 5,
-    staleTime: 1000 * 60 * 5,
-  });
-
-  return data?.data.map((v) => {
-    return <PostContent key={v.post_key} row={v} />;
+  const { list, isLoading } = useGetPost("total");
+  if (isLoading) return <div>로딩중</div>;
+  return list.data.map((item) => {
+    return <PostContent key={item.post_key} row={item} />;
   });
 };
 

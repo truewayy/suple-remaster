@@ -54,3 +54,10 @@ export const fields = [
     value: "app",
   },
 ];
+
+export const postingData = {
+  title: "",
+  content: "",
+  contact: "",
+  stack: undefined,
+};

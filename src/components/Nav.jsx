@@ -22,7 +22,7 @@ const Nav = () => {
     navigate("/");
     queryClient.invalidateQueries("myInfo");
   };
-  const cookie = getCookie("accessToken");
+  const token = getCookie("accessToken");
 
   return (
     <Navbar>
@@ -31,7 +31,7 @@ const Nav = () => {
         <FontAwesomeIcon icon={faBars} />
       </MobileIcon>
       <NavMenu onClick={handleClick} click={click}>
-        {!cookie ? (
+        {!token ? (
           <NavLinks
             onClick={() => {
               alert("로그인 후 이용해주세요");
@@ -44,12 +44,12 @@ const Nav = () => {
           <NavLinks onClick={() => navigate("/write")}>글 쓰기</NavLinks>
         )}
         <NavLinks onClick={() => navigate("/notice")}>공지사항</NavLinks>
-        {!cookie ? (
+        {!token ? (
           <NavLinks onClick={() => navigate("/login")}>로그인</NavLinks>
         ) : (
           <NavLinks onClick={() => Logout()}>로그아웃</NavLinks>
         )}
-        {!cookie ? (
+        {!token ? (
           <NavLinks id="signup" onClick={() => navigate("/signup")}>
             회원가입
           </NavLinks>

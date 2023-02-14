@@ -8,13 +8,13 @@ import Notice from "./pages/Notice";
 import MyInformation from "./pages/MyInformation";
 import Nav from "./components/Nav";
 import WriteButton from "./components/WriteButton";
-import WriteForm from "./pages/WriteForm";
 import WrittenPost from "./pages/WrittenPost";
 import Search from "./pages/Search";
 import PwChange from "./pages/ChangePassword";
 import Exit from "./pages/Exit";
 import { global } from "globalStyles";
 import { ROUTES } from "constants/routes";
+import PostingForm from "components/PostingForm";
 
 function App() {
   return (
@@ -31,7 +31,7 @@ function App() {
         <Route path={ROUTES.MY_INFORMATION} element={<MyInformation />} />
         <Route path={ROUTES.CHANGE_PASSWORD} element={<PwChange />} />
         <Route path={ROUTES.EXIT} element={<Exit />} />
-        <Route path={ROUTES.WRITE} element={<WriteForm />} />
+        <Route path={ROUTES.WRITE} element={<PostingForm />} />
         <Route path={ROUTES.TOTAL} element={<WrittenPost />} />
         <Route path={ROUTES.SEARCH} element={<Search />} />
       </Routes>

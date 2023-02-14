@@ -6,10 +6,10 @@ import { useNavigate } from "react-router-dom";
 import { getCookie } from "utils/Cookie";
 
 const WriteButton = () => {
-  const cookie = getCookie("accessToken");
+  const token = getCookie("accessToken");
   const navigate = useNavigate();
   const handleClick = () => {
-    if (cookie) {
+    if (token) {
       navigate("/write");
     } else {
       alert("로그인 후 이용해주세요");

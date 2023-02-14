@@ -4,7 +4,7 @@ import { useState } from "react";
 import { subStr } from "utils/subStr";
 import Modal from "./Modal";
 import PostingDetail from "./PostingDetail";
-import EditPosting from "./EditPosting";
+import PostingForm from "./PostingForm";
 
 const MyPosting = ({ row }) => {
   const { RemovePost } = useUserQuery();
@@ -41,7 +41,7 @@ const MyPosting = ({ row }) => {
         id="edit"
         width={600}
       >
-        <EditPosting setModal={setEditModal} row={row} />
+        <PostingForm setModal={setEditModal} row={row} type="edit" />
       </Modal>
     </div>
   );

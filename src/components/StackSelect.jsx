@@ -4,7 +4,8 @@ import { stacks } from "constants/options";
 
 const StackSelect = ({ field, stack, setStack }) => {
   const techStack = stacks[field];
-  const handleFront = (checked, value) => {
+  const handleChange = (e) => {
+    const { checked, value } = e.target;
     if (checked) {
       setStack([...stack, value]);
     } else {
@@ -13,10 +14,7 @@ const StackSelect = ({ field, stack, setStack }) => {
   };
 
   return (
-    <Content
-      id="content"
-      onChange={(e) => handleFront(e.target.checked, e.target.value)}
-    >
+    <Content id="content" onChange={handleChange}>
       {techStack?.map((tech) => (
         <FormLabel key={tech}>
           <FormCheckMulti

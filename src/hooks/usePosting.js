@@ -2,15 +2,30 @@ import { User } from "api";
 import { queryClient } from "index";
 import { useState } from "react";
 import { useMutation } from "react-query";
+import { useNavigate } from "react-router-dom";
 
-const useEditPosting = (row, setModal) => {
-  const { updatePost } = User();
+const usePosting = ({ row, type }) => {
+  const navigate = useNavigate();
+  const { updatePost, writePost } = User();
   const [title, setTitle] = useState(row.title);
   const [content, setContent] = useState(row.content);
-  const [field, setField] = useState("frontEnd"); //분야 선택
+  const [field, setField] = useState(type === "add" ? "" : "frontEnd"); //분야 선택
   const [contact, setContact] = useState(row.contact);
-  const [stack, setStack] = useState(row.stack.split(", "));
-  const editPost = useMutation(
+  const [stack, setStack] = useState(row.stack ? row.stack.split(",") : []);
+  const { mutate: add } = useMutation(
+    () => writePost(title, stack.join(", "), content, contact),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("main");
+        queryClient.invalidateQueries("myInfo");
+        alert("작성 완료");
+        navigate("/myinformation");
+      },
+      onError: (err) => alert(err.response.data.message),
+    }
+  );
+  console.log(stack);
+  const { mutate: edit, isSuccess: edited } = useMutation(
     () => updatePost(title, stack.join(", "), content, contact, row.post_key),
     {
       onSuccess: (res) => {
@@ -24,6 +39,11 @@ const useEditPosting = (row, setModal) => {
       onError: (err) => alert(err.response.data.message),
     }
   );
+  const submit = {
+    add: add,
+    edit: edit,
+  };
+
   const onSubmit = () => {
     if (!title.length) return alert("제목을 입력해주세요");
     if (!field.length) return alert("분야/스택(을) 선택해주세요");
@@ -31,8 +51,7 @@ const useEditPosting = (row, setModal) => {
     if (!content.length) return alert("내용을 입력해주세요");
     if (!contact.length) return alert("카카오톡 오픈채팅 URL을 입력해주세요");
     if (stack.length > 4) return alert("스택은 4개까지 선택할 수 있습니다");
-    setModal(false);
-    editPost.mutate();
+    submit[type]();
   };
   const handleChangeField = (e) => {
     setField(e.target.value);
@@ -61,7 +80,8 @@ const useEditPosting = (row, setModal) => {
     handleChangeContent,
     handleChangeContact,
     onSubmit,
+    edited,
   };
 };
 
-export default useEditPosting;
+export default usePosting;
